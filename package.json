@@ -1,7 +1,7 @@
 {
-  "name": "github-ai-daily",
-  "version": "0.1.0",
-  "description": "每日追踪 GitHub 生成式 AI 方向日涨星前 10 的仓库,产出中文报告;支持重点关注项目。",
+  "name": "ai-trending",
+  "version": "0.2.0",
+  "description": "每天发现 GitHub 近60天新建、星数最高的 AI 项目 Top10 + 中文解读报告网站",
   "type": "module",
   "private": true,
   "engines": {
@@ -9,8 +9,7 @@
   },
   "scripts": {
     "collect": "node collect.mjs",
-    "render": "node render-report.mjs",
-    "index": "node build-index.mjs",
+    "build": "node site-builder.mjs",
     "merge-watch": "node merge-watchlist.mjs"
   }
 }

@@ -1,10 +1,13 @@
-# GitHub AI 每日涨星追踪 · 重点关注
+# 🔥 AI 新项目崛起榜
 
-每天中午 12:00 自动追踪 GitHub **生成式 AI** 方向日涨星前 10 的仓库,产出中文 Markdown 报告;并支持对任意项目「重点关注」,关注项目**即使未上榜**也会每日独立追踪变化。
+每天中午 12:00 自动发现 GitHub **近 60 天新建、星数最高**的 AI 项目 Top10,每个项目配中文解读(是什么 / 哪里好 / 应用场景),产出编辑刊物风的报告网站;并支持对任意项目「重点关注」,老牌项目也能持续追踪。
 
-- **数据口径**:GitHub Search API 快照增量(每日存快照,次日算真实 diff),聚焦生成式 AI。
-- **匿名友好**:无需 Token 即可运行;配置 Token 后自动提升额度与限流。
-- **关注能力**:纯前端管理页面 + localStorage,关注项目走独立 API 路径拉取。
+线上: **https://mmlong818.github.io/ai-trending/**
+
+- **榜单定位**:只看近 60 天**新建**的项目,按总星排序 = 崛起热度。老牌高星项目不再霸榜,每天都是「最近刚冒头的新项目」。
+- **新进榜信号**:每天标注哪些是「🆕 新进榜」(昨天不在 Top10、今天杀进来)——这才是值得关注的崛起信号。
+- **报告网站**:首页 + 月历存档(每日条数 + 本地搜索)+ 日归档 + 重点关注页 + RSS。暖白纸张 + 砖红 + Georgia 衬线的编辑刊物美学。
+- **匿名友好**:无需 Token 即可运行;配置 Token 后自动提升额度。
 - **零依赖**:纯 Node.js (ESM, Node 18+ 内置 fetch),无 npm install。
 
 ---
@@ -12,32 +15,29 @@
 ## 目录结构
 
 ```
-github-ai-daily/
-├── collect.mjs                # 主入口:搜索→快照→diff→关注→README→ranking
-├── render-report.mjs          # ranking JSON → 自包含 HTML 报告
-├── build-index.mjs            # 扫描 reports/ 生成首页 index.html
+ai-trending/
+├── collect.mjs                # 数据采集:搜索近60天新建AI项目 → 快照 → 排序 → ranking JSON
+├── site-builder.mjs           # ★ 静态站点生成器:ranking JSON → 完整网站(reports/)
+├── wait-pages.mjs             # 推送后指纹轮询,确认线上已更新
 ├── merge-watchlist.mjs        # 手动合流 watchlist 变更(可选)
 ├── lib/
 │   ├── github.mjs             # GitHub API 封装(限流/重试/Token可选)
-│   ├── keywords.mjs           # 生成式AI关键词表(可自行增删)
+│   ├── keywords.mjs           # AI关键词表 + 候选池窗口配置
 │   ├── filter.mjs             # AI相关性过滤 + 去重 + 排除黑名单
-│   ├── snapshot.mjs           # 快照读写 + 日涨星 diff
+│   ├── snapshot.mjs           # 快照读写 + diff
 │   ├── profile.mjs            # per-repo 画像 + 变化检测
 │   └── watchlist.mjs          # 关注列表读写 + 独立拉取 + 合流
-├── web/
-│   ├── index.html             # 重点关注管理页面(浏览器打开即用)
-│   ├── app.css
-│   └── app.js
+├── web/                       # 重点关注管理页面(浏览器打开即用)
 ├── data/                      # 运行产物(.gitignore,不入库)
-│   ├── snapshots/YYYY-MM-DD.json
-│   ├── profiles/{owner}-{name}.json
-│   ├── ranking-YYYY-MM-DD.json   # 含 zh_intro 字段(agent 填充中文解读)
-│   ├── watchlist.json         # 关注列表真相源(collect 只读它)
-│   └── watchlist-changes.json # 页面待合流的变更队列
-└── reports/                   # 报告产物(HTML+MD 入库,供 Pages 部署)
-    ├── index.html             # 首页(列出所有历史报告)
-    ├── YYYY-MM-DD.html        # 每日 HTML 报告(含每个项目中文解读)
-    └── github-ai-daily-YYYY-MM-DD.md  # Markdown 备份
+│   ├── ranking-YYYY-MM-DD.json   # 每日榜单(含 zh_intro 中文解读)
+│   ├── snapshots / profiles / watchlist.json
+└── reports/                   # ★ 站点产物(入库,GitHub Pages 部署)
+    ├── index.html             # 首页(头条 + 近期时间线)
+    ├── archive.html           # 月历存档(7列网格 + 每日条数 + 搜索)
+    ├── watchlist.html         # 重点关注页
+    ├── report-YYYY-MM-DD.html # 日归档(当天完整榜单 + 中文解读)
+    ├── rss.xml / sitemap.xml / robots.txt
+```
 ```
 
 ---
@@ -56,18 +56,20 @@ node collect.mjs          # 采集 → 产出 data/ranking-今日.json
 - 全部项目标记为「📋 基线收录」,`delta` 为空(无昨日可比);
 - **真正的涨星排名从第二天开始**(次日与今日快照 diff)。
 
-### 2. 查看报告网页
+### 2. 查看报告网站
 
-每天 cron 产出两类报告,都在 `reports/` 下:
-- **`YYYY-MM-DD.html`** — 可在浏览器直接打开的自包含网页(深色主题,含每个项目的中文解读:是什么/哪里好/应用场景)。双击即可查看。
-- **`github-ai-daily-YYYY-MM-DD.md`** — Markdown 备份。
+线上: **https://mmlong818.github.io/ai-trending/**
 
-首页 `reports/index.html` 列出所有历史报告,点击进入。
+网站由 `site-builder.mjs` 从所有 `data/ranking-*.json` 生成,含:
+- **首页**:今日头条 + 近期时间线
+- **存档页**(archive.html):月历网格,每日显示条数,内置本地搜索(输入项目名/关键词即时筛选)
+- **日归档**(report-YYYY-MM-DD.html):当天完整 Top10 + 每个项目的中文解读(是什么/哪里好/应用场景)+ 重点关注 + 元数据
+- **关注页**(watchlist.html):重点关注项目的每日变化
+- **RSS**:https://mmlong818.github.io/ai-trending/rss.xml
 
-手动重渲染(改了 ranking JSON 后刷新 HTML):
+手动重新生成站点(改了 ranking JSON 后):
 ```bash
-node render-report.mjs 2026-08-10   # 指定日期
-node build-index.mjs                # 更新首页
+node site-builder.mjs    # 重新生成整个 reports/ 站点
 ```
 
 ### 3. 打开关注管理页面
@@ -176,7 +178,7 @@ export const KEYWORD_GROUPS = [
 
 ### 部署后访问
 
-配置成功后,线上地址为:`https://mmlong818.github.io/ai-trending/`(首页 index.html 列出所有历史报告)。
+配置成功后,线上地址为:`https://mmlong818.github.io/ai-trending/`(首页含今日头条 + 近期时间线,存档页 archive.html 有月历 + 搜索)。
 
 ### 手动触发部署
 
