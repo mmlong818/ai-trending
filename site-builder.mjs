@@ -110,9 +110,9 @@ function renderHome(rankings) {
   const hero = latest ? `
     <section class="hero">
       <p class="hero-date">${latest.date}</p>
-      <h2 class="hero-title"><a href="day/${latest.date}.html">今日榜单 · ${headline(latest.data)}</a></h2>
+      <h2 class="hero-title"><a href="report-${latest.date}.html">今日榜单 · ${headline(latest.data)}</a></h2>
       <p class="hero-sub">${esc(headline(latest.data))} · 候选池 ${latest.data.candidate_pool_size} 个新项目</p>
-      <a class="hero-cta" href="day/${latest.date}.html">查看完整榜单 →</a>
+      <a class="hero-cta" href="report-${latest.date}.html">查看完整榜单 →</a>
     </section>` : `<section class="hero"><p class="muted">暂无报告,等待首次运行。</p></section>`;
 
   // 时间线:最近 14 份
@@ -127,7 +127,7 @@ function renderHome(rankings) {
           return `<article class="feed-card">
             <div class="feed-date">${r.date}</div>
             <div class="feed-body">
-              <a class="feed-title" href="day/${r.date}.html">${top1?esc(top1.full_name)+" 领跑":"榜单"}</a>
+              <a class="feed-title" href="report-${r.date}.html">${top1?esc(top1.full_name)+" 领跑":"榜单"}</a>
               <p class="feed-sub">${newCount>0?newCount+" 个新进榜 · ":""}候选池 ${r.data.candidate_pool_size}</p>
             </div>
           </article>`;
@@ -214,7 +214,7 @@ function renderArchive(rankings) {
       const r = dayMap.get(ds);
       if (r) {
         const newCount = r.data.top10?.filter(t=>t.is_new&&!t.is_baseline).length||0;
-        cells.push(`<a class="cal-cell has-report" href="day/${fullDate}.html"><span class="cal-day">${d}</span><span class="cal-count">${newCount>0?newCount+"🆕":"报告"}</span></a>`);
+        cells.push(`<a class="cal-cell has-report" href="report-${fullDate}.html"><span class="cal-day">${d}</span><span class="cal-count">${newCount>0?newCount+"🆕":"报告"}</span></a>`);
       } else {
         cells.push(`<div class="cal-cell"><span class="cal-day">${d}</span></div>`);
       }
@@ -244,7 +244,7 @@ document.getElementById('search').addEventListener('input', e=>{
     const blob = (it.t+' '+it.d).toLowerCase();
     if (words.every(w=>blob.includes(w))) hits.push({date:r.date, ...it});
   }
-  box.innerHTML = hits.length ? hits.slice(0,30).map(h=>'<a class="search-hit" href="day/'+h.date+'.html">'+h.date+' · '+h.t+(h.n?' 🆕':'')+'</a>').join('') : '<p class="muted">无匹配</p>';
+  box.innerHTML = hits.length ? hits.slice(0,30).map(h=>'<a class="search-hit" href="report-'+h.date+'.html">'+h.date+' · '+h.t+(h.n?' 🆕':'')+'</a>').join('') : '<p class="muted">无匹配</p>';
 });
 </script>
 ${footer()}`);
@@ -271,8 +271,8 @@ ${footer()}`);
 function renderRSS(rankings) {
   const items = rankings.slice(0,20).map(r => `    <item>
       <title>${esc(r.date)} AI 新项目崛起榜 · ${esc(headline(r.data))}</title>
-      <link>https://mmlong818.github.io/ai-trending/day/${r.date}.html</link>
-      <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/day/${r.date}.html</guid>
+      <link>https://mmlong818.github.io/ai-trending/report-${r.date}.html</link>
+      <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-${r.date}.html</guid>
       <pubDate>${new Date(r.date+"T12:00:00+08:00").toUTCString()}</pubDate>
       <description>${esc((r.data.top10||[]).slice(0,3).map(t=>t.full_name+" (★"+fmtStars(t.today_stars)+")").join("; "))}</description>
     </item>`).join("\n");
@@ -288,7 +288,7 @@ ${items}
 
 function renderSitemap(rankings) {
   const urls = [`https://mmlong818.github.io/ai-trending/`,`https://mmlong818.github.io/ai-trending/archive.html`];
-  for (const r of rankings) urls.push(`https://mmlong818.github.io/ai-trending/day/${r.date}.html`);
+  for (const r of rankings) urls.push(`https://mmlong818.github.io/ai-trending/report-${r.date}.html`);
   return urls.map(u=>`<url><loc>${u}</loc></url>`).join("");
 }
 function sitemapWrap(urls){return `<?xml version="1.0" encoding="UTF-8"?>
@@ -416,7 +416,7 @@ function main() {
 
   // 清空并重建 docs/
   if (existsSync(DOCS)) rmSync(DOCS, { recursive: true, force: true });
-  mkdirSync(join(DOCS, "day"), { recursive: true });
+  mkdirSync(DOCS, { recursive: true });
   writeFileSync(join(DOCS, ".nojekyll"), "");
 
   // 首页
@@ -425,9 +425,9 @@ function main() {
   writeFileSync(join(DOCS, "archive.html"), renderArchive(rankings));
   // 关注
   writeFileSync(join(DOCS, "watchlist.html"), renderWatchlistPage(rankings));
-  // 每份报告的日页
+  // 每份报告的日页(输出到根目录 report-日期.html,因 Pages workflow 用 *.html 复制,不支持子目录)
   for (const r of rankings) {
-    writeFileSync(join(DOCS, "day", `${r.date}.html`), renderDay(r));
+    writeFileSync(join(DOCS, `report-${r.date}.html`), renderDay(r));
   }
   // RSS / sitemap / robots
   writeFileSync(join(DOCS, "rss.xml"), renderRSS(rankings));
