@@ -1,0 +1,19 @@
+# 运行时数据(体积大、可重算,不入库)
+data/
+
+# 报告产物:HTML 和 Markdown 入库(用于 GitHub Pages 部署)
+# 仅忽略其他临时文件
+reports/*.tmp
+
+# 本地环境变量(含可选 GitHub Token)
+.env
+# .env.example 是模板,需要入库(顶层 .gitignore 的 .env.* 会忽略它,这里强制包含)
+!.env.example
+
+# 一次性脚本
+scripts/
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+*.log

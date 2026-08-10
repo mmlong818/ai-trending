@@ -1,0 +1,16 @@
+{
+  "name": "github-ai-daily",
+  "version": "0.1.0",
+  "description": "每日追踪 GitHub 生成式 AI 方向日涨星前 10 的仓库,产出中文报告;支持重点关注项目。",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "collect": "node collect.mjs",
+    "render": "node render-report.mjs",
+    "index": "node build-index.mjs",
+    "merge-watch": "node merge-watchlist.mjs"
+  }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub AI 每日追踪 · 重点关注管理</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">⭐</span>
+      <div>
+        <h1>GitHub AI 每日追踪</h1>
+        <p class="sub">重点关注管理 · 生成式 AI 方向</p>
+      </div>
+    </div>
+    <div id="sync-status" class="sync-status">加载中…</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="watchlist">⭐ 我的关注 <span id="wl-count" class="badge">0</span></button>
+    <button class="tab" data-tab="today">🔥 今日榜单</button>
+    <button class="tab" data-tab="io">📦 导入 / 导出</button>
+  </nav>
+
+  <main>
+    <!-- 关注列表 -->
+    <section id="tab-watchlist" class="tab-panel active">
+      <div class="toolbar">
+        <input id="add-input" class="add-input" type="text" placeholder="owner/repo  例如 langchain-ai/langchain" />
+        <input id="add-note" class="add-note" type="text" placeholder="备注(可选)" />
+        <button id="add-btn" class="btn primary">＋ 关注</button>
+        <input id="search-input" class="search-input" type="text" placeholder="🔍 搜索关注列表…" />
+      </div>
+      <div id="watchlist-list" class="repo-list"></div>
+    </section>
+
+    <!-- 今日榜单(从最新 ranking 读取) -->
+    <section id="tab-today" class="tab-panel">
+      <p class="hint" id="today-hint">读取最新 ranking 文件…</p>
+      <div id="today-list" class="repo-list"></div>
+    </section>
+
+    <!-- 导入导出 -->
+    <section id="tab-io" class="tab-panel">
+      <div class="io-card">
+        <h3>导出</h3>
+        <p>把当前关注列表导出为 JSON(备份 / 跨浏览器迁移 / 交给 collect 合流)。</p>
+        <div class="btn-row">
+          <button id="export-wl" class="btn">⬇ 导出完整 watchlist.json</button>
+          <button id="export-changes" class="btn">⬇ 导出待合流 changes</button>
+        </div>
+      </div>
+      <div class="io-card">
+        <h3>导入</h3>
+        <p>从 JSON 文件合并关注列表(支持完整 watchlist 或 changes 队列格式)。</p>
+        <input id="import-file" type="file" accept=".json,application/json" />
+        <button id="import-btn" class="btn">合并导入</button>
+        <p id="import-msg" class="msg"></p>
+      </div>
+      <div class="io-card">
+        <h3>合流说明</h3>
+        <p>浏览器无法直接写本地文件。每次操作后,请点 <b>「⬇ 导出待合流 changes」</b>,把下载的 <code>watchlist-changes.json</code> 覆盖到本目录 <code>data/watchlist-changes.json</code>。下次 collect 运行(或手动 <code>node merge-watchlist.mjs</code>)会自动合流。</p>
+        <p class="ok">即便忘了导出,本页 localStorage 永远保留你的最新关注,下次打开仍在。</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

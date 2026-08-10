@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub AI 每日追踪 · 2026-08-10</title>
+<style>
+:root {
+  --bg: #0d1117; --panel: #161b22; --panel2: #1c2128; --border: #30363d;
+  --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff; --green: #3fb950;
+  --danger: #f85149; --warn: #d29922; --star: #e3b341;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+  font-size: 15px; line-height: 1.65;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+.header h1 { margin: 0 0 4px; font-size: 26px; }
+.header .date { margin: 0 0 4px; color: var(--accent); font-size: 14px; }
+.header .date a { color: var(--accent); }
+.header .meta-line { margin: 0; color: var(--muted); font-size: 12px; }
+.banner {
+  background: rgba(210,153,34,0.1); border: 1px solid var(--warn);
+  border-radius: 8px; padding: 12px 16px; margin: 16px 0; font-size: 14px;
+}
+section { margin: 32px 0; }
+h2 { font-size: 18px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin: 0 0 16px; }
+h2 .count { color: var(--muted); font-size: 13px; font-weight: normal; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td a { color: var(--accent); text-decoration: none; }
+td a:hover { text-decoration: underline; }
+.col-rank { color: var(--muted); width: 32px; }
+
+.card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px 20px; margin-bottom: 14px;
+}
+.card-changed { border-left: 3px solid var(--accent); }
+.card-watched { border-left: 3px solid var(--star); }
+.card-error { border-left: 3px solid var(--danger); }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.card-title { font-size: 16px; font-weight: 600; }
+.card-title a { color: var(--text); text-decoration: none; }
+.card-title a:hover { color: var(--accent); }
+.card-title .rank { color: var(--muted); margin-right: 6px; }
+.card-stats { display: flex; gap: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stat-delta { color: var(--green); font-weight: 600; }
+.stat-stars { color: var(--star); }
+.desc { color: var(--muted); margin: 8px 0 0; font-size: 13px; }
+.intro { margin: 12px 0 8px; padding: 12px 14px; background: var(--panel2); border-radius: 8px; font-size: 14px; }
+.intro p { margin: 0 0 8px; }
+.intro p:last-child { margin-bottom: 0; }
+.intro strong { color: var(--accent); }
+.card-meta { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 10px; align-items: center; }
+.card-meta a { color: var(--muted); }
+.gh-link { margin-left: auto; color: var(--accent) !important; }
+.topics { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.topic { font-size: 11px; padding: 2px 8px; background: var(--panel2); border: 1px solid var(--border); border-radius: 10px; color: var(--muted); }
+.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--border); margin-left: 6px; font-weight: normal; vertical-align: middle; }
+.tag-new { color: var(--accent); border-color: var(--accent); }
+.tag-hot { color: var(--danger); border-color: var(--danger); }
+.tag-rank { color: var(--green); border-color: var(--green); }
+.tag-err { color: var(--danger); border-color: var(--danger); }
+.stable-list { display: flex; flex-direction: column; gap: 8px; }
+.stable-item { display: flex; gap: 12px; align-items: baseline; padding: 8px 12px; background: var(--panel); border-radius: 8px; font-size: 14px; }
+.stable-item a { color: var(--accent); text-decoration: none; }
+.stable-item .num { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.stable-desc { color: var(--muted); font-size: 12px; margin-left: auto; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 280px; }
+.metadata ul { list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--muted); }
+.metadata li { padding: 4px 0; }
+.metadata strong { color: var(--text); }
+.footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; text-align: center; }
+.footer a { color: var(--muted); }
+@media (max-width: 600px) {
+  .container { padding: 16px 12px 60px; }
+  .header h1 { font-size: 22px; }
+  .stable-desc { display: none; }
+  .card-meta { font-size: 11px; gap: 8px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1>GitHub 生成式 AI 每日涨星追踪</h1>
+    <p class="date">2026-08-10 · <a href="index.html">← 返回首页</a></p>
+    <p class="meta-line">数据口径:GitHub Search API 快照增量 · 范围:生成式AI · 源:github-api(anonymous) · 候选池 1760</p>
+  </header>
+
+  <div class="banner">📋 <strong>基线收录日(首次运行)</strong>:今天尚无昨日数据可比,无涨星数字。按总星数展示当前生成式AI领域星数最高的项目作为基线。真正的日涨星排名从明天开始。</div>
+
+  <section>
+    <h2>📊 今日 Top 10 速览</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>项目</th><th>今日涨星</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
+      <tbody><tr>
+        <td class="col-rank">1</td>
+        <td><a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">affaan-m/ECC</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 239.2k</td>
+        <td>JavaScript</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">2</td>
+        <td><a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">NousResearch/hermes-agent</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 228.3k</td>
+        <td>Python</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">3</td>
+        <td><a href="https://github.com/n8n-io/n8n" target="_blank" rel="noopener">n8n-io/n8n</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 200.1k</td>
+        <td>TypeScript</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">4</td>
+        <td><a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener">Significant-Gravitas/AutoGPT</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 186.5k</td>
+        <td>Python</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">5</td>
+        <td><a href="https://github.com/ollama/ollama" target="_blank" rel="noopener">ollama/ollama</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 178.2k</td>
+        <td>Go</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">6</td>
+        <td><a href="https://github.com/microsoft/markitdown" target="_blank" rel="noopener">microsoft/markitdown</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 172.9k</td>
+        <td>Python</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">7</td>
+        <td><a href="https://github.com/f/prompts.chat" target="_blank" rel="noopener">f/prompts.chat</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 167k</td>
+        <td>HTML</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">8</td>
+        <td><a href="https://github.com/huggingface/transformers" target="_blank" rel="noopener">huggingface/transformers</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 163.5k</td>
+        <td>Python</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">9</td>
+        <td><a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">Snailclimb/JavaGuide</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 157.7k</td>
+        <td>JavaScript</td>
+        <td>📋</td>
+      </tr><tr>
+        <td class="col-rank">10</td>
+        <td><a href="https://github.com/langflow-ai/langflow" target="_blank" rel="noopener">langflow-ai/langflow</a></td>
+        <td class="num">—</td>
+        <td class="num">★ 153k</td>
+        <td>Python</td>
+        <td>📋</td>
+      </tr></tbody>
+    </table></div>
+  </section>
+
+  <section><h2>🆕 基线项目详解</h2>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#1</span>
+          <a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">affaan-m/ECC</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 239.2k</span>
+        </div>
+      </div>
+      <p class="desc">The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.</p>
+      <div class="intro"><p><strong>是什么</strong>：ECC（Essential Claude Code）是一套面向 AI 编码代理（Claude Code、Codex、OpenCode、Cursor 等）的<strong>性能优化与增强系统</strong>，定位为 Agent 运行的"操作系统"层。它为这些编码 Agent 提供技能（skills）、直觉（instincts）、记忆（memory）、安全（security）等外挂能力。</p>
+<p><strong>哪里好</strong>：把分散的 Agent 增强能力（上下文管理、记忆持久化、工具技能库、安全沙箱）整合成统一框架，让用户不必为每个 Agent 单独配置。它抓住了"Agent 工程化"这一当下最热方向，提供开箱即用的工程实践模板，文档完善且支持多语言。</p>
+<p><strong>应用场景</strong>：重度使用 Claude Code / Codex 等 AI 编程工具的开发者，想给 Agent 加上长期记忆、自定义技能、更可控的执行边界；或团队希望统一 AI 编码工作流、沉淀可复用的 Agent 能力。</p></div>
+      <div class="card-meta">
+        <span>JavaScript</span>
+        <span>MIT</span>
+        <span>更新 2026-08-10</span>
+        
+        
+        <a class="gh-link" href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">ai-agents</span><span class="topic">anthropic</span><span class="topic">claude</span><span class="topic">claude-code</span><span class="topic">developer-tools</span><span class="topic">llm</span><span class="topic">mcp</span><span class="topic">productivity</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#2</span>
+          <a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">NousResearch/hermes-agent</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 228.3k</span>
+        </div>
+      </div>
+      <p class="desc">The agent that grows with you</p>
+      <div class="intro"><p><strong>是什么</strong>：Hermes Agent 是 NousResearch 推出的<strong>"会成长的 AI 代理"</strong>（The agent that grows with you）。它是一个可长期陪伴、逐步学习用户习惯与偏好的通用 Agent，同时提供桌面端应用 Hermes Desktop。</p>
+<p><strong>哪里好</strong>：由知名开源模型团队 NousResearch 打造，主打"个性化成长"——Agent 不只是执行单次任务，而是随使用积累对你的工作方式越来越懂。定位清晰，衔接了从"单次工具"到"长期助手"的演进趋势，生态对标 Claude/ChatGPT 的 Agent 形态。</p>
+<p><strong>应用场景</strong>：希望有一个能持续学习自己习惯的私人 AI 助手的重度用户；研究者探索长记忆、个性化 Agent 的前沿形态；需要一个可自托管的 Agent 桌面端替代商业产品。</p></div>
+      <div class="card-meta">
+        <span>Python</span>
+        <span>MIT</span>
+        <span>更新 2026-08-11</span>
+        
+        
+        <a class="gh-link" href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">ai</span><span class="topic">ai-agent</span><span class="topic">ai-agents</span><span class="topic">anthropic</span><span class="topic">chatgpt</span><span class="topic">claude</span><span class="topic">claude-code</span><span class="topic">clawdbot</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#3</span>
+          <a href="https://github.com/n8n-io/n8n" target="_blank" rel="noopener">n8n-io/n8n</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 200.1k</span>
+        </div>
+      </div>
+      <p class="desc">Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.</p>
+      <div class="intro"><p><strong>是什么</strong>：n8n 是一个<strong>原生集成 AI 能力的工作流自动化平台</strong>，采用 fair-code 模式（可自托管）。它把可视化拖拽编排与自定义代码结合，连接 1500+ 集成，让你用一块画布构建和部署 AI Agent 与自动化流程。</p>
+<p><strong>哪里好</strong>：可视化 + 代码双模，既给非技术用户低代码体验，又允许开发者写自定义逻辑。原生支持 MCP（Model Context Protocol），AI 能力是一等公民而非后期插件。支持自托管，数据不出私有环境，隐私友好。社区生态庞大，集成覆盖极广。</p>
+<p><strong>应用场景</strong>：企业内部自动化流程（审批、数据同步、通知）；把 LLM 嵌入业务工作流构建 AI Agent；需要自托管的隐私敏感场景；替代 Zapier/Make 的开源自部署方案。</p></div>
+      <div class="card-meta">
+        <span>TypeScript</span>
+        <span>NOASSERTION</span>
+        <span>更新 2026-08-11</span>
+        
+        
+        <a class="gh-link" href="https://github.com/n8n-io/n8n" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">ai</span><span class="topic">apis</span><span class="topic">automation</span><span class="topic">cli</span><span class="topic">data-flow</span><span class="topic">development</span><span class="topic">integration-framework</span><span class="topic">integrations</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#4</span>
+          <a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener">Significant-Gravitas/AutoGPT</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 186.5k</span>
+        </div>
+      </div>
+      <p class="desc">AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.</p>
+      <div class="intro"><p><strong>是什么</strong>：AutoGPT 是 2023 年引爆"自主 AI Agent"概念的<strong>元老级开源项目</strong>，目标是让 LLM 自主分解任务、调用工具、循环执行直到完成目标（"AI agents that finish the work"）。现已演进为完整的 Agent 平台，提供可视化构建与部署。</p>
+<p><strong>哪里好</strong>：最早验证"LLM + 工具 + 循环"自主 Agent 范式的开源实现，品牌认知度极高，是学习 Agent 架构的标杆参考。新版强调"每周省 10 小时"的生产力定位，从实验项目走向可用平台，社区与衍生生态庞大。</p>
+<p><strong>应用场景</strong>：需要多步骤自主完成的自动化任务（调研、数据处理、内容流水线）；学习与教授 Agent 架构设计的参考实现；快速搭建原型 Agent 验证想法。</p></div>
+      <div class="card-meta">
+        <span>Python</span>
+        <span>NOASSERTION</span>
+        <span>更新 2026-08-11</span>
+        
+        
+        <a class="gh-link" href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">agentic-ai</span><span class="topic">agents</span><span class="topic">ai</span><span class="topic">artificial-intelligence</span><span class="topic">autonomous-agents</span><span class="topic">claude</span><span class="topic">gpt</span><span class="topic">llama-api</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#5</span>
+          <a href="https://github.com/ollama/ollama" target="_blank" rel="noopener">ollama/ollama</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 178.2k</span>
+        </div>
+      </div>
+      <p class="desc">Get up and running with Kimi-K2.6, GLM-5.2, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.</p>
+      <div class="intro"><p><strong>是什么</strong>：Ollama 是<strong>本地运行大模型的标杆工具</strong>，让你在自己的机器上一行命令拉起 Llama 3、GLM-5.2、DeepSeek、Qwen、Gemma、gpt-oss、Kimi-K2.6 等开源模型。它把模型下载、量化、推理引擎、API 服务打包成极简体验。</p>
+<p><strong>哪里好</strong>：体验极简——装完即用，无需懂量化/部署细节。跨平台（macOS/Windows/Linux），提供兼容 OpenAI 的 REST API，可直接对接 LangChain、各类 Chat UI。模型生态丰富，社区持续贡献 Modelfile，最新描述已点名支持 GLM-5.2、Kimi-K2.6、MiniMax 等国产新模型。</p>
+<p><strong>应用场景</strong>：隐私敏感场景（医疗/金融/法务）的本地推理；开发调试时不想付费调云 API；离线环境下的 AI 助手；作为 RAG/Agent 应用的本地推理后端。</p></div>
+      <div class="card-meta">
+        <span>Go</span>
+        <span>MIT</span>
+        <span>更新 2026-08-11</span>
+        
+        
+        <a class="gh-link" href="https://github.com/ollama/ollama" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">deepseek</span><span class="topic">gemma</span><span class="topic">gemma3</span><span class="topic">glm</span><span class="topic">go</span><span class="topic">golang</span><span class="topic">gpt-oss</span><span class="topic">llama</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#6</span>
+          <a href="https://github.com/microsoft/markitdown" target="_blank" rel="noopener">microsoft/markitdown</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 172.9k</span>
+        </div>
+      </div>
+      <p class="desc">Python tool for converting files and office documents to Markdown.</p>
+      <div class="intro"><p><strong>是什么</strong>：MarkItDown 是微软出品的 <strong>Python 文件转 Markdown 工具</strong>，能把 Office 文档（Word/Excel/PowerPoint）、PDF、图片、音频等各类文件统一转成 Markdown，为 LLM 处理做好准备。由微软 AutoGen 团队打造。</p>
+<p><strong>哪里好</strong>：解决了"把现实文档喂给大模型"的关键前置步骤——各种格式统一成 LLM 最友好的 Markdown。微软官方背书，质量与维护有保障。支持作为 LangChain/AutoGen 扩展集成进 Agent 流水线，是 RAG 与文档问答场景的基础设施。</p>
+<p><strong>应用场景</strong>：企业知识库入 RAG 系统前的文档预处理；批量把历史 Office/PDF 文档转成可检索文本；构建文档问答 Agent 的数据接入层；自动化文档归档与结构化。</p></div>
+      <div class="card-meta">
+        <span>Python</span>
+        <span>MIT</span>
+        <span>更新 2026-07-30</span>
+        
+        
+        <a class="gh-link" href="https://github.com/microsoft/markitdown" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">autogen</span><span class="topic">autogen-extension</span><span class="topic">langchain</span><span class="topic">markdown</span><span class="topic">microsoft-office</span><span class="topic">openai</span><span class="topic">pdf</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#7</span>
+          <a href="https://github.com/f/prompts.chat" target="_blank" rel="noopener">f/prompts.chat</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 167k</span>
+        </div>
+      </div>
+      <p class="desc">f.k.a. Awesome ChatGPT Prompts. Share, discover, and collect prompts from the community. Free and open source — self-host for your organization with complete privacy.</p>
+      <div class="intro"><p><strong>是什么</strong>：prompts.chat（原名 Awesome ChatGPT Prompts）是全球最大的<strong>开源提示词社区</strong>，让用户分享、发现、收藏各类 AI 提示词。可自托管部署，保证组织内隐私。</p>
+<p><strong>哪里好</strong>：提示词工程领域最早、最知名的社区资源，积累了海量经过验证的优质提示词。完全开源、可自托管，适合对数据隐私有要求的组织。从 Awesome 列表演进为完整 Web 应用，支持收藏、发现、检索。</p>
+<p><strong>应用场景</strong>：个人用户寻找高质量提示词模板提升 AI 使用效率；团队/企业自托管一个内部提示词库沉淀组织经验；学习提示词工程的实战案例库。</p></div>
+      <div class="card-meta">
+        <span>HTML</span>
+        <span>NOASSERTION</span>
+        <span>更新 2026-08-10</span>
+        
+        
+        <a class="gh-link" href="https://github.com/f/prompts.chat" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">ai</span><span class="topic">artificial-intelligence</span><span class="topic">awesome-list</span><span class="topic">chatgpt</span><span class="topic">chatgpt-prompts</span><span class="topic">claude</span><span class="topic">gemini</span><span class="topic">gpt</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#8</span>
+          <a href="https://github.com/huggingface/transformers" target="_blank" rel="noopener">huggingface/transformers</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 163.5k</span>
+        </div>
+      </div>
+      <p class="desc">🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. </p>
+      <div class="intro"><p><strong>是什么</strong>：🤗 Transformers 是 HuggingFace 出品的<strong>模型定义框架</strong>，提供文本、视觉、音频、多模态等前沿机器学习模型的统一接口，覆盖推理与训练。它是整个开源 AI 生态的基石库。</p>
+<p><strong>哪里好</strong>：事实上的行业标准——几乎所有人用开源模型都绕不开它。模型覆盖极广（DeepSeek/Gemma/GLM/Qwen 等最新模型均首发支持），API 设计优雅（pipeline 三行代码完成推理），与 HuggingFace Hub 深度集成，PyTorch/JAX/TensorFlow 全支持。文档与教程极其完善。</p>
+<p><strong>应用场景</strong>：研究和复现最新模型论文；在生产环境部署开源模型推理；微调/训练自定义模型；学习 NLP/多模态模型工程；构建任何涉及开源大模型的应用。</p></div>
+      <div class="card-meta">
+        <span>Python</span>
+        <span>Apache-2.0</span>
+        <span>更新 2026-08-11</span>
+        
+        
+        <a class="gh-link" href="https://github.com/huggingface/transformers" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">audio</span><span class="topic">deep-learning</span><span class="topic">deepseek</span><span class="topic">gemma</span><span class="topic">glm</span><span class="topic">hacktoberfest</span><span class="topic">llm</span><span class="topic">machine-learning</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#9</span>
+          <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">Snailclimb/JavaGuide</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 157.7k</span>
+        </div>
+      </div>
+      <p class="desc">Java 面试 &amp; 后端通用面试指南，覆盖计算机基础、数据库、分布式、高并发、系统设计与 AI 应用开发</p>
+      <div class="intro"><p><strong>是什么</strong>：JavaGuide 是中文社区知名的<strong>Java 面试与后端通用指南</strong>，覆盖计算机基础、数据库、分布式、高并发、系统设计，近期扩展加入了 AI 应用开发（SpringAI/MCP）等内容。</p>
+<p><strong>哪里好</strong>：中文 Java 学习者最常用的面试备战资料之一，内容系统全面、持续更新。提供在线阅读版和精美 PDF。近期向 AI 方向扩展（加入 context-engineering、springai、mcp、deepseek 等主题），反映后端工程师向 AI 应用开发转型的趋势。</p>
+<p><strong>应用场景</strong>：Java/后端工程师面试备战；系统学习后端技术体系；了解后端向 AI 应用开发转型的路径与工具栈。<em>注：本质是后端面试指南而非纯生成式AI项目，因近期加了 AI 主题标签被纳入榜单，如不需要可在配置中排除。</em></p></div>
+      <div class="card-meta">
+        <span>JavaScript</span>
+        <span>Apache-2.0</span>
+        <span>更新 2026-08-08</span>
+        
+        
+        <a class="gh-link" href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">agent</span><span class="topic">ai</span><span class="topic">context-engineering</span><span class="topic">deepseek</span><span class="topic">interview</span><span class="topic">java</span><span class="topic">mcp</span><span class="topic">mysql</span></div>
+    </article>
+    <article class="card card-changed">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="rank">#10</span>
+          <a href="https://github.com/langflow-ai/langflow" target="_blank" rel="noopener">langflow-ai/langflow</a>
+          <span class="tag tag-new">📋 基线</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 153k</span>
+        </div>
+      </div>
+      <p class="desc">Langflow is a powerful tool for building and deploying AI-powered agents and workflows.</p>
+      <div class="intro"><p><strong>是什么</strong>：Langflow 是一个<strong>低代码 AI Agent 与工作流构建平台</strong>，通过可视化拖拽的方式构建和部署 AI 驱动的 Agent 与工作流，让非技术用户也能组装复杂 AI 应用。</p>
+<p><strong>哪里好</strong>：把 LangChain 生态的复杂能力封装成可视化组件，大幅降低 AI 应用搭建门槛。支持多 Agent 编排，所见即所得的调试体验，可一键部署。对想快速实验 Agent 方案但不想写大量代码的团队非常友好。</p>
+<p><strong>应用场景</strong>：快速原型验证 AI Agent 想法；非技术团队自助搭建 AI 工作流；教学演示 LLM/Agent 编排概念；企业内部 AI 应用低代码平台。</p></div>
+      <div class="card-meta">
+        <span>Python</span>
+        <span>MIT</span>
+        <span>更新 2026-08-11</span>
+        
+        
+        <a class="gh-link" href="https://github.com/langflow-ai/langflow" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">agents</span><span class="topic">chatgpt</span><span class="topic">generative-ai</span><span class="topic">large-language-models</span><span class="topic">multiagent</span><span class="topic">react-flow</span></div>
+    </article></section>
+
+  <section><h2>⭐ 重点关注 <span class="count">2</span></h2>
+    <article class="card card-changed card-watched">
+      <div class="card-head">
+        <div class="card-title">
+          
+          <a href="https://github.com/ollama/ollama" target="_blank" rel="noopener">ollama/ollama</a>
+          <span class="tag tag-hot">🔥 基线收录</span><span class="tag tag-rank">📍榜内 #undefined</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 178.2k</span>
+        </div>
+      </div>
+      <p class="desc">Get up and running with Kimi-K2.6, GLM-5.2, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.</p>
+      <div class="intro"><p><strong>是什么</strong>：Ollama 是<strong>本地运行大模型的标杆工具</strong>，让你在自己的机器上一行命令拉起 Llama 3、GLM-5.2、DeepSeek、Qwen、Gemma、gpt-oss、Kimi-K2.6 等开源模型。它把模型下载、量化、推理引擎、API 服务打包成极简体验。</p>
+<p><strong>哪里好</strong>：体验极简——装完即用，无需懂量化/部署细节。跨平台（macOS/Windows/Linux），提供兼容 OpenAI 的 REST API，可直接对接 LangChain、各类 Chat UI。模型生态丰富，社区持续贡献 Modelfile，最新描述已点名支持 GLM-5.2、Kimi-K2.6、MiniMax 等国产新模型。</p>
+<p><strong>应用场景</strong>：隐私敏感场景（医疗/金融/法务）的本地推理；开发调试时不想付费调云 API；离线环境下的 AI 助手；作为 RAG/Agent 应用的本地推理后端。</p></div>
+      <div class="card-meta">
+        <span>Go</span>
+        <span>MIT</span>
+        <span>更新 2026-08-11</span>
+        
+        <span>⭐ 关注于 2026-08-11</span>
+        <a class="gh-link" href="https://github.com/ollama/ollama" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">deepseek</span><span class="topic">gemma</span><span class="topic">glm</span><span class="topic">llama</span><span class="topic">llm</span><span class="topic">ollama</span><span class="topic">qwen</span></div>
+    </article>
+    <article class="card card-changed card-watched">
+      <div class="card-head">
+        <div class="card-title">
+          
+          <a href="https://github.com/browser-use/browser-use" target="_blank" rel="noopener">browser-use/browser-use</a>
+          <span class="tag tag-hot">🔥 基线收录</span><span class="tag">榜外</span>
+        </div>
+        <div class="card-stats">
+          <span class="stat-delta">—</span>
+          <span class="stat-stars">★ 108.6k</span>
+        </div>
+      </div>
+      <p class="desc">Make AI agents that can control browsers.</p>
+      <div class="intro"><p><strong>是什么</strong>:browser-use 是一个让 AI Agent 能够<strong>操控真实浏览器</strong>的开源框架,赋予 LLM 点击、输入、导航、提取网页信息的能力,是"网页自动化 Agent"赛道的代表项目。</p><p><strong>哪里好</strong>:把"看网页、操作网页"这一人类自然能力交给 AI,打通了 LLM 与真实 Web 世界的交互。API 简洁,支持多种主流模型,可处理复杂多步网页任务(填表、比价、订票、数据采集)。社区活跃。</p><p><strong>应用场景</strong>:自动化重复性网页操作;构建能自主上网完成任务的 AI 助手;自动化测试与网页信息抽取;替代传统 RPA 的智能化方案。</p></div>
+      <div class="card-meta">
+        <span>Python</span>
+        <span>MIT</span>
+        <span>更新 2026-08-10</span>
+        
+        <span>⭐ 关注于 2026-08-11</span>
+        <a class="gh-link" href="https://github.com/browser-use/browser-use" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="topics"><span class="topic">agent</span><span class="topic">browser</span><span class="topic">selenium</span><span class="topic">playwright</span><span class="topic">llm</span></div>
+    </article></section>
+  
+
+  <section class="metadata">
+    <h2>📈 追踪元数据</h2>
+    <ul>
+      <li>候选池规模:<strong>1760</strong> 个 AI 相关仓库(原始搜索 2728)</li>
+      <li>关键词覆盖:<strong>44</strong> 组</li>
+      <li>失败关键词:<strong>0</strong> 组</li>
+      <li>关注池:<strong>2</strong> 项</li>
+      <li>API 额度:core 剩余 57 / search 剩余 6</li>
+      <li>生成时间:2026-08-10T17:52:02.247Z</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <p>由 collect.mjs 采集数据 · render-report.mjs 渲染 · 每天 12:00 自动更新</p>
+    <p><a href="https://github.com/mmlong818/ai-trending" target="_blank">源代码</a></p>
+  </footer>
+</div>
+</body>
+</html>
