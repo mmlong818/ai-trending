@@ -59,7 +59,7 @@ function repoCard(item, opts = {}) {
   const intro = item.zh_intro || "";
   const showIntro = intro && intro.trim().length > 20;
   const statusTags = [];
-  if (item.is_new || item.is_baseline) statusTags.push(`<span class="tag tag-new">${item.is_baseline ? "📋 基线" : "🆕 新入榜"}</span>`);
+  if (item.is_new || item.is_baseline) statusTags.push(`<span class="tag tag-new">${item.is_baseline ? "📋 基线" : "🆕 新进榜"}</span>`);
   if (item.is_changed && !item.is_new && !item.is_baseline) statusTags.push(`<span class="tag tag-hot">🔥 ${esc(item.change_reason || "有变化")}</span>`);
   if (opts.inRanking) statusTags.push(`<span class="tag tag-rank">📍榜内 #${opts.rank}</span>`);
   if (opts.outRanking) statusTags.push(`<span class="tag">榜外</span>`);
@@ -109,7 +109,7 @@ function renderHtml(r) {
   const date = r.date;
   const isFirst = r.is_first_run;
   const banner = isFirst
-    ? `<div class="banner">📋 <strong>基线收录日(首次运行)</strong>:今天尚无昨日数据可比,无涨星数字。按总星数展示当前生成式AI领域星数最高的项目作为基线。真正的日涨星排名从明天开始。</div>`
+    ? `<div class="banner">📋 <strong>基线收录日(首次运行)</strong>:展示近 60 天新建、目前星数最高的 AI 项目。明天起会标注哪些是「新进榜」(昨日不在榜、今日上榜),这才是真正值得关注的崛起信号。</div>`
     : "";
 
   // 分类
@@ -123,8 +123,8 @@ function renderHtml(r) {
       return `<tr>
         <td class="col-rank">${t.rank}</td>
         <td><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.full_name)}</a></td>
-        <td class="num">${fmtDelta(t.delta)}</td>
         <td class="num">★ ${fmtStars(t.today_stars)}</td>
+        <td class="num">${fmtDelta(t.delta)}</td>
         <td>${esc(t.language || "")}</td>
         <td>${st}</td>
       </tr>`;
@@ -171,7 +171,7 @@ function renderHtml(r) {
 <body>
 <div class="container">
   <header class="header">
-    <h1>GitHub 生成式 AI 每日涨星追踪</h1>
+    <h1>🔥 AI 新项目崛起榜</h1>
     <p class="date">${date} · <a href="index.html">← 返回首页</a></p>
     <p class="meta-line">数据口径:GitHub Search API 快照增量 · 范围:生成式AI · 源:${esc(r.data_source)} · 候选池 ${r.candidate_pool_size}</p>
   </header>
@@ -181,12 +181,12 @@ function renderHtml(r) {
   <section>
     <h2>📊 今日 Top 10 速览</h2>
     <div class="table-wrap"><table>
-      <thead><tr><th>#</th><th>项目</th><th>今日涨星</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
+      <thead><tr><th>#</th><th>项目</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
       <tbody>${tableRows}</tbody>
     </table></div>
   </section>
 
-  ${changed.length > 0 ? `<section><h2>${isFirst ? "🆕 基线项目详解" : "🆕 新入榜 / 重大变化"}</h2>${changed.map((t) => repoCard(t, { rank: t.rank, changed: true })).join("")}</section>` : ""}
+  ${changed.length > 0 ? `<section><h2>${isFirst ? "🆕 基线项目详解(近60天新建·按星排序)" : "🆕 新进榜 / 重大变化"}</h2>${changed.map((t) => repoCard(t, { rank: t.rank, changed: true })).join("")}</section>` : ""}
 
   ${watchSection}
   ${stableSection}

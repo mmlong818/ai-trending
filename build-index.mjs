@@ -37,14 +37,14 @@ const html = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GitHub AI 每日追踪</title>
+<title>AI 新项目崛起榜</title>
 <style>${getCss()}</style>
 </head>
 <body>
 <div class="container">
   <header class="header">
-    <h1>📊 GitHub 生成式 AI 每日追踪</h1>
-    <p class="sub">每天 12:00 自动追踪涨星前 10 的生成式 AI 项目 + 重点关注</p>
+    <h1>🔥 AI 新项目崛起榜</h1>
+    <p class="sub">每天 12:00 发现近 60 天新建、星数最高的 AI 项目 + 重点关注</p>
   </header>
 
   <div class="actions">

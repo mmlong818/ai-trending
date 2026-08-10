@@ -11,7 +11,7 @@
 //   8. 变化检测
 //   9. 产出 ranking-YYYY-MM-DD.json
 
-import { writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { writeFileSync, readFileSync, mkdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -91,25 +91,37 @@ async function main() {
   writeSnapshot(dateStr, todayMap);
   log(`✓ 已写快照 ${dateStr}.json`);
 
-  // 5. 算 diff
+  // 5. 算 diff(关注项目变化检测仍需要;榜单排序用 stars)
   const { date: prevDate, map: prevMap } = latestSnapshotBefore(dateStr);
   const isFirstRun = prevDate === null;
   log(`  最近历史快照: ${prevDate || "无(首次运行·基线收录)"}`);
   const diffs = computeDiffs(slimmed, prevMap);
 
-  // 排序:首日无 delta → 按总星降序(仅作基线展示);非首日 → 按日涨星降序
-  let ranked;
-  if (isFirstRun) {
-    ranked = diffs
-      .filter((d) => d.today_stars > 0)
-      .sort((a, b) => b.today_stars - a.today_stars)
-      .slice(0, TOP_N);
-  } else {
-    ranked = diffs
-      .filter((d) => (d.delta ?? -1) > 0 || d.is_new)
-      .sort((a, b) => (b.delta ?? 0) - (a.delta ?? 0))
-      .slice(0, TOP_N);
-  }
+  // 新项目崛起榜:始终按总星降序取 Top10(新项目总星=累计崛起热度)。
+  // 不按 delta 排序——新项目里高星的才是"最猛崛起",delta 只用于变化检测(排名跃升/新进入)。
+  // 标记"新进入":昨天不在 Top10 集合里的项目(用昨日快照比对)。
+  const prevTopSet = (() => {
+    // 读昨日 ranking 的 top10 full_name 集合(若存在)
+    try {
+      const prevRanking = JSON.parse(
+        readFileSync(join(RANKING_DIR, `ranking-${prevDate}.json`), "utf8"),
+      );
+      return new Set((prevRanking.top10 || []).map((t) => t.full_name));
+    } catch {
+      return new Set();
+    }
+  })();
+
+  const ranked = diffs
+    .filter((d) => d.today_stars > 0)
+    .sort((a, b) => b.today_stars - a.today_stars)
+    .slice(0, TOP_N)
+    .map((d) => ({
+      ...d,
+      // is_new 语义重定义:今天进榜但昨天不在榜 = 新进入(真信号)
+      is_new: !prevTopSet.has(d.full_name),
+      is_baseline: isFirstRun,
+    }));
 
   // 6 & 7 & 8. 对 topN 组装详情 + 抓 README + 变化检测
   const slimMap = new Map(slimmed.map((r) => [r.full_name, r]));
