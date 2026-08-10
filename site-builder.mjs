@@ -11,7 +11,8 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 const DATA_DIR = join(ROOT, "data");
-const DOCS = join(ROOT, "docs");
+// 输出到 reports/(GitHub Actions workflow 已配部署 reports/ 目录,沿用避免改 workflow)
+const DOCS = join(ROOT, "reports");
 
 // ---------- 收集所有 ranking ----------
 function loadAllRankings() {

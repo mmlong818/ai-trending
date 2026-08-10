@@ -1,9 +1,9 @@
 # 运行时数据(体积大、可重算,不入库)
 data/
 
-# 站点产物:docs/ 入库(用于 GitHub Pages 部署)
-# reports/ 是旧的渲染产物,已被 docs/ 取代,不再入库
-reports/
+# 站点产物:reports/ 入库(用于 GitHub Pages 部署)
+# docs/ 是本地预览/旧产物,不入库
+docs/
 
 # 本地环境变量(含可选 GitHub Token)
 .env

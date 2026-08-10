@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+  <title>AI 新项目崛起榜</title>
+  <link>https://mmlong818.github.io/ai-trending/</link>
+  <description>每天发现近 60 天新建、星数最高的 AI 项目</description>
+  <language>zh-CN</language>
+    <item>
+      <title>2026-08-10 AI 新项目崛起榜 · DietrichGebert/ponytail 领跑(★100.1k) · 关注 2 项</title>
+      <link>https://mmlong818.github.io/ai-trending/day/2026-08-10.html</link>
+      <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/day/2026-08-10.html</guid>
+      <pubDate>Mon, 10 Aug 2026 04:00:00 GMT</pubDate>
+      <description>DietrichGebert/ponytail (★100.1k); xai-org/grok-build (★24.6k); langchain-ai/openwiki (★14.8k)</description>
+    </item>
+</channel></rss>
