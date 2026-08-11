@@ -35,6 +35,24 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<"
 const fmtStars = (n) => { if (n == null) return "—"; if (n >= 1000) return (n/1000).toFixed(1).replace(/\.0$/,"")+"k"; return String(n); };
 const fmtDelta = (d) => { if (d == null) return "—"; if (d === 0) return "持平"; return (d>0?"+":"")+d; };
 
+// 速览表的约100字简介:优先从 zh_intro 提取"是什么"段(去标签精简),
+// 其次用 description,控制在 90-120 字。
+function briefIntro(t) {
+  let text = "";
+  if (t.zh_intro) {
+    // 去 HTML 标签
+    text = t.zh_intro.replace(/<[^>]+>/g, "").trim();
+    // 提取"是什么"到下一个分段(通常到"哪里好"前)
+    const m = text.match(/是什么[：:]\s*([\s\S]*?)(哪里好|应用场景|$)/);
+    if (m) text = m[1].trim();
+  }
+  if (!text && t.description) text = t.description;
+  if (!text) return '<span class="muted">—</span>';
+  // 精简到 100 字左右
+  if (text.length > 110) text = text.slice(0, 107).trim() + "…";
+  return esc(text);
+}
+
 // 生成日期的"头条描述":榜单第一名 + 新进榜数
 function headline(ranking) {
   const top = ranking.top10?.[0];
@@ -153,13 +171,14 @@ function renderDay(ranking) {
     const st = t.is_baseline?"📋":t.is_new?"🆕":t.is_changed?"🔥":"";
     return `<tr><td class="col-rank">${t.rank}</td>
       <td><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.full_name)}</a></td>
+      <td class="brief">${briefIntro(t)}</td>
       <td class="num">★ ${fmtStars(t.today_stars)}</td>
       <td class="num">${fmtDelta(t.delta)}</td>
       <td>${esc(t.language||"")}</td><td>${st}</td></tr>`;
   }).join("");
 
   const table = tableRows ? `<section><h2 class="section-title">📊 Top 10 速览</h2>
-    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
     <tbody>${tableRows}</tbody></table></div></section>` : "";
 
   const detail = changed.length ? `<section><h2 class="section-title">${isFirst?"🆕 基线项目详解":"🆕 新进榜 / 重大变化"}</h2>${changed.map(t=>repoCard(t,{rank:t.rank,changed:true})).join("")}</section>` : "";
@@ -386,6 +405,7 @@ th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;le
 td.num{text-align:right;font-variant-numeric:tabular-nums;}
 .col-rank{color:var(--ink-3);width:32px;}
 td a{color:var(--accent);}
+.brief{color:var(--ink-2);font-size:13px;line-height:1.5;max-width:340px;}
 .meta-section ul{list-style:none;padding:0;font-size:14px;color:var(--ink-2);}
 .meta-section li{padding:4px 0;}
 .meta-section strong{color:var(--ink);}
@@ -405,7 +425,7 @@ td a{color:var(--accent);}
 .cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
 .cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
 .cal-count{font-size:11px;color:var(--accent);}
-@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}}
 `;
 }
 

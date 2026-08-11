@@ -79,6 +79,7 @@ th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;le
 td.num{text-align:right;font-variant-numeric:tabular-nums;}
 .col-rank{color:var(--ink-3);width:32px;}
 td a{color:var(--accent);}
+.brief{color:var(--ink-2);font-size:13px;line-height:1.5;max-width:340px;}
 .meta-section ul{list-style:none;padding:0;font-size:14px;color:var(--ink-2);}
 .meta-section li{padding:4px 0;}
 .meta-section strong{color:var(--ink);}
@@ -98,7 +99,7 @@ td a{color:var(--accent);}
 .cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
 .cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
 .cal-count{font-size:11px;color:var(--accent);}
-@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}}
 </style>
 </head>
 <body>
@@ -115,45 +116,55 @@ td a{color:var(--accent);}
   <p class="breadcrumbs"><a href="index.html">首页</a> / <a href="archive.html">存档</a> / 2026-08-10</p>
   <h2 class="day-title">2026-08-10 AI 新项目崛起榜</h2>
   <div class="banner">📋 <strong>基线收录日</strong>:首次收录近 60 天新建的 AI 项目,按总星排序。明天起会标注「🆕 新进榜」。</div><section><h2 class="section-title">📊 Top 10 速览</h2>
-    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
     <tbody><tr><td class="col-rank">1</td>
       <td><a href="https://github.com/DietrichGebert/ponytail" target="_blank" rel="noopener">DietrichGebert/ponytail</a></td>
+      <td class="brief">Ponytail 是一个让 AI 编码代理&quot;像最懒的资深开发者那样思考&quot;的增强系统。它的核心理念是&quot;最好的代码就是不用写的代码&quot;——让 Agent 少写代码、少做无用功。</td>
       <td class="num">★ 100.1k</td>
       <td class="num">—</td>
       <td>JavaScript</td><td>📋</td></tr><tr><td class="col-rank">2</td>
       <td><a href="https://github.com/xai-org/grok-build" target="_blank" rel="noopener">xai-org/grok-build</a></td>
+      <td class="brief">Grok Build 是 xAI(SpaceXAI)官方推出的终端 AI 编码代理,以全屏 TUI 形式运行,能理解代码库、编辑文件、执行命令、搜索网页、管理长任务。</td>
       <td class="num">★ 24.6k</td>
       <td class="num">—</td>
       <td>Rust</td><td>📋</td></tr><tr><td class="col-rank">3</td>
       <td><a href="https://github.com/langchain-ai/openwiki" target="_blank" rel="noopener">langchain-ai/openwiki</a></td>
+      <td class="brief">OpenWiki 是 LangChain 官方推出的&quot;自维护 wiki&quot;——一个 CLI 工具,由 Agent 自动为你的代码库编写和维护文档,人类可浏览探索。</td>
       <td class="num">★ 14.8k</td>
       <td class="num">—</td>
       <td>TypeScript</td><td>📋</td></tr><tr><td class="col-rank">4</td>
       <td><a href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a></td>
+      <td class="brief">QM 是一个面向工作场景的多玩家 Agent 框架,在 Slack 和网页端运行。与大多数单次执行的 Agent 不同,它强调多人协作、长期运行的工作 Agent。</td>
       <td class="num">★ 12.9k</td>
       <td class="num">—</td>
       <td>TypeScript</td><td>📋</td></tr><tr><td class="col-rank">5</td>
       <td><a href="https://github.com/lidge-jun/opencodex" target="_blank" rel="noopener">lidge-jun/opencodex</a></td>
+      <td class="brief">OpenCodex 是一个通用 Provider 代理,让 OpenAI Codex、Claude Code、Claude Desktop、Grok Build 等工具能接入任意 LLM(Claude/Gemini…</td>
       <td class="num">★ 8.9k</td>
       <td class="num">—</td>
       <td>TypeScript</td><td>📋</td></tr><tr><td class="col-rank">6</td>
       <td><a href="https://github.com/unicity-aos/aos-ce" target="_blank" rel="noopener">unicity-aos/aos-ce</a></td>
+      <td class="brief">AOS Community Edition 是一个开源的 Agent 操作系统,为 Agent 提供可检视、可组合的运行环境,包含 CLI、HTTP API、发行版和官方组件。</td>
       <td class="num">★ 8.6k</td>
       <td class="num">—</td>
       <td>Rust</td><td>📋</td></tr><tr><td class="col-rank">7</td>
       <td><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></td>
+      <td class="brief">Comp AI CRM 是一个为 AI Agent 设计的开源 CRM,采用&quot;Agentic-first&quot;理念,与传统&quot;数据库+表单&quot;的 CRM 或&quot;在老 CRM 上贴 AI&quot;的方案划清界限。</td>
       <td class="num">★ 8.1k</td>
       <td class="num">—</td>
       <td>TypeScript</td><td>📋</td></tr><tr><td class="col-rank">8</td>
       <td><a href="https://github.com/drumih/turbo-fieldfare" target="_blank" rel="noopener">drumih/turbo-fieldfare</a></td>
+      <td class="brief">TurboFieldfare 是一个Swift + Metal 自研推理运行时,让 Gemma 4 26B-A4B 模型能在任意 Apple Silicon Mac 上运行,仅需约 2GB 内存,连 8GB 内存的…</td>
       <td class="num">★ 5.6k</td>
       <td class="num">—</td>
       <td>Swift</td><td>📋</td></tr><tr><td class="col-rank">9</td>
       <td><a href="https://github.com/elder-plinius/T3MP3ST" target="_blank" rel="noopener">elder-plinius/T3MP3ST</a></td>
+      <td class="brief">T3MP3ST 是一个自主红队测试平台,采用多 Agent 架构做进攻性安全元测试(自动化安全攻防演练)。</td>
       <td class="num">★ 5.5k</td>
       <td class="num">—</td>
       <td>TypeScript</td><td>📋</td></tr><tr><td class="col-rank">10</td>
       <td><a href="https://github.com/MDX-Tom/gpt-5.6-instruct" target="_blank" rel="noopener">MDX-Tom/gpt-5.6-instruct</a></td>
+      <td class="brief">一个面向 gpt-5.6 系列的越狱/破甲提示词与测试工具包,将安全研究、渗透测试、逆向、软件破解及 NSFW 内容统一纳入本地沙箱任务,抑制模型拒绝与回退话术。</td>
       <td class="num">★ 5.2k</td>
       <td class="num">—</td>
       <td>Python</td><td>📋</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 基线项目详解</h2><article class="card card-changed">
