@@ -99,7 +99,19 @@ td a{color:var(--accent);}
 .cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
 .cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
 .cal-count{font-size:11px;color:var(--accent);}
-@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}}
+.dual-section{display:flex;gap:28px;margin:8px 0 28px;}
+.dual-col{flex:1;min-width:0;}
+.dual-desc{color:var(--ink-3);font-size:13px;margin:0 0 12px;}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;color:var(--ink);background:var(--surface);}
+.mini-card:hover{border-color:var(--accent);background:var(--accent-soft);text-decoration:none;}
+.mini-rank{color:var(--ink-3);font-size:15px;font-weight:600;min-width:18px;text-align:center;font-variant-numeric:tabular-nums;}
+.mini-name{flex:1;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mini-delta{color:var(--green);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.mini-stars{color:#c9a227;font-size:13px;font-variant-numeric:tabular-nums;}
+.mini-new{border-left:3px solid var(--accent);}
+.mini-brief{margin:-2px 0 8px 12px;color:var(--ink-3);font-size:12px;line-height:1.45;padding-left:28px;}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}.dual-section{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -109,7 +121,7 @@ td a{color:var(--accent);}
       <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
       <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
     </div>
-    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item active" href="archive.html">存档</a><a class="nav-item " href="watchlist.html">关注</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
+    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item " href="trending.html">涨星榜</a><a class="nav-item active" href="archive.html">存档</a><a class="nav-item " href="watchlist.html">关注</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
   </div>
 </header>
 <main class="wrap">

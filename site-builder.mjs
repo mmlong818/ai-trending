@@ -40,16 +40,27 @@ const fmtDelta = (d) => { if (d == null) return "—"; if (d === 0) return "持�
 function briefIntro(t) {
   let text = "";
   if (t.zh_intro) {
-    // 去 HTML 标签
     text = t.zh_intro.replace(/<[^>]+>/g, "").trim();
-    // 提取"是什么"到下一个分段(通常到"哪里好"前)
     const m = text.match(/是什么[：:]\s*([\s\S]*?)(哪里好|应用场景|$)/);
     if (m) text = m[1].trim();
   }
   if (!text && t.description) text = t.description;
   if (!text) return '<span class="muted">—</span>';
-  // 精简到 100 字左右
   if (text.length > 110) text = text.slice(0, 107).trim() + "…";
+  return esc(text);
+}
+
+// 纯文本版简介(用于首页 mini 卡片,返回已转义文本)
+function briefIntroPlain(t) {
+  let text = "";
+  if (t.zh_intro) {
+    text = t.zh_intro.replace(/<[^>]+>/g, "").trim();
+    const m = text.match(/是什么[：:]\s*([\s\S]*?)(哪里好|应用场景|$)/);
+    if (m) text = m[1].trim();
+  }
+  if (!text && t.description) text = t.description;
+  if (!text) return "";
+  if (text.length > 80) text = text.slice(0, 77).trim() + "…";
   return esc(text);
 }
 
@@ -74,7 +85,7 @@ function masthead(activeNav = "") {
       <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
       <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
     </div>
-    <nav class="nav">${navItem("home","首页","index.html")}${navItem("archive","存档","archive.html")}${navItem("watch","关注","watchlist.html")}${navItem("src","源码","https://github.com/mmlong818/ai-trending")}</nav>
+    <nav class="nav">${navItem("home","首页","index.html")}${navItem("trending","涨星榜","trending.html")}${navItem("archive","存档","archive.html")}${navItem("watch","关注","watchlist.html")}${navItem("src","源码","https://github.com/mmlong818/ai-trending")}</nav>
   </div>
 </header>`;
 }
@@ -133,6 +144,38 @@ function renderHome(rankings) {
       <a class="hero-cta" href="report-${latest.date}.html">查看完整榜单 →</a>
     </section>` : `<section class="hero"><p class="muted">暂无报告,等待首次运行。</p></section>`;
 
+  // 今日涨星榜(GitHub Trending 过滤 AI):首页展示前5,完整版在 trending.html
+  const trending = latest?.data?.trending_top10 || [];
+  const trendingHome = trending.length === 0 ? "" : `
+    <section class="dual-section">
+      <div class="dual-col">
+        <h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending</span></h2>
+        <p class="dual-desc">今天真实在涨的 AI 项目,按今日新增星排序</p>
+        <div class="mini-list">
+          ${trending.slice(0,5).map((t,i)=>`<a class="mini-card${t.is_new?" mini-new":""}" href="trending.html">
+            <span class="mini-rank">${i+1}</span>
+            <span class="mini-name">${esc(t.full_name)}</span>
+            <span class="mini-delta">+${t.today_stars}</span>
+          </a>
+          <p class="mini-brief">${briefIntroPlain(t)}</p>`).join("")}
+        </div>
+        <p class="archive-link"><a href="trending.html">查看完整涨星榜 →</a></p>
+      </div>
+      <div class="dual-col">
+        <h2 class="section-title">🚀 新项目崛起榜 <span class="count">近60天新建</span></h2>
+        <p class="dual-desc">近 60 天新建、总星最高的 AI 项目</p>
+        <div class="mini-list">
+          ${(latest?.data?.top10||[]).slice(0,5).map((t,i)=>`<a class="mini-card${t.is_new?" mini-new":""}" href="report-${latest.date}.html">
+            <span class="mini-rank">${i+1}</span>
+            <span class="mini-name">${esc(t.full_name)}</span>
+            <span class="mini-stars">★ ${fmtStars(t.today_stars)}</span>
+          </a>
+          <p class="mini-brief">${briefIntroPlain(t)}</p>`).join("")}
+        </div>
+        <p class="archive-link"><a href="report-${latest.date}.html">查看完整崛起榜 →</a></p>
+      </div>
+    </section>`;
+
   // 时间线:最近 14 份
   const recent = rankings.slice(1, 14);
   const timeline = recent.length === 0 ? "" : `
@@ -156,8 +199,35 @@ function renderHome(rankings) {
   return page("首页", `${masthead("home")}
 <main class="wrap">
   ${hero}
+  ${trendingHome}
   ${timeline}
   <p class="archive-link"><a href="archive.html">📚 查看完整历史记录 →</a></p>
+</main>
+${footer()}`);
+}
+
+// 涨星榜页(trending.html):完整 GitHub Trending AI 榜
+function renderTrendingPage(rankings) {
+  const latest = rankings[0];
+  const trending = latest?.data?.trending_top10 || [];
+  const cards = trending.length === 0
+    ? "<p class='muted'>今日未抓取到 Trending 数据。</p>"
+    : trending.map((t,i)=>repoCard({
+        ...t,
+        today_stars: t.total_stars, // 卡片右侧显示总星
+        delta: t.today_stars,       // 涨星位置显示今日新增
+        is_new: t.is_new,
+        is_baseline: false,
+        zh_intro: t.zh_intro,
+      }, {rank:i+1, changed:t.is_new})).join("");
+  const banner = `<div class="banner">🔥 <strong>今日涨星榜</strong>:来自 GitHub Trending 今日榜,过滤出 AI 相关项目,按今日新增星数排序。这才是"今天真实在涨"的项目。</div>`;
+  return page("今日涨星榜", `${masthead()}
+<main class="wrap">
+  <p class="breadcrumbs"><a href="index.html">首页</a> / 今日涨星榜</p>
+  <h2 class="page-title">🔥 今日涨星榜 <span class="muted">${latest?.date||""}</span></h2>
+  ${banner}
+  ${cards}
+  <p class="archive-link"><a href="index.html">← 返回首页</a></p>
 </main>
 ${footer()}`);
 }
@@ -425,7 +495,19 @@ td a{color:var(--accent);}
 .cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
 .cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
 .cal-count{font-size:11px;color:var(--accent);}
-@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}}
+.dual-section{display:flex;gap:28px;margin:8px 0 28px;}
+.dual-col{flex:1;min-width:0;}
+.dual-desc{color:var(--ink-3);font-size:13px;margin:0 0 12px;}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;color:var(--ink);background:var(--surface);}
+.mini-card:hover{border-color:var(--accent);background:var(--accent-soft);text-decoration:none;}
+.mini-rank{color:var(--ink-3);font-size:15px;font-weight:600;min-width:18px;text-align:center;font-variant-numeric:tabular-nums;}
+.mini-name{flex:1;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mini-delta{color:var(--green);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.mini-stars{color:#c9a227;font-size:13px;font-variant-numeric:tabular-nums;}
+.mini-new{border-left:3px solid var(--accent);}
+.mini-brief{margin:-2px 0 8px 12px;color:var(--ink-3);font-size:12px;line-height:1.45;padding-left:28px;}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}.dual-section{flex-direction:column;}}
 `;
 }
 
@@ -443,6 +525,8 @@ function main() {
   writeFileSync(join(DOCS, "index.html"), renderHome(rankings));
   // 存档
   writeFileSync(join(DOCS, "archive.html"), renderArchive(rankings));
+  // 涨星榜页
+  writeFileSync(join(DOCS, "trending.html"), renderTrendingPage(rankings));
   // 关注
   writeFileSync(join(DOCS, "watchlist.html"), renderWatchlistPage(rankings));
   // 每份报告的日页(输出到根目录 report-日期.html,因 Pages workflow 用 *.html 复制,不支持子目录)

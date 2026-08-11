@@ -15,9 +15,9 @@ import { writeFileSync, readFileSync, mkdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { searchRepos, getReadmeExcerpt, HAS_TOKEN, rateLimitStatus } from "./lib/github.mjs";
+import { searchRepos, getReadmeExcerpt, getRepo, HAS_TOKEN, rateLimitStatus } from "./lib/github.mjs";
 import { KEYWORD_GROUPS, buildQuery } from "./lib/keywords.mjs";
-import { filterAndDedup, slimRepo } from "./lib/filter.mjs";
+import { filterAndDedup, slimRepo, isAITool } from "./lib/filter.mjs";
 import {
   todayStr,
   writeSnapshot,
@@ -107,6 +107,18 @@ async function main() {
         readFileSync(join(RANKING_DIR, `ranking-${prevDate}.json`), "utf8"),
       );
       return new Set((prevRanking.top10 || []).map((t) => t.full_name));
+    } catch {
+      return new Set();
+    }
+  })();
+
+  // 昨日涨星榜集合(用于判断今日 trending 新进榜)
+  const prevTrendingSet = (() => {
+    try {
+      const prevRanking = JSON.parse(
+        readFileSync(join(RANKING_DIR, `ranking-${prevDate}.json`), "utf8"),
+      );
+      return new Set((prevRanking.trending_top10 || []).map((t) => t.full_name));
     } catch {
       return new Set();
     }
@@ -208,6 +220,49 @@ async function main() {
   const wlInfo = readWatchlist();
   log(`✓ 关注列表: ${wlInfo.items.length} 项, 成功拉取 ${watchlistSection.filter((w) => !w.error).length}`);
 
+  // 10. 抓取 GitHub Trending 今日榜 → 过滤 AI → 补总星/README → 涨星榜
+  log(`▶ 抓取 GitHub Trending 今日榜...`);
+  let trendingTop10 = [];
+  try {
+    const { getTrending } = await import("./lib/trending.mjs");
+    const trending = getTrending();
+    log(`  抓到 ${trending.length} 个 trending 项目`);
+
+    // AI 相关性过滤(复用 filter)
+    const aiTrending = trending
+      .filter((t) => isAITool({
+        full_name: t.full_name,
+        name: t.full_name.split("/")[1],
+        description: t.description,
+        topics: [],
+      }))
+      .sort((a, b) => b.today_stars - a.today_stars)
+      .slice(0, 10);
+    log(`  过滤出 ${aiTrending.length} 个 AI 项目`);
+
+    // 用 API 补总星和 created_at(逐个,/repos 路径)
+    for (const t of aiTrending) {
+      try {
+        const repo = await getRepo(t.full_name);
+        t.total_stars = repo?.stargazers_count ?? t.total_stars;
+        t.created_at = repo?.created_at ?? null;
+        t.pushed_at = repo?.pushed_at ?? null;
+        t.license = repo?.license?.spdx_id || null;
+        t.topics = repo?.topics || [];
+        t.url = repo?.html_url || `https://github.com/${t.full_name}`;
+        // 新进榜判断:昨天 trending 榜里有没有它
+        t.is_new = !prevTrendingSet.has(t.full_name);
+      } catch (e) {
+        t.total_stars = t.total_stars || 0;
+        t.is_new = true;
+      }
+    }
+    trendingTop10 = aiTrending;
+    log(`✓ 涨星榜完成: ${trendingTop10.length} 个项目`);
+  } catch (e) {
+    log(`⚠️ Trending 抓取失败: ${e?.message || e}`);
+  }
+
   // 产出 ranking 文件
   const rlStatus = rateLimitStatus();
   const ranking = {
@@ -221,6 +276,7 @@ async function main() {
     raw_search_count: rawItems.length,
     failed_keywords: failedKeywords,
     top10: topDetail,
+    trending_top10: trendingTop10,
     watchlist_section: watchlistSection,
     watchlist_count: wlInfo.items.length,
     rate_limit_at_end: rlStatus,

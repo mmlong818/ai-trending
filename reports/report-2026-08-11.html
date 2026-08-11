@@ -99,7 +99,19 @@ td a{color:var(--accent);}
 .cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
 .cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
 .cal-count{font-size:11px;color:var(--accent);}
-@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}}
+.dual-section{display:flex;gap:28px;margin:8px 0 28px;}
+.dual-col{flex:1;min-width:0;}
+.dual-desc{color:var(--ink-3);font-size:13px;margin:0 0 12px;}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;color:var(--ink);background:var(--surface);}
+.mini-card:hover{border-color:var(--accent);background:var(--accent-soft);text-decoration:none;}
+.mini-rank{color:var(--ink-3);font-size:15px;font-weight:600;min-width:18px;text-align:center;font-variant-numeric:tabular-nums;}
+.mini-name{flex:1;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mini-delta{color:var(--green);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.mini-stars{color:#c9a227;font-size:13px;font-variant-numeric:tabular-nums;}
+.mini-new{border-left:3px solid var(--accent);}
+.mini-brief{margin:-2px 0 8px 12px;color:var(--ink-3);font-size:12px;line-height:1.45;padding-left:28px;}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}.dual-section{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -109,7 +121,7 @@ td a{color:var(--accent);}
       <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
       <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
     </div>
-    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item " href="archive.html">存档</a><a class="nav-item " href="watchlist.html">关注</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
+    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item " href="trending.html">涨星榜</a><a class="nav-item " href="archive.html">存档</a><a class="nav-item " href="watchlist.html">关注</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
   </div>
 </header>
 <main class="wrap">
@@ -119,65 +131,119 @@ td a{color:var(--accent);}
     <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
     <tbody><tr><td class="col-rank">1</td>
       <td><a href="https://github.com/xai-org/grok-build" target="_blank" rel="noopener">xai-org/grok-build</a></td>
-      <td class="brief">Grok Build 是 xAI(SpaceXAI)官方推出的终端 AI 编码代理,以全屏 TUI 形式运行,能理解代码库、编辑文件、执行命令、搜索网页、管理长任务。</td>
-      <td class="num">★ 24.6k</td>
-      <td class="num">+30</td>
-      <td>Rust</td><td></td></tr><tr><td class="col-rank">2</td>
+      <td class="brief">SpaceXAI&#39;s coding agent harness and TUI. Fullscreen, mouse interactive, extensible.</td>
+      <td class="num">★ 24.7k</td>
+      <td class="num">+60</td>
+      <td>Rust</td><td>🔥</td></tr><tr><td class="col-rank">2</td>
       <td><a href="https://github.com/langchain-ai/openwiki" target="_blank" rel="noopener">langchain-ai/openwiki</a></td>
-      <td class="brief">OpenWiki 是 LangChain 官方推出的&quot;自维护 wiki&quot;——一个 CLI 工具,由 Agent 自动为你的代码库编写和维护文档,人类可浏览探索。</td>
+      <td class="brief">OpenWiki is a CLI that writes and maintains agent documentation for your codebase.</td>
       <td class="num">★ 14.9k</td>
-      <td class="num">+21</td>
+      <td class="num">+36</td>
       <td>TypeScript</td><td></td></tr><tr><td class="col-rank">3</td>
       <td><a href="https://github.com/yc-software/qm" target="_blank" rel="noopener">yc-software/qm</a></td>
-      <td class="brief">QM 是一个面向工作场景的多玩家 Agent 框架,在 Slack 和网页端运行。与大多数单次执行的 Agent 不同,它强调多人协作、长期运行的工作 Agent。</td>
+      <td class="brief">Multiplayer agent harness for work</td>
       <td class="num">★ 13k</td>
-      <td class="num">+53</td>
+      <td class="num">+73</td>
       <td>TypeScript</td><td></td></tr><tr><td class="col-rank">4</td>
       <td><a href="https://github.com/lidge-jun/opencodex" target="_blank" rel="noopener">lidge-jun/opencodex</a></td>
-      <td class="brief">OpenCodex 是一个通用 Provider 代理,让 OpenAI Codex、Claude Code、Claude Desktop、Grok Build 等工具能接入任意 LLM(Claude/Gemini…</td>
-      <td class="num">★ 9k</td>
-      <td class="num">+63</td>
-      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">5</td>
+      <td class="brief">Universal provider proxy for OpenAI Codex &amp; Claude Code — use any LLM (Claude, Gemini, Grok, DeepSeek, Olla…</td>
+      <td class="num">★ 9.1k</td>
+      <td class="num">+209</td>
+      <td>TypeScript</td><td>🔥</td></tr><tr><td class="col-rank">5</td>
       <td><a href="https://github.com/unicity-aos/aos-ce" target="_blank" rel="noopener">unicity-aos/aos-ce</a></td>
-      <td class="brief">AOS Community Edition 是一个开源的 Agent 操作系统,为 Agent 提供可检视、可组合的运行环境,包含 CLI、HTTP API、发行版和官方组件。</td>
+      <td class="brief">AOS Community Edition: the open agent operating system.</td>
       <td class="num">★ 8.6k</td>
       <td class="num">持平</td>
       <td>Rust</td><td></td></tr><tr><td class="col-rank">6</td>
       <td><a href="https://github.com/trycompai/crm" target="_blank" rel="noopener">trycompai/crm</a></td>
-      <td class="brief">Comp AI CRM 是一个为 AI Agent 设计的开源 CRM,采用&quot;Agentic-first&quot;理念,与传统&quot;数据库+表单&quot;的 CRM 或&quot;在老 CRM 上贴 AI&quot;的方案划清界限。</td>
+      <td class="brief">Comp AI CRM is an open source, CRM designed for AI agents. Agentic-first CRM.</td>
       <td class="num">★ 8.1k</td>
-      <td class="num">+44</td>
+      <td class="num">+62</td>
       <td>TypeScript</td><td></td></tr><tr><td class="col-rank">7</td>
       <td><a href="https://github.com/drumih/turbo-fieldfare" target="_blank" rel="noopener">drumih/turbo-fieldfare</a></td>
-      <td class="brief">TurboFieldfare 是一个Swift + Metal 自研推理运行时,让 Gemma 4 26B-A4B 模型能在任意 Apple Silicon Mac 上运行,仅需约 2GB 内存,连 8GB 内存的…</td>
+      <td class="brief">Gemma 4 26B-A4B inference in ~2 GB of RAM on any M-series MacBook</td>
       <td class="num">★ 5.7k</td>
-      <td class="num">+43</td>
+      <td class="num">+75</td>
       <td>Swift</td><td></td></tr><tr><td class="col-rank">8</td>
       <td><a href="https://github.com/elder-plinius/T3MP3ST" target="_blank" rel="noopener">elder-plinius/T3MP3ST</a></td>
-      <td class="brief">T3MP3ST 是一个自主红队测试平台,采用多 Agent 架构做进攻性安全元测试(自动化安全攻防演练)。</td>
+      <td class="brief">autonomous red teaming platform; multi-agent offensive-security meta-harness</td>
       <td class="num">★ 5.5k</td>
-      <td class="num">+8</td>
+      <td class="num">+9</td>
       <td>TypeScript</td><td></td></tr><tr><td class="col-rank">9</td>
       <td><a href="https://github.com/MDX-Tom/gpt-5.6-instruct" target="_blank" rel="noopener">MDX-Tom/gpt-5.6-instruct</a></td>
-      <td class="brief">一个面向 gpt-5.6 系列的越狱/破甲提示词与测试工具包,将安全研究、渗透测试、逆向、软件破解及 NSFW 内容统一纳入本地沙箱任务,抑制模型拒绝与回退话术。</td>
-      <td class="num">★ 5.2k</td>
-      <td class="num">+25</td>
-      <td>Python</td><td></td></tr><tr><td class="col-rank">10</td>
+      <td class="brief">A Codex jailbreak prompt and test pack for gpt-5.6-sol. 针对 gpt-5.6 系列的 Codex 破甲提示词与测试包。</td>
+      <td class="num">★ 5.3k</td>
+      <td class="num">+57</td>
+      <td>Python</td><td>🔥</td></tr><tr><td class="col-rank">10</td>
       <td><a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a></td>
-      <td class="brief">kimi-k3-in-c 是一个用纯 C99 实现的 Kimi K3 推理引擎,让这个 2.78 万亿参数的超大模型能在单颗 CPU + 8.24GB 内存上跑推理。无需 BLAS、无需框架、无需 GPU。</td>
-      <td class="num">★ 4.7k</td>
-      <td class="num">+92</td>
+      <td class="brief">A 2.78-trillion-parameter Kimi K3 running inference on a single CPU in 8.24 GB of RAM. Portable C99: no BLA…</td>
+      <td class="num">★ 4.8k</td>
+      <td class="num">+155</td>
       <td>C</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 新进榜 / 重大变化</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#1</span>
+      <a href="https://github.com/xai-org/grok-build" target="_blank" rel="noopener">xai-org/grok-build</a>
+      <span class="badge badge-hot">🔥 涨星加速 30→60</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+60</span><span class="stat-stars">★ 24.7k</span></div>
+  </div>
+  <p class="desc">SpaceXAI&#39;s coding agent harness and TUI. Fullscreen, mouse interactive, extensible.</p>
+  
+  <div class="card-meta">
+    <span>Rust</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-07-14</span>
+    <a class="gh-link" href="https://github.com/xai-org/grok-build" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#4</span>
+      <a href="https://github.com/lidge-jun/opencodex" target="_blank" rel="noopener">lidge-jun/opencodex</a>
+      <span class="badge badge-hot">🔥 涨星加速 63→209</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+209</span><span class="stat-stars">★ 9.1k</span></div>
+  </div>
+  <p class="desc">Universal provider proxy for OpenAI Codex &amp; Claude Code — use any LLM (Claude, Gemini, Grok, DeepSeek, Ollama…) with Codex CLI, App, SDK, and Claude Code</p>
+  
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>MIT</span>
+    <span>建于 2026-06-18</span>
+    <a class="gh-link" href="https://github.com/lidge-jun/opencodex" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-gateway</span><span class="topic">ai-tools</span><span class="topic">anthropic</span><span class="topic">chatgpt</span><span class="topic">claude</span><span class="topic">claude-code</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#9</span>
+      <a href="https://github.com/MDX-Tom/gpt-5.6-instruct" target="_blank" rel="noopener">MDX-Tom/gpt-5.6-instruct</a>
+      <span class="badge badge-hot">🔥 涨星加速 25→57</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+57</span><span class="stat-stars">★ 5.3k</span></div>
+  </div>
+  <p class="desc">A Codex jailbreak prompt and test pack for gpt-5.6-sol. 针对 gpt-5.6 系列的 Codex 破甲提示词与测试包。</p>
+  
+  <div class="card-meta">
+    <span>Python</span>
+    <span>MIT</span>
+    <span>建于 2026-07-11</span>
+    <a class="gh-link" href="https://github.com/MDX-Tom/gpt-5.6-instruct" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
   <div class="card-head">
     <div class="card-title">
       <span class="rank">#10</span>
       <a href="https://github.com/FareedKhan-dev/kimi-k3-in-c" target="_blank" rel="noopener">FareedKhan-dev/kimi-k3-in-c</a>
       <span class="badge badge-new">🆕 新进榜</span>
     </div>
-    <div class="card-stats"><span class="stat-delta">+92</span><span class="stat-stars">★ 4.7k</span></div>
+    <div class="card-stats"><span class="stat-delta">+155</span><span class="stat-stars">★ 4.8k</span></div>
   </div>
   <p class="desc">A 2.78-trillion-parameter Kimi K3 running inference on a single CPU in 8.24 GB of RAM. Portable C99: no BLAS, no framework, no GPU.</p>
-  <div class="intro"><p><strong>是什么</strong>:kimi-k3-in-c 是一个用<strong>纯 C99</strong> 实现的 Kimi K3 推理引擎,让这个 2.78 万亿参数的超大模型能在<strong>单颗 CPU + 8.24GB 内存</strong>上跑推理。无需 BLAS、无需框架、无需 GPU。</p><p><strong>哪里好</strong>:工程极致——整个引擎仅 176KB,1.56TB 的检查点,峰值内存仅 8.24GB RSS。打破了"大模型必须靠 GPU"的固有认知,证明纯 CPU 也能跑万亿参数模型。便携 C99 可在任何平台编译,零依赖。这是"极限压缩推理"赛道的标杆之作。</p><p><strong>应用场景</strong>:无 GPU 环境下的本地大模型推理(普通笔记本/服务器);边缘设备部署;研究模型推理优化极限;低门槛体验 Kimi K3 模型。</p></div>
+  
   <div class="card-meta">
     <span>C</span>
     <span>Apache-2.0</span>
@@ -195,7 +261,7 @@ td a{color:var(--accent);}
     <div class="card-stats"><span class="stat-delta">—</span><span class="stat-stars">★ 178.2k</span></div>
   </div>
   <p class="desc">Get up and running with Kimi-K2.6, GLM-5.2, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.</p>
-  <div class="intro"><p><strong>是什么</strong>:Ollama 是<strong>本地运行大模型的标杆工具</strong>,一行命令拉起 Llama/GLM/DeepSeek/Qwen/Gemma 等开源模型,把模型下载、量化、推理引擎、API 服务打包成极简体验。</p><p><strong>哪里好</strong>:装完即用,无需懂量化/部署。跨平台,提供兼容 OpenAI 的 REST API,可对接 LangChain、各类 Chat UI。模型生态丰富,持续支持最新国产模型。</p><p><strong>应用场景</strong>:隐私敏感场景的本地推理;开发调试不想付费调云API;离线AI助手;RAG/Agent应用的本地推理后端。</p></div>
+  
   <div class="card-meta">
     <span>Go</span>
     <span>MIT</span>
@@ -213,7 +279,7 @@ td a{color:var(--accent);}
     <div class="card-stats"><span class="stat-delta">—</span><span class="stat-stars">★ 108.7k</span></div>
   </div>
   <p class="desc">🌐 Make websites accessible for AI agents. Automate tasks online with ease.</p>
-  <div class="intro"><p><strong>是什么</strong>:browser-use 是让 AI Agent 能够<strong>操控真实浏览器</strong>的开源框架,赋予 LLM 点击、输入、导航、提取网页信息的能力,是"网页自动化Agent"赛道的代表。</p><p><strong>哪里好</strong>:打通了 LLM 与真实 Web 世界的交互。API 简洁,支持多种主流模型,可处理复杂多步网页任务(填表、比价、订票、数据采集)。社区活跃,被众多 Agent 框架集成。</p><p><strong>应用场景</strong>:自动化重复性网页操作;构建能自主上网完成任务的AI助手;自动化测试与网页信息抽取;替代传统RPA的智能化方案。</p></div>
+  
   <div class="card-meta">
     <span>Python</span>
     <span>MIT</span>
@@ -222,10 +288,10 @@ td a{color:var(--accent);}
   </div>
   <div class="topics"><span class="topic">ai-agents</span><span class="topic">ai-tools</span><span class="topic">browser-automation</span><span class="topic">browser-use</span><span class="topic">llm</span><span class="topic">playwright</span></div>
 </article></section><section class="meta-section"><h2 class="section-title">📈 追踪元数据</h2><ul>
-    <li>候选池:<strong>1071</strong> 个 AI 相关新项目(原始 1856)</li>
+    <li>候选池:<strong>1070</strong> 个 AI 相关新项目(原始 1857)</li>
     <li>关键词:<strong>62</strong> 组 · 失败 0 组</li>
     <li>关注池:<strong>2</strong> 项</li>
-    <li>数据源:github-api(anonymous) · 生成于 2026-08-11 04:10</li>
+    <li>数据源:github-api(anonymous) · 生成于 2026-08-11 09:09</li>
   </ul></section>
   <p class="archive-link"><a href="archive.html">← 返回存档</a></p>
 </main>
