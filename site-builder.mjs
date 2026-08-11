@@ -85,7 +85,7 @@ function masthead(activeNav = "") {
       <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
       <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
     </div>
-    <nav class="nav">${navItem("home","首页","index.html")}${navItem("trending","涨星榜","trending.html")}${navItem("archive","存档","archive.html")}${navItem("watch","关注","watchlist.html")}${navItem("src","源码","https://github.com/mmlong818/ai-trending")}</nav>
+    <nav class="nav">${navItem("home","首页","index.html")}${navItem("archive","存档","archive.html")}${navItem("watch","关注","watchlist.html")}${navItem("src","源码","https://github.com/mmlong818/ai-trending")}</nav>
   </div>
 </header>`;
 }
@@ -134,110 +134,13 @@ function repoCard(t, opts = {}) {
 }
 
 // ---------- 各类页面 ----------
-function renderHome(rankings) {
-  const latest = rankings[0];
-  const hero = latest ? `
-    <section class="hero">
-      <p class="hero-date">${latest.date}</p>
-      <h2 class="hero-title"><a href="report-${latest.date}.html">今日榜单 · ${headline(latest.data)}</a></h2>
-      <p class="hero-sub">${esc(headline(latest.data))} · 候选池 ${latest.data.candidate_pool_size} 个新项目</p>
-      <a class="hero-cta" href="report-${latest.date}.html">查看完整榜单 →</a>
-    </section>` : `<section class="hero"><p class="muted">暂无报告,等待首次运行。</p></section>`;
-
-  // 今日涨星榜(GitHub Trending 过滤 AI):首页展示前5,完整版在 trending.html
-  const trending = latest?.data?.trending_top10 || [];
-  const trendingHome = trending.length === 0 ? "" : `
-    <section class="dual-section">
-      <div class="dual-col">
-        <h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending</span></h2>
-        <p class="dual-desc">今天真实在涨的 AI 项目,按今日新增星排序</p>
-        <div class="mini-list">
-          ${trending.slice(0,5).map((t,i)=>`<a class="mini-card${t.is_new?" mini-new":""}" href="trending.html">
-            <span class="mini-rank">${i+1}</span>
-            <span class="mini-name">${esc(t.full_name)}</span>
-            <span class="mini-delta">+${t.today_stars}</span>
-          </a>
-          <p class="mini-brief">${briefIntroPlain(t)}</p>`).join("")}
-        </div>
-        <p class="archive-link"><a href="trending.html">查看完整涨星榜 →</a></p>
-      </div>
-      <div class="dual-col">
-        <h2 class="section-title">🚀 新项目崛起榜 <span class="count">近60天新建</span></h2>
-        <p class="dual-desc">近 60 天新建、总星最高的 AI 项目</p>
-        <div class="mini-list">
-          ${(latest?.data?.top10||[]).slice(0,5).map((t,i)=>`<a class="mini-card${t.is_new?" mini-new":""}" href="report-${latest.date}.html">
-            <span class="mini-rank">${i+1}</span>
-            <span class="mini-name">${esc(t.full_name)}</span>
-            <span class="mini-stars">★ ${fmtStars(t.today_stars)}</span>
-          </a>
-          <p class="mini-brief">${briefIntroPlain(t)}</p>`).join("")}
-        </div>
-        <p class="archive-link"><a href="report-${latest.date}.html">查看完整崛起榜 →</a></p>
-      </div>
-    </section>`;
-
-  // 时间线:最近 14 份
-  const recent = rankings.slice(1, 14);
-  const timeline = recent.length === 0 ? "" : `
-    <section class="timeline-section">
-      <h3 class="section-title">近期报告</h3>
-      <div class="feed">
-        ${recent.map(r => {
-          const newCount = r.data.top10?.filter(t=>t.is_new&&!t.is_baseline).length||0;
-          const top1 = r.data.top10?.[0];
-          return `<article class="feed-card">
-            <div class="feed-date">${r.date}</div>
-            <div class="feed-body">
-              <a class="feed-title" href="report-${r.date}.html">${top1?esc(top1.full_name)+" 领跑":"榜单"}</a>
-              <p class="feed-sub">${newCount>0?newCount+" 个新进榜 · ":""}候选池 ${r.data.candidate_pool_size}</p>
-            </div>
-          </article>`;
-        }).join("")}
-      </div>
-    </section>`;
-
-  return page("首页", `${masthead("home")}
-<main class="wrap">
-  ${hero}
-  ${trendingHome}
-  ${timeline}
-  <p class="archive-link"><a href="archive.html">📚 查看完整历史记录 →</a></p>
-</main>
-${footer()}`);
-}
-
-// 涨星榜页(trending.html):完整 GitHub Trending AI 榜
-function renderTrendingPage(rankings) {
-  const latest = rankings[0];
-  const trending = latest?.data?.trending_top10 || [];
-  const cards = trending.length === 0
-    ? "<p class='muted'>今日未抓取到 Trending 数据。</p>"
-    : trending.map((t,i)=>repoCard({
-        ...t,
-        today_stars: t.total_stars, // 卡片右侧显示总星
-        delta: t.today_stars,       // 涨星位置显示今日新增
-        is_new: t.is_new,
-        is_baseline: false,
-        zh_intro: t.zh_intro,
-      }, {rank:i+1, changed:t.is_new})).join("");
-  const banner = `<div class="banner">🔥 <strong>今日涨星榜</strong>:来自 GitHub Trending 今日榜,过滤出 AI 相关项目,按今日新增星数排序。这才是"今天真实在涨"的项目。</div>`;
-  return page("今日涨星榜", `${masthead()}
-<main class="wrap">
-  <p class="breadcrumbs"><a href="index.html">首页</a> / 今日涨星榜</p>
-  <h2 class="page-title">🔥 今日涨星榜 <span class="muted">${latest?.date||""}</span></h2>
-  ${banner}
-  ${cards}
-  <p class="archive-link"><a href="index.html">← 返回首页</a></p>
-</main>
-${footer()}`);
-}
-
-function renderDay(ranking) {
+// 抽取一份报告的完整双榜正文(供首页和日页共用)
+function dayBody(ranking) {
   const { date, data: r } = ranking;
   const isFirst = r.is_first_run;
   const banner = isFirst ? `<div class="banner">📋 <strong>基线收录日</strong>:首次收录,明天起会标注「🆕 新进榜」。所有项目已配中文解读。</div>` : "";
 
-  // ===== 涨星榜(GitHub Trending AI) =====
+  // ===== 涨星榜 =====
   const trending = r.trending_top10 || [];
   const trendingRows = trending.map((t,i) => {
     const st = t.is_new ? "🆕" : "";
@@ -251,14 +154,13 @@ function renderDay(ranking) {
   const trendingTable = trendingRows ? `<section><h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending · 按今日新增星</span></h2>
     <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>今日新增</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
     <tbody>${trendingRows}</tbody></table></div></section>` : '<section><h2 class="section-title">🔥 今日涨星榜</h2><p class="muted">今日未抓取到 GitHub Trending 数据。</p></section>';
-  // 涨星榜详解卡片(新进榜的)
   const trendingNew = trending.filter(t=>t.is_new);
-  const trendingDetail = trendingNew.length ? `<section><h2 class="section-title">🆕 涨星榜新进榜详解</h2>${trendingNew.map((t,i)=>{
+  const trendingDetail = trendingNew.length ? `<section><h2 class="section-title">🆕 涨星榜新进榜详解</h2>${trendingNew.map((t)=>{
     const rank = trending.findIndex(x=>x===t)+1;
     return repoCard({...t, today_stars:t.total_stars, delta:t.today_stars, is_baseline:false}, {rank, changed:true});
   }).join("")}</section>` : "";
 
-  // ===== 崛起榜(近60天新建) =====
+  // ===== 崛起榜 =====
   const riseTableRows = (r.top10||[]).map(t => {
     const st = t.is_baseline?"📋":t.is_new?"🆕":t.is_changed?"🔥":"";
     return `<tr><td class="col-rank">${t.rank}</td>
@@ -290,15 +192,77 @@ function renderDay(ranking) {
     <li>数据源:${esc(r.data_source)} · 生成于 ${esc((r.generated_at||"").slice(0,16).replace("T"," "))}</li>
   </ul></section>`;
 
+  return `${banner}${trendingTable}${trendingDetail}${riseTable}${riseDetail}${watchSection}${meta}`;
+}
+
+function renderHome(rankings) {
+  const latest = rankings[0];
+  if (!latest) {
+    return page("首页", `${masthead("home")}<main class="wrap"><p class="muted">暂无报告,等待首次运行。</p></main>${footer()}`);
+  }
+  // 首页 = 最新日报的完整内容 + 顶部日期头 + 底部近期时间线
+  const recent = rankings.slice(1, 8);
+  const timeline = recent.length === 0 ? "" : `
+    <section class="timeline-section">
+      <h3 class="section-title">📅 往期报告</h3>
+      <div class="feed">
+        ${recent.map(r => {
+          const top1 = r.data.top10?.[0];
+          const tr1 = r.data.trending_top10?.[0];
+          return `<article class="feed-card">
+            <div class="feed-date">${r.date}</div>
+            <div class="feed-body">
+              <a class="feed-title" href="report-${r.date}.html">${r.date} 日报</a>
+              <p class="feed-sub">${tr1?'🔥'+esc(tr1.full_name)+' +'+tr1.today_stars+' · ':''}${top1?'🚀'+esc(top1.full_name)+' ★'+fmtStars(top1.today_stars):''}</p>
+            </div>
+          </article>`;
+        }).join("")}
+      </div>
+    </section>`;
+
+  return page("首页", `${masthead("home")}
+<main class="wrap">
+  <p class="hero-date">${latest.date} · ${esc(headline(latest.data))}</p>
+  ${dayBody(latest)}
+  ${timeline}
+  <p class="archive-link"><a href="archive.html">📚 查看完整历史存档 →</a></p>
+</main>
+${footer()}`);
+}
+
+// 涨星榜页(trending.html):完整 GitHub Trending AI 榜
+function renderTrendingPage(rankings) {
+  const latest = rankings[0];
+  const trending = latest?.data?.trending_top10 || [];
+  const cards = trending.length === 0
+    ? "<p class='muted'>今日未抓取到 Trending 数据。</p>"
+    : trending.map((t,i)=>repoCard({
+        ...t,
+        today_stars: t.total_stars, // 卡片右侧显示总星
+        delta: t.today_stars,       // 涨星位置显示今日新增
+        is_new: t.is_new,
+        is_baseline: false,
+        zh_intro: t.zh_intro,
+      }, {rank:i+1, changed:t.is_new})).join("");
+  const banner = `<div class="banner">🔥 <strong>今日涨星榜</strong>:来自 GitHub Trending 今日榜,过滤出 AI 相关项目,按今日新增星数排序。这才是"今天真实在涨"的项目。</div>`;
+  return page("今日涨星榜", `${masthead()}
+<main class="wrap">
+  <p class="breadcrumbs"><a href="index.html">首页</a> / 今日涨星榜</p>
+  <h2 class="page-title">🔥 今日涨星榜 <span class="muted">${latest?.date||""}</span></h2>
+  ${banner}
+  ${cards}
+  <p class="archive-link"><a href="index.html">← 返回首页</a></p>
+</main>
+${footer()}`);
+}
+
+function renderDay(ranking) {
+  const { date } = ranking;
   return page(`${date} AI 趋势日报`, `${masthead()}
 <main class="wrap">
   <p class="breadcrumbs"><a href="index.html">首页</a> / <a href="archive.html">存档</a> / ${date}</p>
   <h2 class="day-title">${date} AI 趋势日报</h2>
-  ${banner}
-  ${trendingTable}${trendingDetail}
-  ${riseTable}${riseDetail}
-  ${watchSection}
-  ${meta}
+  ${dayBody(ranking)}
   <p class="archive-link"><a href="archive.html">← 返回存档</a></p>
 </main>
 ${footer()}`);
@@ -553,8 +517,6 @@ function main() {
   writeFileSync(join(DOCS, "index.html"), renderHome(rankings));
   // 存档
   writeFileSync(join(DOCS, "archive.html"), renderArchive(rankings));
-  // 涨星榜页
-  writeFileSync(join(DOCS, "trending.html"), renderTrendingPage(rankings));
   // 关注
   writeFileSync(join(DOCS, "watchlist.html"), renderWatchlistPage(rankings));
   // 每份报告的日页(输出到根目录 report-日期.html,因 Pages workflow 用 *.html 复制,不支持子目录)
