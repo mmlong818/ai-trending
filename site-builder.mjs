@@ -121,7 +121,7 @@ function repoCard(t, opts = {}) {
     </div>
     <div class="card-stats"><span class="stat-delta">${fmtDelta(delta)}</span><span class="stat-stars">★ ${fmtStars(stars)}</span></div>
   </div>
-  ${t.description?`<p class="desc">${esc(t.description)}</p>`:""}
+  ${(t.description && !(t.zh_intro && t.zh_intro.trim().length>20))?`<p class="desc">${esc(t.description)}</p>`:""}
   ${showIntro?`<div class="intro">${intro}</div>`:""}
   <div class="card-meta">
     ${t.language?`<span>${esc(t.language)}</span>`:""}
@@ -235,9 +235,31 @@ ${footer()}`);
 function renderDay(ranking) {
   const { date, data: r } = ranking;
   const isFirst = r.is_first_run;
-  const banner = isFirst ? `<div class="banner">📋 <strong>基线收录日</strong>:首次收录近 60 天新建的 AI 项目,按总星排序。明天起会标注「🆕 新进榜」。</div>` : "";
-  const changed = r.top10?.filter(t=>t.is_new||t.is_baseline||t.is_changed) || [];
-  const tableRows = (r.top10||[]).map(t => {
+  const banner = isFirst ? `<div class="banner">📋 <strong>基线收录日</strong>:首次收录,明天起会标注「🆕 新进榜」。所有项目已配中文解读。</div>` : "";
+
+  // ===== 涨星榜(GitHub Trending AI) =====
+  const trending = r.trending_top10 || [];
+  const trendingRows = trending.map((t,i) => {
+    const st = t.is_new ? "🆕" : "";
+    return `<tr><td class="col-rank">${i+1}</td>
+      <td><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.full_name)}</a></td>
+      <td class="brief">${briefIntro(t)}</td>
+      <td class="num">+${t.today_stars}</td>
+      <td class="num">★ ${fmtStars(t.total_stars)}</td>
+      <td>${esc(t.language||"")}</td><td>${st}</td></tr>`;
+  }).join("");
+  const trendingTable = trendingRows ? `<section><h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending · 按今日新增星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>今日新增</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody>${trendingRows}</tbody></table></div></section>` : '<section><h2 class="section-title">🔥 今日涨星榜</h2><p class="muted">今日未抓取到 GitHub Trending 数据。</p></section>';
+  // 涨星榜详解卡片(新进榜的)
+  const trendingNew = trending.filter(t=>t.is_new);
+  const trendingDetail = trendingNew.length ? `<section><h2 class="section-title">🆕 涨星榜新进榜详解</h2>${trendingNew.map((t,i)=>{
+    const rank = trending.findIndex(x=>x===t)+1;
+    return repoCard({...t, today_stars:t.total_stars, delta:t.today_stars, is_baseline:false}, {rank, changed:true});
+  }).join("")}</section>` : "";
+
+  // ===== 崛起榜(近60天新建) =====
+  const riseTableRows = (r.top10||[]).map(t => {
     const st = t.is_baseline?"📋":t.is_new?"🆕":t.is_changed?"🔥":"";
     return `<tr><td class="col-rank">${t.rank}</td>
       <td><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.full_name)}</a></td>
@@ -246,31 +268,37 @@ function renderDay(ranking) {
       <td class="num">${fmtDelta(t.delta)}</td>
       <td>${esc(t.language||"")}</td><td>${st}</td></tr>`;
   }).join("");
-
-  const table = tableRows ? `<section><h2 class="section-title">📊 Top 10 速览</h2>
+  const riseTable = riseTableRows ? `<section><h2 class="section-title">🚀 新项目崛起榜 <span class="count">近60天新建 · 按总星</span></h2>
     <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
-    <tbody>${tableRows}</tbody></table></div></section>` : "";
+    <tbody>${riseTableRows}</tbody></table></div></section>` : "";
+  const riseChanged = r.top10?.filter(t=>t.is_new||t.is_baseline||t.is_changed) || [];
+  const riseDetail = riseChanged.length ? `<section><h2 class="section-title">${isFirst?"🆕 崛起榜基线项目详解":"🆕 崛起榜新进榜 / 重大变化"}</h2>${riseChanged.map(t=>repoCard(t,{rank:t.rank,changed:true})).join("")}</section>` : "";
 
-  const detail = changed.length ? `<section><h2 class="section-title">${isFirst?"🆕 基线项目详解":"🆕 新进榜 / 重大变化"}</h2>${changed.map(t=>repoCard(t,{rank:t.rank,changed:true})).join("")}</section>` : "";
-
+  // ===== 重点关注 =====
   const watchCards = (r.watchlist_section||[]).map(w=>{
     if (w.error) return `<article class="card card-error"><div class="card-title">${esc(w.full_name)} <span class="badge badge-err">⚠️ ${esc(w.error)}</span></div></article>`;
     return repoCard(w,{watched:true,changed:w.is_changed});
   }).join("");
   const watchSection = (r.watchlist_section||[]).length ? `<section><h2 class="section-title">⭐ 重点关注 <span class="count">${r.watchlist_count}</span></h2>${watchCards}</section>` : "";
 
+  // ===== 元数据 =====
   const meta = `<section class="meta-section"><h2 class="section-title">📈 追踪元数据</h2><ul>
-    <li>候选池:<strong>${r.candidate_pool_size}</strong> 个 AI 相关新项目(原始 ${r.raw_search_count})</li>
+    <li>涨星榜:<strong>${trending.length}</strong> 个 AI 项目(来自 GitHub Trending 今日榜)</li>
+    <li>崛起榜候选池:<strong>${r.candidate_pool_size}</strong> 个近60天新建 AI 项目(原始 ${r.raw_search_count})</li>
     <li>关键词:<strong>${(r.keywords||[]).length}</strong> 组 · 失败 ${(r.failed_keywords||[]).length} 组</li>
     <li>关注池:<strong>${r.watchlist_count||0}</strong> 项</li>
     <li>数据源:${esc(r.data_source)} · 生成于 ${esc((r.generated_at||"").slice(0,16).replace("T"," "))}</li>
   </ul></section>`;
 
-  return page(`${date} 报告`, `${masthead()}
+  return page(`${date} AI 趋势日报`, `${masthead()}
 <main class="wrap">
   <p class="breadcrumbs"><a href="index.html">首页</a> / <a href="archive.html">存档</a> / ${date}</p>
-  <h2 class="day-title">${date} AI 新项目崛起榜</h2>
-  ${banner}${table}${detail}${watchSection}${meta}
+  <h2 class="day-title">${date} AI 趋势日报</h2>
+  ${banner}
+  ${trendingTable}${trendingDetail}
+  ${riseTable}${riseDetail}
+  ${watchSection}
+  ${meta}
   <p class="archive-link"><a href="archive.html">← 返回存档</a></p>
 </main>
 ${footer()}`);
