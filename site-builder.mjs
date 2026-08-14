@@ -71,7 +71,6 @@ function headline(ranking) {
   const newCount = ranking.top10?.filter(t => t.is_new && !t.is_baseline).length || 0;
   const parts = [`${top.full_name} 领跑(★${fmtStars(top.today_stars)})`];
   if (newCount > 0) parts.push(`${newCount} 个新进榜`);
-  if (ranking.watchlist_count > 0) parts.push(`关注 ${ranking.watchlist_count} 项`);
   return parts.join(" · ");
 }
 
@@ -85,7 +84,7 @@ function masthead(activeNav = "") {
       <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
       <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
     </div>
-    <nav class="nav">${navItem("home","首页","index.html")}${navItem("archive","存档","archive.html")}${navItem("watch","关注","watchlist.html")}${navItem("src","源码","https://github.com/mmlong818/ai-trending")}</nav>
+    <nav class="nav">${navItem("home","首页","index.html")}${navItem("archive","存档","archive.html")}${navItem("src","源码","https://github.com/mmlong818/ai-trending")}</nav>
   </div>
 </header>`;
 }
@@ -176,23 +175,15 @@ function dayBody(ranking) {
   const riseChanged = r.top10?.filter(t=>t.is_new||t.is_baseline||t.is_changed) || [];
   const riseDetail = riseChanged.length ? `<section><h2 class="section-title">${isFirst?"🆕 崛起榜基线项目详解":"🆕 崛起榜新进榜 / 重大变化"}</h2>${riseChanged.map(t=>repoCard(t,{rank:t.rank,changed:true})).join("")}</section>` : "";
 
-  // ===== 重点关注 =====
-  const watchCards = (r.watchlist_section||[]).map(w=>{
-    if (w.error) return `<article class="card card-error"><div class="card-title">${esc(w.full_name)} <span class="badge badge-err">⚠️ ${esc(w.error)}</span></div></article>`;
-    return repoCard(w,{watched:true,changed:w.is_changed});
-  }).join("");
-  const watchSection = (r.watchlist_section||[]).length ? `<section><h2 class="section-title">⭐ 重点关注 <span class="count">${r.watchlist_count}</span></h2>${watchCards}</section>` : "";
-
   // ===== 元数据 =====
   const meta = `<section class="meta-section"><h2 class="section-title">📈 追踪元数据</h2><ul>
     <li>涨星榜:<strong>${trending.length}</strong> 个 AI 项目(来自 GitHub Trending 今日榜)</li>
     <li>崛起榜候选池:<strong>${r.candidate_pool_size}</strong> 个近60天新建 AI 项目(原始 ${r.raw_search_count})</li>
     <li>关键词:<strong>${(r.keywords||[]).length}</strong> 组 · 失败 ${(r.failed_keywords||[]).length} 组</li>
-    <li>关注池:<strong>${r.watchlist_count||0}</strong> 项</li>
     <li>数据源:${esc(r.data_source)} · 生成于 ${esc((r.generated_at||"").slice(0,16).replace("T"," "))}</li>
   </ul></section>`;
 
-  return `${banner}${trendingTable}${trendingDetail}${riseTable}${riseDetail}${watchSection}${meta}`;
+  return `${banner}${trendingTable}${trendingDetail}${riseTable}${riseDetail}${meta}`;
 }
 
 function renderHome(rankings) {
@@ -328,24 +319,6 @@ document.getElementById('search').addEventListener('input', e=>{
   box.innerHTML = hits.length ? hits.slice(0,30).map(h=>'<a class="search-hit" href="report-'+h.date+'.html">'+h.date+' · '+h.t+(h.n?' 🆕':'')+'</a>').join('') : '<p class="muted">无匹配</p>';
 });
 </script>
-${footer()}`);
-}
-
-function renderWatchlistPage(rankings) {
-  const latest = rankings[0];
-  const note = `<div class="banner">关注列表在本地管理。打开仓库的 <a href="https://github.com/mmlong818/ai-trending/blob/main/web/index.html">web/index.html</a> 添加关注,导出 changes 后由下次运行合流。老牌项目(不在新项目窗口内)只能通过关注追踪。</div>`;
-  const watchSection = latest?.data?.watchlist_section || [];
-  const cards = watchSection.length ? watchSection.map(w=>{
-    if (w.error) return `<article class="card card-error"><div class="card-title">${esc(w.full_name)} <span class="badge badge-err">⚠️ ${esc(w.error)}</span></div></article>`;
-    return repoCard(w,{watched:true,changed:w.is_changed});
-  }).join("") : "<p class='muted'>暂无关注项目,或今日未运行。</p>";
-  return page("重点关注", `${masthead("watch")}
-<main class="wrap">
-  <h2 class="page-title">⭐ 重点关注</h2>
-  ${note}
-  <p class="muted">截至 ${latest?.date||"—"},共 ${latest?.data?.watchlist_count||0} 项。</p>
-  ${cards}
-</main>
 ${footer()}`);
 }
 
@@ -517,8 +490,6 @@ function main() {
   writeFileSync(join(DOCS, "index.html"), renderHome(rankings));
   // 存档
   writeFileSync(join(DOCS, "archive.html"), renderArchive(rankings));
-  // 关注
-  writeFileSync(join(DOCS, "watchlist.html"), renderWatchlistPage(rankings));
   // 每份报告的日页(输出到根目录 report-日期.html,因 Pages workflow 用 *.html 复制,不支持子目录)
   for (const r of rankings) {
     writeFileSync(join(DOCS, `report-${r.date}.html`), renderDay(r));
@@ -528,7 +499,7 @@ function main() {
   writeFileSync(join(DOCS, "sitemap.xml"), sitemapWrap(renderSitemap(rankings)));
   writeFileSync(join(DOCS, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: https://mmlong818.github.io/ai-trending/sitemap.xml\n`);
 
-  console.log(`✓ 站点已生成到 docs/ (${rankings.length} 份日页 + 首页 + 存档 + 关注 + RSS + sitemap)`);
+  console.log(`✓ 站点已生成到 docs/ (${rankings.length} 份日页 + 首页 + 存档 + RSS + sitemap)`);
 }
 
 main();

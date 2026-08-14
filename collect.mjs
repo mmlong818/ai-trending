@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 // collect.mjs — 主入口
 // 流程:
-//   1. 合流 watchlist changes
-//   2. 搜索候选池(Search API,关键词组合)
-//   3. AI 相关性过滤 + 去重
-//   4. 写今日快照
-//   5. 算 top10 日涨星 diff
-//   6. 独立拉取 watchlist 关注项目
-//   7. 对"需详述"项目抓 README
-//   8. 变化检测
-//   9. 产出 ranking-YYYY-MM-DD.json
+//   1. 搜索候选池(Search API,关键词组合,近60天新建)
+//   2. AI 相关性过滤 + 去重
+//   3. 写今日快照
+//   4. 算 top10 日涨星 diff(崛起榜)
+//   5. 对"需详述"项目抓 README
+//   6. 变化检测
+//   7. 抓取 GitHub Trending → 过滤 AI → 涨星榜
+//   8. 产出 ranking-YYYY-MM-DD.json
 
 import { writeFileSync, readFileSync, mkdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -32,11 +31,6 @@ import {
   guessReleaseFromReadme,
   updateProfile,
 } from "./lib/profile.mjs";
-import {
-  mergePendingChanges,
-  readWatchlist,
-  collectWatchlist,
-} from "./lib/watchlist.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -56,13 +50,7 @@ async function main() {
   ensureDirs();
   if (!existsSync(RANKING_DIR)) mkdirSync(RANKING_DIR, { recursive: true });
 
-  // 1. 合流 watchlist changes
-  const mergeResult = mergePendingChanges();
-  if (mergeResult.applied > 0) {
-    log(`✓ watchlist 合流: 应用 ${mergeResult.applied} 条, ${mergeResult.before}→${mergeResult.after}`);
-  }
-
-  // 2. 搜索候选池
+  // 1. 搜索候选池
   log(`▶ 开始搜索,共 ${KEYWORD_GROUPS.length} 组关键词...`);
   const rawItems = [];
   const failedKeywords = [];
@@ -137,7 +125,6 @@ async function main() {
 
   // 6 & 7 & 8. 对 topN 组装详情 + 抓 README + 变化检测
   const slimMap = new Map(slimmed.map((r) => [r.full_name, r]));
-  const rankingSet = new Set(ranked.map((r) => r.full_name));
   const topDetail = [];
   for (let i = 0; i < ranked.length; i++) {
     const d = ranked[i];
@@ -211,16 +198,7 @@ async function main() {
     });
   }
 
-  // 9. 独立拉取 watchlist
-  const watchlistSection = await collectWatchlist({
-    yesterdayMap: prevMap,
-    rankingSet,
-    isFirstRun,
-  });
-  const wlInfo = readWatchlist();
-  log(`✓ 关注列表: ${wlInfo.items.length} 项, 成功拉取 ${watchlistSection.filter((w) => !w.error).length}`);
-
-  // 10. 抓取 GitHub Trending 今日榜 → 过滤 AI → 补总星/README → 涨星榜
+  // 9. 抓取 GitHub Trending 今日榜 → 过滤 AI → 补总星/README → 涨星榜
   log(`▶ 抓取 GitHub Trending 今日榜...`);
   let trendingTop10 = [];
   try {
@@ -277,8 +255,6 @@ async function main() {
     failed_keywords: failedKeywords,
     top10: topDetail,
     trending_top10: trendingTop10,
-    watchlist_section: watchlistSection,
-    watchlist_count: wlInfo.items.length,
     rate_limit_at_end: rlStatus,
   };
 
@@ -297,18 +273,6 @@ async function main() {
     console.log(
       `${tag} #${t.rank} ${t.full_name}  ${deltaStr(t.delta)} (总 ${t.today_stars})  ${t.change_reason || ""}`,
     );
-  }
-  if (watchlistSection.length > 0) {
-    console.log("\n---------- ⭐ 重点关注 ----------");
-    for (const w of watchlistSection) {
-      if (w.error) {
-        console.log(`  ${w.full_name}  ⚠️ ${w.error}`);
-      } else {
-        console.log(
-          `  ${w.in_ranking ? "📍榜内" : "榜外"} ${w.full_name}  ${deltaStr(w.delta)} (总 ${w.stars})  ${w.change_reason || "持平"}`,
-        );
-      }
-    }
   }
   console.log("\n▶ 完成。ranking 文件交给 agent 写报告。");
 }

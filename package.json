@@ -9,7 +9,6 @@
   },
   "scripts": {
     "collect": "node collect.mjs",
-    "build": "node site-builder.mjs",
-    "merge-watch": "node merge-watchlist.mjs"
+    "build": "node site-builder.mjs"
   }
 }
