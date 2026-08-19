@@ -24,6 +24,8 @@ a:hover{text-decoration:underline;}
 .nav-item.active{color:var(--accent);font-weight:600;}
 .foot{border-top:3px double var(--border);margin-top:48px;padding:20px 0;font-size:13px;color:var(--ink-3);text-align:center;}
 .foot a{color:var(--ink-2);}
+.pv-line{color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums;}
+.pv-line span{color:var(--accent);font-weight:600;}
 main{padding:16px 0 32px;}
 .hero{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 28px 24px;margin:8px 0 28px;}
 .hero-date{margin:0;color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;}
@@ -525,8 +527,10 @@ td a{color:var(--accent);}
 <footer class="foot">
   <div class="wrap">
     <p>每天 12:00 自动更新 · 数据源 GitHub Search API · <a href="https://github.com/mmlong818/ai-trending">源代码</a></p>
+    <p class="pv-line">📖 全站累计阅读 <span id="busuanzi_site_pv">…</span> 次 · 访客 <span id="busuanzi_site_uv">…</span> 人</p>
     <p class="muted">候选池:近 60 天新建的 AI 项目 · 按总星排序 = 崛起热度</p>
   </div>
 </footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>
