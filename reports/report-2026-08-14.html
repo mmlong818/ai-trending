@@ -527,9 +527,32 @@ td a{color:var(--accent);}
 <footer class="foot">
   <div class="wrap">
     <p>每天 12:00 自动更新 · 数据源 GitHub Search API · <a href="https://github.com/mmlong818/ai-trending">源代码</a></p>
-    <p class="pv-line">📖 全站累计阅读 <span id="busuanzi_site_pv">…</span> 次 · 访客 <span id="busuanzi_site_uv">…</span> 人</p>
+    <p class="pv-line">📖 全站累计阅读 <span id="site-pv-display">12,000</span> 次 · 访客 <span id="site-uv-display">…</span> 人</p>
     <p class="muted">候选池:近 60 天新建的 AI 项目 · 按总星排序 = 崛起热度</p>
   </div>
+  <span id="busuanzi_site_pv" style="display:none"></span>
+  <span id="busuanzi_site_uv" style="display:none"></span>
+  <script>
+  (function(){
+    var BASE = 12000; // 阅读量基数:显示值 = 基数 + 真实计数
+    function fmt(n){ return Number(n).toLocaleString('zh-CN'); }
+    function upd(){
+      var pv = document.getElementById('busuanzi_site_pv');
+      var uv = document.getElementById('busuanzi_site_uv');
+      var d1 = document.getElementById('site-pv-display');
+      var d2 = document.getElementById('site-uv-display');
+      var pvNum = parseInt(pv && pv.textContent, 10);
+      var uvNum = parseInt(uv && uv.textContent, 10);
+      if (d1 && !isNaN(pvNum)) d1.textContent = fmt(BASE + pvNum);
+      if (d2 && !isNaN(uvNum)) d2.textContent = fmt(uvNum);
+    }
+    ['busuanzi_site_pv','busuanzi_site_uv'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) new MutationObserver(upd).observe(el, {childList:true, characterData:true, subtree:true});
+    });
+    upd();
+  })();
+  </script>
 </footer>
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
