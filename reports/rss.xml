@@ -5,6 +5,13 @@
   <description>每天发现近 60 天新建、星数最高的 AI 项目</description>
   <language>zh-CN</language>
     <item>
+      <title>2026-09-04 AI 新项目崛起榜 · deepseek-ai/deepseek-harness 领跑(★211.3k)</title>
+      <link>https://mmlong818.github.io/ai-trending/report-2026-09-04.html</link>
+      <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-2026-09-04.html</guid>
+      <pubDate>Fri, 04 Sep 2026 04:00:00 GMT</pubDate>
+      <description>deepseek-ai/deepseek-harness (★211.3k); xai-org/grok-build (★26.4k); anywhere-labs/dsh-desktop (★23.4k)</description>
+    </item>
+    <item>
       <title>2026-09-03 AI 新项目崛起榜 · deepseek-ai/deepseek-harness 领跑(★209.9k)</title>
       <link>https://mmlong818.github.io/ai-trending/report-2026-09-03.html</link>
       <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-2026-09-03.html</guid>
@@ -136,12 +143,5 @@
       <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-2026-08-14.html</guid>
       <pubDate>Fri, 14 Aug 2026 04:00:00 GMT</pubDate>
       <description>deepseek-ai/deepseek-harness (★90k); xai-org/grok-build (★25.2k); langchain-ai/openwiki (★15.1k)</description>
-    </item>
-    <item>
-      <title>2026-08-12 AI 新项目崛起榜 · xai-org/grok-build 领跑(★24.7k)</title>
-      <link>https://mmlong818.github.io/ai-trending/report-2026-08-12.html</link>
-      <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-2026-08-12.html</guid>
-      <pubDate>Wed, 12 Aug 2026 04:00:00 GMT</pubDate>
-      <description>xai-org/grok-build (★24.7k); langchain-ai/openwiki (★14.9k); yc-software/qm (★13.1k)</description>
     </item>
 </channel></rss>
