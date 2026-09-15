@@ -5,6 +5,13 @@
   <description>每天发现近 60 天新建、星数最高的 AI 项目</description>
   <language>zh-CN</language>
     <item>
+      <title>2026-09-15 AI 新项目崛起榜 · deepseek-ai/deepseek-harness 领跑(★224.3k)</title>
+      <link>https://mmlong818.github.io/ai-trending/report-2026-09-15.html</link>
+      <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-2026-09-15.html</guid>
+      <pubDate>Tue, 15 Sep 2026 04:00:00 GMT</pubDate>
+      <description>deepseek-ai/deepseek-harness (★224.3k); anywhere-labs/dsh-desktop (★26.6k); guillaumemeyer/watermarks-remover (★22k)</description>
+    </item>
+    <item>
       <title>2026-09-14 AI 新项目崛起榜 · deepseek-ai/deepseek-harness 领跑(★222.9k)</title>
       <link>https://mmlong818.github.io/ai-trending/report-2026-09-14.html</link>
       <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-2026-09-14.html</guid>
@@ -136,12 +143,5 @@
       <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-2026-08-25.html</guid>
       <pubDate>Tue, 25 Aug 2026 04:00:00 GMT</pubDate>
       <description>deepseek-ai/deepseek-harness (★192.7k); xai-org/grok-build (★26k); anywhere-labs/dsh-desktop (★19.8k)</description>
-    </item>
-    <item>
-      <title>2026-08-24 AI 新项目崛起榜 · deepseek-ai/deepseek-harness 领跑(★188.9k)</title>
-      <link>https://mmlong818.github.io/ai-trending/report-2026-08-24.html</link>
-      <guid isPermaLink="true">https://mmlong818.github.io/ai-trending/report-2026-08-24.html</guid>
-      <pubDate>Mon, 24 Aug 2026 04:00:00 GMT</pubDate>
-      <description>deepseek-ai/deepseek-harness (★188.9k); xai-org/grok-build (★26k); anywhere-labs/deepseek-harness-desktop (★19.1k)</description>
     </item>
 </channel></rss>
