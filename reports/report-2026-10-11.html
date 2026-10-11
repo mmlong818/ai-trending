@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-11 AI 趋势日报 · AI 新项目崛起榜</title>
+<meta name="description" content="每天发现近 60 天新建、星数最高的 AI 项目">
+<link rel="alternate" type="application/rss+xml" title="AI 新项目崛起榜" href="rss.xml">
+<style>
+:root{--bg:#fbfaf7;--surface:#ffffff;--border:#e8e5de;--ink:#1b1a17;--ink-2:#5c5951;--ink-3:#8f8b80;--accent:#b8451f;--accent-soft:#faf1ee;--serif:Georgia,"Times New Roman",serif;--sans:-apple-system,"Segoe UI","Noto Sans SC",sans-serif;--green:#2d7a4f;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.muted{color:var(--ink-3);font-size:14px;}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+.masthead{border-bottom:3px double var(--border);padding:24px 0 16px;margin-bottom:8px;}
+.masthead-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+.logo{margin:0;font-family:var(--serif);font-size:26px;font-weight:normal;}
+.logo a{color:var(--ink);}
+.tagline{margin:4px 0 0;color:var(--ink-2);font-size:13px;}
+.nav{display:flex;gap:18px;font-size:14px;}
+.nav-item{color:var(--ink-2);}
+.nav-item.active{color:var(--accent);font-weight:600;}
+.foot{border-top:3px double var(--border);margin-top:48px;padding:20px 0;font-size:13px;color:var(--ink-3);text-align:center;}
+.foot a{color:var(--ink-2);}
+.pv-line{color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums;}
+.pv-line span{color:var(--accent);font-weight:600;}
+main{padding:16px 0 32px;}
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 28px 24px;margin:8px 0 28px;}
+.hero-date{margin:0;color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;}
+.hero-title{font-family:var(--serif);font-size:28px;font-weight:normal;margin:8px 0 6px;line-height:1.3;}
+.hero-title a{color:var(--ink);}
+.hero-sub{margin:0 0 14px;color:var(--ink-2);font-size:15px;}
+.hero-cta{display:inline-block;background:var(--accent);color:#fff;padding:8px 18px;border-radius:6px;font-size:14px;}
+.hero-cta:hover{background:#9c3a19;text-decoration:none;}
+.section-title{font-family:var(--serif);font-size:20px;font-weight:normal;border-bottom:1px solid var(--border);padding-bottom:8px;margin:32px 0 16px;}
+.section-title .count{color:var(--ink-3);font-size:14px;font-family:var(--sans);}
+.page-title{font-family:var(--serif);font-size:26px;font-weight:normal;margin:8px 0 20px;}
+.day-title{font-family:var(--serif);font-size:24px;font-weight:normal;margin:8px 0 16px;}
+.breadcrumbs{font-size:13px;color:var(--ink-3);margin:4px 0 8px;}
+.banner{background:var(--accent-soft);border:1px solid #e8c9c0;border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:14px;}
+.feed{display:flex;flex-direction:column;gap:0;}
+.feed-card{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+.feed-date{color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;min-width:90px;padding-top:2px;}
+.feed-title{color:var(--ink);font-weight:600;}
+.feed-title:hover{color:var(--accent);}
+.feed-sub{margin:2px 0 0;color:var(--ink-3);font-size:13px;}
+.archive-link{margin:28px 0;text-align:center;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+.card-changed{border-left:4px solid var(--accent);}
+.card-watched{border-left:4px solid #c9a227;}
+.card-error{border-left:4px solid #c0392b;}
+.card-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.card-title{font-size:16px;font-weight:600;}
+.card-title a{color:var(--ink);}
+.card-title a:hover{color:var(--accent);}
+.card-title .rank{color:var(--ink-3);margin-right:6px;}
+.card-stats{display:flex;gap:14px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.stat-delta{color:var(--green);font-weight:600;}
+.stat-stars{color:#c9a227;}
+.desc{color:var(--ink-2);margin:8px 0 0;font-size:14px;}
+.intro{margin:12px 0 8px;padding:12px 14px;background:var(--bg);border-radius:8px;font-size:14.5px;}
+.intro p{margin:0 0 8px;}
+.intro p:last-child{margin-bottom:0;}
+.intro strong{color:var(--accent);}
+.card-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-3);margin-top:10px;}
+.gh-link{margin-left:auto;color:var(--accent);}
+.topics{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+.topic{font-size:11px;padding:2px 8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--ink-3);}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:var(--bg);border:1px solid var(--border);margin-left:6px;font-weight:normal;vertical-align:middle;}
+.badge-new{color:var(--accent);border-color:var(--accent);}
+.badge-base{color:var(--ink-3);border-color:var(--ink-3);}
+.badge-hot{color:#c0392b;border-color:#c0392b;}
+.badge-rank{color:var(--green);border-color:var(--green);}
+.badge-err{color:#c0392b;border-color:#c0392b;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+td.num{text-align:right;font-variant-numeric:tabular-nums;}
+.col-rank{color:var(--ink-3);width:32px;}
+td a{color:var(--accent);}
+.brief{color:var(--ink-2);font-size:13px;line-height:1.5;max-width:340px;}
+.meta-section ul{list-style:none;padding:0;font-size:14px;color:var(--ink-2);}
+.meta-section li{padding:4px 0;}
+.meta-section strong{color:var(--ink);}
+.search-box{margin:0 0 28px;}
+.search-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:var(--surface);color:var(--ink);font-family:var(--sans);}
+.search-box input:focus{outline:none;border-color:var(--accent);}
+.search-results{margin-top:8px;}
+.search-hit{display:block;padding:8px 12px;border-bottom:1px solid var(--border);font-size:14px;}
+.search-hit:hover{background:var(--accent-soft);text-decoration:none;}
+.cal-month{margin-bottom:36px;}
+.cal-title{font-family:var(--serif);font-size:18px;font-weight:normal;margin:0 0 12px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dow{text-align:center;font-size:12px;color:var(--ink-3);padding:4px 0;font-weight:600;}
+.cal-cell{min-height:64px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;font-size:13px;}
+.cal-cell.empty{background:transparent;border:1px dashed var(--border);opacity:.4;}
+.cal-cell.has-report{color:var(--ink);}
+.cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
+.cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
+.cal-count{font-size:11px;color:var(--accent);}
+.dual-section{display:flex;gap:28px;margin:8px 0 28px;}
+.dual-col{flex:1;min-width:0;}
+.dual-desc{color:var(--ink-3);font-size:13px;margin:0 0 12px;}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;color:var(--ink);background:var(--surface);}
+.mini-card:hover{border-color:var(--accent);background:var(--accent-soft);text-decoration:none;}
+.mini-rank{color:var(--ink-3);font-size:15px;font-weight:600;min-width:18px;text-align:center;font-variant-numeric:tabular-nums;}
+.mini-name{flex:1;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mini-delta{color:var(--green);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.mini-stars{color:#c9a227;font-size:13px;font-variant-numeric:tabular-nums;}
+.mini-new{border-left:3px solid var(--accent);}
+.mini-brief{margin:-2px 0 8px 12px;color:var(--ink-3);font-size:12px;line-height:1.45;padding-left:28px;}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}.dual-section{flex-direction:column;}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <div class="brand">
+      <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
+      <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
+    </div>
+    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item " href="archive.html">存档</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <p class="breadcrumbs"><a href="index.html">首页</a> / <a href="archive.html">存档</a> / 2026-10-11</p>
+  <h2 class="day-title">2026-10-11 AI 趋势日报</h2>
+  <section><h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending · 按今日新增星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>今日新增</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/morluto/rea" target="_blank" rel="noopener">morluto/rea</a></td>
+      <td class="brief">REA(Reverse Engineer Anything)是一个&quot;万物逆向&quot;的 MCP 服务器:把 AI 智能体接到一整套逆向分析工具上,从应用行为到原生二进制层层下钻,没有源码也能弄清某个功能是如何实现的,给出…</td>
+      <td class="num">+25793</td>
+      <td class="num">★ 76.3k</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a></td>
+      <td class="brief">来自 Matt Pocock(知名 TypeScript 教育者/Total TypeScript 作者)的个人 Agent 工程技能库,直接开源自他的 .agents 目录——“给真工程师的技能”。</td>
+      <td class="num">+1736</td>
+      <td class="num">★ 284.7k</td>
+      <td>Shell</td><td></td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/cathrynlavery/diagram-design" target="_blank" rel="noopener">cathrynlavery/diagram-design</a></td>
+      <td class="brief">diagram-design 是一套面向 Claude Code 的编辑型图表资源,提供 29 种自包含的 HTML + SVG 图表模板,无阴影、无 Mermaid 依赖,专为 AI 编程场景设计。</td>
+      <td class="num">+1190</td>
+      <td class="num">★ 49.1k</td>
+      <td>HTML</td><td></td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/anthropics/knowledge-work-plugins" target="_blank" rel="noopener">anthropics/knowledge-work-plugins</a></td>
+      <td class="brief">Anthropic 官方开源的知识工作者插件库——主要供 Claude Cowork 使用:面向非程序员的办公场景(文档/研究/分析)的插件集合。</td>
+      <td class="num">+625</td>
+      <td class="num">★ 28.9k</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/multica-ai/andrej-karpathy-skills" target="_blank" rel="noopener">multica-ai/andrej-karpathy-skills</a></td>
+      <td class="brief">一个单文件 CLAUDE.md,基于 Andrej Karpathy(前 Tesla AI 总监)对 LLM 协作的观察总结,用于直接改进 Claude Code 的行为。</td>
+      <td class="num">+278</td>
+      <td class="num">★ 218.4k</td>
+      <td></td><td>🆕</td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/mksglu/context-mode" target="_blank" rel="noopener">mksglu/context-mode</a></td>
+      <td class="brief">context-mode 是 AI 编码 Agent 的上下文窗口优化工具:把工具输出放进沙箱(减少 98% token)、持久化会话记忆,让 Agent 跑得更久更省。</td>
+      <td class="num">+178</td>
+      <td class="num">★ 26.4k</td>
+      <td>TypeScript</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 涨星榜新进榜详解</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#5</span>
+      <a href="https://github.com/multica-ai/andrej-karpathy-skills" target="_blank" rel="noopener">multica-ai/andrej-karpathy-skills</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+278</span><span class="stat-stars">★ 218.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:一个<strong>单文件 CLAUDE.md</strong>,基于 Andrej Karpathy(前 Tesla AI 总监)对 LLM 协作的观察总结,用于直接改进 Claude Code 的行为。</p><p><strong>哪里好</strong>:极致轻量——不用装任何东西,一个 Markdown 文件就把 Karpathy 的 LLM 协作经验注入你的 Agent。“大师经验打包”的极简范例,今日 +315 星。</p><p><strong>应用场景</strong>:Claude Code 用户一行配置获得专家级协作准则;学习如何写好 CLAUDE.md 系统提示;Agent 行为调优的入门范本。</p></div>
+  <div class="card-meta">
+    
+    
+    <span>建于 2026-01-27</span>
+    <a class="gh-link" href="https://github.com/multica-ai/andrej-karpathy-skills" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#6</span>
+      <a href="https://github.com/mksglu/context-mode" target="_blank" rel="noopener">mksglu/context-mode</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+178</span><span class="stat-stars">★ 26.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:context-mode 是 AI 编码 Agent 的<strong>上下文窗口优化工具</strong>:把工具输出放进沙箱(减少 98% token)、持久化会话记忆,让 Agent 跑得更久更省。</p><p><strong>哪里好</strong>:直击编码 Agent 的成本痛点——工具返回内容动辄吃掉海量上下文,沙箱化后省 98%,还支持跨会话记忆。今日 +96 星。</p><p><strong>应用场景</strong>:Claude Code/Codex 长会话的成本压缩;大型代码库下 Agent 上下文管理;多会话工作记忆延续。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>NOASSERTION</span>
+    <span>建于 2026-02-23</span>
+    <a class="gh-link" href="https://github.com/mksglu/context-mode" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">antigravity</span><span class="topic">claude</span><span class="topic">claude-code</span><span class="topic">claude-code-hooks</span><span class="topic">claude-code-plugins</span><span class="topic">claude-code-skill</span></div>
+</article></section><section><h2 class="section-title">🚀 新项目崛起榜 <span class="count">近60天新建 · 按总星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">deepseek-ai/deepseek-harness</a></td>
+      <td class="brief">DeepSeek Harness(命令 dsh)是 DeepSeek 官方开源的 Agent Harness(代理运行框架),核心理念是&quot;一切皆插件&quot;——所有能力都以插件形式装载,基于 Cordis 架构驱动。</td>
+      <td class="num">★ 247.1k</td>
+      <td class="num">+602</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/anywhere-labs/dsh-desktop" target="_blank" rel="noopener">anywhere-labs/dsh-desktop</a></td>
+      <td class="brief">DSH Desktop 是基于 DeepSeek Harness 构建的社区版桌面客户端(Windows/macOS),一键下载开箱即用——“万物皆插件,桌面本身也是插件”。仓库明确声明:独立社区项目,与深度求索公…</td>
+      <td class="num">★ 30.4k</td>
+      <td class="num">+93</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/browser-use/jev-ultrafast" target="_blank" rel="noopener">browser-use/jev-ultrafast</a></td>
+      <td class="brief">jev-ultrafast 来自 browser-use 团队(video-use 同门):“最快最便宜的网页 Agent”—— ultrafast 系列的超高速浏览器自动化引擎,Browser Use Cloud…</td>
+      <td class="num">★ 22.6k</td>
+      <td class="num">+78</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/Niko1221/Strata" target="_blank" rel="noopener">Niko1221/Strata</a></td>
+      <td class="brief">Strata 是一个开源本地大模型推理引擎,让你在自己游戏 PC 上运行 1250 亿参数的 Qwen3.8-Flash-Next 模型。只要一张 12GB 以上显存的 NVIDIA 或 AMD 显卡,Window…</td>
+      <td class="num">★ 20.8k</td>
+      <td class="num">+1073</td>
+      <td>C++</td><td></td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/dataelement/dsh-desktop" target="_blank" rel="noopener">dataelement/dsh-desktop</a></td>
+      <td class="brief">dataelement 版 DSH Desktop 是 DeepSeek Harness 的又一个社区桌面客户端:本地优先、跨平台,带便携预设(portable presets)与模块化设计,支持中日俄西葡等多语言。</td>
+      <td class="num">★ 13k</td>
+      <td class="num">+336</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/google/artemis" target="_blank" rel="noopener">google/artemis</a></td>
+      <td class="brief">ARTEMIS 是 Google 开源的 Android 自动化框架——把自然语言指令变成可靠的安卓自动化操作,“让 AI 助手和测试套件像人一样使用真手机”。含 MCP for IDEs 集成与中文文档。</td>
+      <td class="num">★ 11.3k</td>
+      <td class="num">+53</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">7</td>
+      <td><a href="https://github.com/lnkiai/m3e-canvas" target="_blank" rel="noopener">lnkiai/m3e-canvas</a></td>
+      <td class="brief">m3e-canvas 是一个浏览器里的 Material 3 Expressive 界面草图工具:在浏览器中画界面、链接页面、点击预览,然后一键复制成 AI 编码工具的提示词(vibe-coding prompt)…</td>
+      <td class="num">★ 9.1k</td>
+      <td class="num">+70</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">8</td>
+      <td><a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a></td>
+      <td class="brief">magpie 是一个常驻菜单栏的本地 AI 网关:让任意编程智能体用上任意大模型——Claude Code 跑 Kimi、Codex 跑 DeepSeek、Gemini CLI 跑 GLM,一个本地网关统一供给,菜…</td>
+      <td class="num">★ 8.7k</td>
+      <td class="num">+1076</td>
+      <td>Go</td><td></td></tr><tr><td class="col-rank">9</td>
+      <td><a href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">zai-org/ZCode</a></td>
+      <td class="brief">ZCode 是智谱 Z.ai 开源的 AI 编程工作台:一套完整的编程智能体运行环境,提供桌面应用、浏览器界面和终端 Agent 三种形态,客户端、后端服务、共享 UI 直到 Agent CLI 与运行时源码全部开放。</td>
+      <td class="num">★ 7.7k</td>
+      <td class="num">+42</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">10</td>
+      <td><a href="https://github.com/tamaratran/fast-jev-compaction" target="_blank" rel="noopener">tamaratran/fast-jev-compaction</a></td>
+      <td class="brief">fast-jev-compaction 是一个 Claude Code 插件,重新定义上下文压缩:不让 LLM 写有损摘要,而是一次快速请求给每条工具调用与结果打分,只删除过时无用的记录,保留的内容一字不改,也可作…</td>
+      <td class="num">★ 7.6k</td>
+      <td class="num">+18</td>
+      <td>TypeScript</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 崛起榜新进榜 / 重大变化</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#10</span>
+      <a href="https://github.com/tamaratran/fast-jev-compaction" target="_blank" rel="noopener">tamaratran/fast-jev-compaction</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+18</span><span class="stat-stars">★ 7.6k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:fast-jev-compaction 是一个 Claude Code 插件,重新定义上下文压缩:不让 LLM 写有损摘要,而是一次快速请求给每条工具调用与结果打分,只删除过时无用的记录,保留的内容一字不改,也可作为 npm 库独立使用。</p><p><strong>哪里好</strong>:传统摘要式压缩会丢掉文件路径、精确报错和关键约束;它永不改写任何内容,用户与助手文本原样保序,只精删工具记录;打分单请求完成,快且省 token,上下文利用率显著提高。</p><p><strong>应用场景</strong>:长会话编程逼近上下文上限时的"无损瘦身";连续几十轮工具调用的自动化任务;给自研智能体接入精细的上下文管理能力。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>MIT</span>
+    <span>建于 2026-09-17</span>
+    <a class="gh-link" href="https://github.com/tamaratran/fast-jev-compaction" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article></section><section class="meta-section"><h2 class="section-title">📈 追踪元数据</h2><ul>
+    <li>涨星榜:<strong>6</strong> 个 AI 项目(来自 GitHub Trending 今日榜)</li>
+    <li>崛起榜候选池:<strong>1376</strong> 个近60天新建 AI 项目(原始 2349)</li>
+    <li>关键词:<strong>62</strong> 组 · 失败 0 组</li>
+    <li>数据源:github-api(anonymous) · 生成于 2026-10-11 04:14</li>
+  </ul></section>
+  <p class="archive-link"><a href="archive.html">← 返回存档</a></p>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <p>每天 12:00 自动更新 · 数据源 GitHub Search API · <a href="https://github.com/mmlong818/ai-trending">源代码</a></p>
+    <p class="pv-line">📖 全站累计阅读 <span id="site-pv-display">12,000</span> 次</p>
+    <p class="muted">候选池:近 60 天新建的 AI 项目 · 按总星排序 = 崛起热度</p>
+  </div>
+  <span id="busuanzi_value_site_pv" style="display:none"></span>
+  <script>
+  (function(){
+    var BASE = 12000; // 阅读量基数:显示值 = 基数 + 真实计数
+    function fmt(n){ return Number(n).toLocaleString('zh-CN'); }
+    function upd(){
+      var pv = document.getElementById('busuanzi_value_site_pv');
+      var d1 = document.getElementById('site-pv-display');
+      var pvNum = parseInt(pv && pv.textContent, 10);
+      if (d1 && !isNaN(pvNum)) d1.textContent = fmt(BASE + pvNum);
+    }
+    var el = document.getElementById('busuanzi_value_site_pv');
+    if (el) new MutationObserver(upd).observe(el, {childList:true, characterData:true, subtree:true});
+    upd();
+  })();
+  </script>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
