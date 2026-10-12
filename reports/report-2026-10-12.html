@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-12 AI 趋势日报 · AI 新项目崛起榜</title>
+<meta name="description" content="每天发现近 60 天新建、星数最高的 AI 项目">
+<link rel="alternate" type="application/rss+xml" title="AI 新项目崛起榜" href="rss.xml">
+<style>
+:root{--bg:#fbfaf7;--surface:#ffffff;--border:#e8e5de;--ink:#1b1a17;--ink-2:#5c5951;--ink-3:#8f8b80;--accent:#b8451f;--accent-soft:#faf1ee;--serif:Georgia,"Times New Roman",serif;--sans:-apple-system,"Segoe UI","Noto Sans SC",sans-serif;--green:#2d7a4f;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.muted{color:var(--ink-3);font-size:14px;}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+.masthead{border-bottom:3px double var(--border);padding:24px 0 16px;margin-bottom:8px;}
+.masthead-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+.logo{margin:0;font-family:var(--serif);font-size:26px;font-weight:normal;}
+.logo a{color:var(--ink);}
+.tagline{margin:4px 0 0;color:var(--ink-2);font-size:13px;}
+.nav{display:flex;gap:18px;font-size:14px;}
+.nav-item{color:var(--ink-2);}
+.nav-item.active{color:var(--accent);font-weight:600;}
+.foot{border-top:3px double var(--border);margin-top:48px;padding:20px 0;font-size:13px;color:var(--ink-3);text-align:center;}
+.foot a{color:var(--ink-2);}
+.pv-line{color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums;}
+.pv-line span{color:var(--accent);font-weight:600;}
+main{padding:16px 0 32px;}
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 28px 24px;margin:8px 0 28px;}
+.hero-date{margin:0;color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;}
+.hero-title{font-family:var(--serif);font-size:28px;font-weight:normal;margin:8px 0 6px;line-height:1.3;}
+.hero-title a{color:var(--ink);}
+.hero-sub{margin:0 0 14px;color:var(--ink-2);font-size:15px;}
+.hero-cta{display:inline-block;background:var(--accent);color:#fff;padding:8px 18px;border-radius:6px;font-size:14px;}
+.hero-cta:hover{background:#9c3a19;text-decoration:none;}
+.section-title{font-family:var(--serif);font-size:20px;font-weight:normal;border-bottom:1px solid var(--border);padding-bottom:8px;margin:32px 0 16px;}
+.section-title .count{color:var(--ink-3);font-size:14px;font-family:var(--sans);}
+.page-title{font-family:var(--serif);font-size:26px;font-weight:normal;margin:8px 0 20px;}
+.day-title{font-family:var(--serif);font-size:24px;font-weight:normal;margin:8px 0 16px;}
+.breadcrumbs{font-size:13px;color:var(--ink-3);margin:4px 0 8px;}
+.banner{background:var(--accent-soft);border:1px solid #e8c9c0;border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:14px;}
+.feed{display:flex;flex-direction:column;gap:0;}
+.feed-card{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+.feed-date{color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;min-width:90px;padding-top:2px;}
+.feed-title{color:var(--ink);font-weight:600;}
+.feed-title:hover{color:var(--accent);}
+.feed-sub{margin:2px 0 0;color:var(--ink-3);font-size:13px;}
+.archive-link{margin:28px 0;text-align:center;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+.card-changed{border-left:4px solid var(--accent);}
+.card-watched{border-left:4px solid #c9a227;}
+.card-error{border-left:4px solid #c0392b;}
+.card-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.card-title{font-size:16px;font-weight:600;}
+.card-title a{color:var(--ink);}
+.card-title a:hover{color:var(--accent);}
+.card-title .rank{color:var(--ink-3);margin-right:6px;}
+.card-stats{display:flex;gap:14px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.stat-delta{color:var(--green);font-weight:600;}
+.stat-stars{color:#c9a227;}
+.desc{color:var(--ink-2);margin:8px 0 0;font-size:14px;}
+.intro{margin:12px 0 8px;padding:12px 14px;background:var(--bg);border-radius:8px;font-size:14.5px;}
+.intro p{margin:0 0 8px;}
+.intro p:last-child{margin-bottom:0;}
+.intro strong{color:var(--accent);}
+.card-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-3);margin-top:10px;}
+.gh-link{margin-left:auto;color:var(--accent);}
+.topics{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+.topic{font-size:11px;padding:2px 8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--ink-3);}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:var(--bg);border:1px solid var(--border);margin-left:6px;font-weight:normal;vertical-align:middle;}
+.badge-new{color:var(--accent);border-color:var(--accent);}
+.badge-base{color:var(--ink-3);border-color:var(--ink-3);}
+.badge-hot{color:#c0392b;border-color:#c0392b;}
+.badge-rank{color:var(--green);border-color:var(--green);}
+.badge-err{color:#c0392b;border-color:#c0392b;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+td.num{text-align:right;font-variant-numeric:tabular-nums;}
+.col-rank{color:var(--ink-3);width:32px;}
+td a{color:var(--accent);}
+.brief{color:var(--ink-2);font-size:13px;line-height:1.5;max-width:340px;}
+.meta-section ul{list-style:none;padding:0;font-size:14px;color:var(--ink-2);}
+.meta-section li{padding:4px 0;}
+.meta-section strong{color:var(--ink);}
+.search-box{margin:0 0 28px;}
+.search-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:var(--surface);color:var(--ink);font-family:var(--sans);}
+.search-box input:focus{outline:none;border-color:var(--accent);}
+.search-results{margin-top:8px;}
+.search-hit{display:block;padding:8px 12px;border-bottom:1px solid var(--border);font-size:14px;}
+.search-hit:hover{background:var(--accent-soft);text-decoration:none;}
+.cal-month{margin-bottom:36px;}
+.cal-title{font-family:var(--serif);font-size:18px;font-weight:normal;margin:0 0 12px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dow{text-align:center;font-size:12px;color:var(--ink-3);padding:4px 0;font-weight:600;}
+.cal-cell{min-height:64px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;font-size:13px;}
+.cal-cell.empty{background:transparent;border:1px dashed var(--border);opacity:.4;}
+.cal-cell.has-report{color:var(--ink);}
+.cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
+.cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
+.cal-count{font-size:11px;color:var(--accent);}
+.dual-section{display:flex;gap:28px;margin:8px 0 28px;}
+.dual-col{flex:1;min-width:0;}
+.dual-desc{color:var(--ink-3);font-size:13px;margin:0 0 12px;}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;color:var(--ink);background:var(--surface);}
+.mini-card:hover{border-color:var(--accent);background:var(--accent-soft);text-decoration:none;}
+.mini-rank{color:var(--ink-3);font-size:15px;font-weight:600;min-width:18px;text-align:center;font-variant-numeric:tabular-nums;}
+.mini-name{flex:1;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mini-delta{color:var(--green);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.mini-stars{color:#c9a227;font-size:13px;font-variant-numeric:tabular-nums;}
+.mini-new{border-left:3px solid var(--accent);}
+.mini-brief{margin:-2px 0 8px 12px;color:var(--ink-3);font-size:12px;line-height:1.45;padding-left:28px;}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}.dual-section{flex-direction:column;}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <div class="brand">
+      <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
+      <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
+    </div>
+    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item " href="archive.html">存档</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <p class="breadcrumbs"><a href="index.html">首页</a> / <a href="archive.html">存档</a> / 2026-10-12</p>
+  <h2 class="day-title">2026-10-12 AI 趋势日报</h2>
+  <section><h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending · 按今日新增星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>今日新增</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/morluto/rea" target="_blank" rel="noopener">morluto/rea</a></td>
+      <td class="brief">REA(Reverse Engineer Anything)是一个&quot;万物逆向&quot;的 MCP 服务器:把 AI 智能体接到一整套逆向分析工具上,从应用行为到原生二进制层层下钻,没有源码也能弄清某个功能是如何实现的,给出…</td>
+      <td class="num">+25599</td>
+      <td class="num">★ 113.4k</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/cathrynlavery/diagram-design" target="_blank" rel="noopener">cathrynlavery/diagram-design</a></td>
+      <td class="brief">diagram-design 是一套面向 Claude Code 的编辑型图表资源,提供 29 种自包含的 HTML + SVG 图表模板,无阴影、无 Mermaid 依赖,专为 AI 编程场景设计。</td>
+      <td class="num">+1083</td>
+      <td class="num">★ 50.7k</td>
+      <td>HTML</td><td></td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/lyogavin/airllm" target="_blank" rel="noopener">lyogavin/airllm</a></td>
+      <td class="brief">AirLLM 是极致压缩推理显存的开源引擎:不做量化、蒸馏、剪枝,就让 70B 模型跑在单张 4GB 显卡上——2.8T 的 Kimi K3 用不到 4GB,125B 的 Qwen3.8-Flash-Next 用…</td>
+      <td class="num">+548</td>
+      <td class="num">★ 36.7k</td>
+      <td>Jupyter Notebook</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 涨星榜新进榜详解</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#3</span>
+      <a href="https://github.com/lyogavin/airllm" target="_blank" rel="noopener">lyogavin/airllm</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+548</span><span class="stat-stars">★ 36.7k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:AirLLM 是极致压缩推理显存的开源引擎:不做量化、蒸馏、剪枝,就让 70B 模型跑在单张 4GB 显卡上——2.8T 的 Kimi K3 用不到 4GB,125B 的 Qwen3.8-Flash-Next 用 6GB,671B 的 DeepSeek-V3 约 12GB。</p><p><strong>哪里好</strong>:"无量化跑巨模型"路线独树一帜,保住模型原始精度;把千亿、万亿参数模型的门槛从数据中心拉到消费级显卡;新版本还支持 6GB 显存训练 125B 模型;macOS 可用,配套示例笔记本完善。</p><p><strong>应用场景</strong>:显存不足又想本地跑最新开源大模型的研究者与发烧友;在笔记本或老显卡上做模型实验;隐私敏感场景下的超大模型离线推理。</p></div>
+  <div class="card-meta">
+    <span>Jupyter Notebook</span>
+    <span>Apache-2.0</span>
+    <span>建于 2023-06-12</span>
+    <a class="gh-link" href="https://github.com/lyogavin/airllm" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">chinese-llm</span><span class="topic">chinese-nlp</span><span class="topic">finetune</span><span class="topic">generative-ai</span><span class="topic">instruct-gpt</span><span class="topic">instruction-set</span></div>
+</article></section><section><h2 class="section-title">🚀 新项目崛起榜 <span class="count">近60天新建 · 按总星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/browser-use/jev-ultrafast" target="_blank" rel="noopener">browser-use/jev-ultrafast</a></td>
+      <td class="brief">jev-ultrafast 来自 browser-use 团队(video-use 同门):“最快最便宜的网页 Agent”—— ultrafast 系列的超高速浏览器自动化引擎,Browser Use Cloud…</td>
+      <td class="num">★ 22.6k</td>
+      <td class="num">+82</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/Niko1221/Strata" target="_blank" rel="noopener">Niko1221/Strata</a></td>
+      <td class="brief">Strata 是一个开源本地大模型推理引擎,让你在自己游戏 PC 上运行 1250 亿参数的 Qwen3.8-Flash-Next 模型。只要一张 12GB 以上显存的 NVIDIA 或 AMD 显卡,Window…</td>
+      <td class="num">★ 21.8k</td>
+      <td class="num">+984</td>
+      <td>C++</td><td></td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a></td>
+      <td class="brief">magpie 是一个常驻菜单栏的本地 AI 网关:让任意编程智能体用上任意大模型——Claude Code 跑 Kimi、Codex 跑 DeepSeek、Gemini CLI 跑 GLM,一个本地网关统一供给,菜…</td>
+      <td class="num">★ 9.6k</td>
+      <td class="num">+900</td>
+      <td>Go</td><td>🔥</td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/Ebony-Vinyl/dsh-our-free-model" target="_blank" rel="noopener">Ebony-Vinyl/dsh-our-free-model</a></td>
+      <td class="brief">dsh-our-free-model 是一个 DeepSeek Harness(dsh)免费模型插件:装上即可免登录、免注册、免 API Key 直接使用 DeepSeek V4.1 Flash、Kimi K3 等…</td>
+      <td class="num">★ 9.4k</td>
+      <td class="num">+2352</td>
+      <td>JavaScript</td><td>🆕</td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/lnkiai/m3e-canvas" target="_blank" rel="noopener">lnkiai/m3e-canvas</a></td>
+      <td class="brief">m3e-canvas 是一个浏览器里的 Material 3 Expressive 界面草图工具:在浏览器中画界面、链接页面、点击预览,然后一键复制成 AI 编码工具的提示词(vibe-coding prompt)…</td>
+      <td class="num">★ 9.2k</td>
+      <td class="num">+71</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">zai-org/ZCode</a></td>
+      <td class="brief">ZCode 是智谱 Z.ai 开源的 AI 编程工作台:一套完整的编程智能体运行环境,提供桌面应用、浏览器界面和终端 Agent 三种形态,客户端、后端服务、共享 UI 直到 Agent CLI 与运行时源码全部开放。</td>
+      <td class="num">★ 7.7k</td>
+      <td class="num">+40</td>
+      <td>TypeScript</td><td>🔥</td></tr><tr><td class="col-rank">7</td>
+      <td><a href="https://github.com/jev-chat/jev-chat-jarvis" target="_blank" rel="noopener">jev-chat/jev-chat-jarvis</a></td>
+      <td class="brief">jev-chat 是一个聊天辅助决策工具:回复之前先让 AI 读懂对方——分析消息真实意图、当前风险,并起草可直接一键填入的回复,发不发始终由你决定,支持 Android/Windows/macOS/iOS。</td>
+      <td class="num">★ 7.6k</td>
+      <td class="num">+64</td>
+      <td>Kotlin</td><td>🆕</td></tr><tr><td class="col-rank">8</td>
+      <td><a href="https://github.com/tamaratran/fast-jev-compaction" target="_blank" rel="noopener">tamaratran/fast-jev-compaction</a></td>
+      <td class="brief">fast-jev-compaction 是一个 Claude Code 插件,重新定义上下文压缩:不让 LLM 写有损摘要,而是一次快速请求给每条工具调用与结果打分,只删除过时无用的记录,保留的内容一字不改,也可作…</td>
+      <td class="num">★ 7.6k</td>
+      <td class="num">+9</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">9</td>
+      <td><a href="https://github.com/Human-Agent-Society/reef" target="_blank" rel="noopener">Human-Agent-Society/reef</a></td>
+      <td class="brief">reef 是持续自我改进 Agent 的基础设施(Infrastructure for continually self-improving agents)——让 Agent 从每次执行中学习并改进自身。</td>
+      <td class="num">★ 7.5k</td>
+      <td class="num">+11</td>
+      <td>Python</td><td>🆕</td></tr><tr><td class="col-rank">10</td>
+      <td><a href="https://github.com/XiaoDuoYa/codex-with-chatgpt" target="_blank" rel="noopener">XiaoDuoYa/codex-with-chatgpt</a></td>
+      <td class="brief">codex-with-chatgpt 让 ChatGPT 思考、Codex 干活:把规划与 Review 交给已付费的网页版 ChatGPT,Codex 只负责执行,通过官方网页加只读 MCP 桥接实现,不用 AP…</td>
+      <td class="num">★ 7.3k</td>
+      <td class="num">+45</td>
+      <td>TypeScript</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 崛起榜新进榜 / 重大变化</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#3</span>
+      <a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a>
+      <span class="badge badge-hot">🔥 排名跃升 8→3</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+900</span><span class="stat-stars">★ 9.6k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:magpie 是一个常驻菜单栏的本地 AI 网关:让任意编程智能体用上任意大模型——Claude Code 跑 Kimi、Codex 跑 DeepSeek、Gemini CLI 跑 GLM,一个本地网关统一供给,菜单栏一点即切。</p><p><strong>哪里好</strong>:不改各智能体配置即可自由混搭模型与账号;某账号额度用完自动静默切换到下一个,工作不断线;全程本地运行,密钥与流量不经第三方;把多家订阅计划的价值榨到最满。</p><p><strong>应用场景</strong>:同时使用 Claude Code/Codex/Gemini CLI 多个智能体的开发者;手里有多个模型账号想统一调度;个人与小团队的模型额度集中管理。</p></div>
+  <div class="card-meta">
+    <span>Go</span>
+    <span>MIT</span>
+    <span>建于 2026-09-23</span>
+    <a class="gh-link" href="https://github.com/yetone/magpie" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">claude-code</span><span class="topic">codex</span><span class="topic">deepseek</span><span class="topic">gemini-cli</span><span class="topic">llm</span><span class="topic">macos</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#4</span>
+      <a href="https://github.com/Ebony-Vinyl/dsh-our-free-model" target="_blank" rel="noopener">Ebony-Vinyl/dsh-our-free-model</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+2352</span><span class="stat-stars">★ 9.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:dsh-our-free-model 是一个 DeepSeek Harness(dsh)免费模型插件:装上即可免登录、免注册、免 API Key 直接使用 DeepSeek V4.1 Flash、Kimi K3 等前沿模型,完全免费且不限量,MIT 开源、零依赖、无构建步骤。</p><p><strong>哪里好</strong>:把"前沿大模型免费用"的门槛降到一次插件安装;不收集账号、不碰密钥,配置成本几乎为零;适配 dsh 0.1.5-0.1.7 内核,轻量到没有任何依赖;当前为 beta,但已可日常白嫖顶级模型。</p><p><strong>应用场景</strong>:个人开发者在 dsh 工作台零成本体验最新模型;学生与尝鲜用户免注册上手 AI 编程;给轻量工作流接一个无配额焦虑的默认模型。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>MIT</span>
+    <span>建于 2026-09-24</span>
+    <a class="gh-link" href="https://github.com/Ebony-Vinyl/dsh-our-free-model" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-agents</span><span class="topic">deepseek</span><span class="topic">deepseek-harness</span><span class="topic">developer-tools</span><span class="topic">dsh</span><span class="topic">dsh-plugin</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#6</span>
+      <a href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">zai-org/ZCode</a>
+      <span class="badge badge-hot">🔥 排名跃升 9→6</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+40</span><span class="stat-stars">★ 7.7k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:ZCode 是智谱 Z.ai 开源的 AI 编程工作台:一套完整的编程智能体运行环境,提供桌面应用、浏览器界面和终端 Agent 三种形态,客户端、后端服务、共享 UI 直到 Agent CLI 与运行时源码全部开放。</p><p><strong>哪里好</strong>:官方主力维护、迭代迅速(已至 v3.14);一个工作台统一管理多形态智能体,不必在散装工具间来回切换;以简体中文为第一语言,配套飞书社群,国内开发者上手门槛低;架构完整,可自部署、可二次开发。</p><p><strong>应用场景</strong>:团队搭建可控、可扩展的编程智能体环境;基于其 CLI 与运行时构建定制 Agent 工具链;企业内部私有化部署 AI 编程平台。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-09-20</span>
+    <a class="gh-link" href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#7</span>
+      <a href="https://github.com/jev-chat/jev-chat-jarvis" target="_blank" rel="noopener">jev-chat/jev-chat-jarvis</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+64</span><span class="stat-stars">★ 7.6k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:jev-chat 是一个聊天辅助决策工具:回复之前先让 AI 读懂对方——分析消息真实意图、当前风险,并起草可直接一键填入的回复,发不发始终由你决定,支持 Android/Windows/macOS/iOS。</p><p><strong>哪里好</strong>:定位是"先看懂再回复"而非代聊,主动权留在用户手里;意图与风险双维度分析,帮你在关键对话里避坑;一键填入草稿的交互顺滑;全平台覆盖,微信类聊天与职场沟通都适用。</p><p><strong>应用场景</strong>:职场沟通中斟酌措辞、判断领导与客户意图;处理敏感或高冲突对话前评估风险;社交场景里想回得体面又拿不准的用户。</p></div>
+  <div class="card-meta">
+    <span>Kotlin</span>
+    <span>MIT</span>
+    <span>建于 2026-09-21</span>
+    <a class="gh-link" href="https://github.com/jev-chat/jev-chat-jarvis" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">accessibility-service</span><span class="topic">ai-assistant</span><span class="topic">android</span><span class="topic">chat-assistant</span><span class="topic">chat-copilot</span><span class="topic">llm</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#9</span>
+      <a href="https://github.com/Human-Agent-Society/reef" target="_blank" rel="noopener">Human-Agent-Society/reef</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+11</span><span class="stat-stars">★ 7.5k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:reef 是<strong>持续自我改进 Agent 的基础设施</strong>(Infrastructure for continually self-improving agents)——让 Agent 从每次执行中学习并改进自身。</p><p><strong>哪里好</strong>:“自我改进”是 Agent 的终极方向之一——不满足于固定循环,而是让 Agent 越用越强。学术团队(Human-Agent-Society)出品,带 CI 工程。新进榜 +439 星。</p><p><strong>应用场景</strong>:自我改进 Agent 系统的构建;Agent 经验沉淀与能力进化研究;长期运行 Agent 的持续优化。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-08-31</span>
+    <a class="gh-link" href="https://github.com/Human-Agent-Society/reef" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-infrastructure</span><span class="topic">ai-agents</span><span class="topic">continual-learning</span><span class="topic">inference</span><span class="topic">llm</span><span class="topic">llm-training</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#10</span>
+      <a href="https://github.com/XiaoDuoYa/codex-with-chatgpt" target="_blank" rel="noopener">XiaoDuoYa/codex-with-chatgpt</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+45</span><span class="stat-stars">★ 7.3k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:codex-with-chatgpt 让 ChatGPT 思考、Codex 干活:把规划与 Review 交给已付费的网页版 ChatGPT,Codex 只负责执行,通过官方网页加只读 MCP 桥接实现,不用 API Key、不做逆向代理。</p><p><strong>哪里好</strong>:直击"网页版额度大量闲置、API 额度却告急"的痛点,把订阅价值最大化;走官方网页而非破解接口,合规且稳定;中文文档完善,一条指令即可更新升级;思考与执行分离后,Codex 的稀缺 token 只花在刀刃上。</p><p><strong>应用场景</strong>:持有 ChatGPT Plus/Pro 订阅的重度 Codex 用户降低 API 消耗;复杂任务的规划与审查交给网页版长上下文;个人降本增效的智能体工作流改造。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>MIT</span>
+    <span>建于 2026-08-28</span>
+    <a class="gh-link" href="https://github.com/XiaoDuoYa/codex-with-chatgpt" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-agents</span><span class="topic">chatgpt</span><span class="topic">codex</span><span class="topic">mcp</span><span class="topic">model-context-protocol</span><span class="topic">oauth</span></div>
+</article></section><section class="meta-section"><h2 class="section-title">📈 追踪元数据</h2><ul>
+    <li>涨星榜:<strong>3</strong> 个 AI 项目(来自 GitHub Trending 今日榜)</li>
+    <li>崛起榜候选池:<strong>1371</strong> 个近60天新建 AI 项目(原始 2312)</li>
+    <li>关键词:<strong>62</strong> 组 · 失败 0 组</li>
+    <li>数据源:github-api(anonymous) · 生成于 2026-10-12 04:24</li>
+  </ul></section>
+  <p class="archive-link"><a href="archive.html">← 返回存档</a></p>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <p>每天 12:00 自动更新 · 数据源 GitHub Search API · <a href="https://github.com/mmlong818/ai-trending">源代码</a></p>
+    <p class="pv-line">📖 全站累计阅读 <span id="site-pv-display">12,000</span> 次</p>
+    <p class="muted">候选池:近 60 天新建的 AI 项目 · 按总星排序 = 崛起热度</p>
+  </div>
+  <span id="busuanzi_value_site_pv" style="display:none"></span>
+  <script>
+  (function(){
+    var BASE = 12000; // 阅读量基数:显示值 = 基数 + 真实计数
+    function fmt(n){ return Number(n).toLocaleString('zh-CN'); }
+    function upd(){
+      var pv = document.getElementById('busuanzi_value_site_pv');
+      var d1 = document.getElementById('site-pv-display');
+      var pvNum = parseInt(pv && pv.textContent, 10);
+      if (d1 && !isNaN(pvNum)) d1.textContent = fmt(BASE + pvNum);
+    }
+    var el = document.getElementById('busuanzi_value_site_pv');
+    if (el) new MutationObserver(upd).observe(el, {childList:true, characterData:true, subtree:true});
+    upd();
+  })();
+  </script>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
