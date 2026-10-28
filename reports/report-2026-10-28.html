@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-10-28 AI 趋势日报 · AI 新项目崛起榜</title>
+<meta name="description" content="每天发现近 60 天新建、星数最高的 AI 项目">
+<link rel="alternate" type="application/rss+xml" title="AI 新项目崛起榜" href="rss.xml">
+<style>
+:root{--bg:#fbfaf7;--surface:#ffffff;--border:#e8e5de;--ink:#1b1a17;--ink-2:#5c5951;--ink-3:#8f8b80;--accent:#b8451f;--accent-soft:#faf1ee;--serif:Georgia,"Times New Roman",serif;--sans:-apple-system,"Segoe UI","Noto Sans SC",sans-serif;--green:#2d7a4f;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.muted{color:var(--ink-3);font-size:14px;}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+.masthead{border-bottom:3px double var(--border);padding:24px 0 16px;margin-bottom:8px;}
+.masthead-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+.logo{margin:0;font-family:var(--serif);font-size:26px;font-weight:normal;}
+.logo a{color:var(--ink);}
+.tagline{margin:4px 0 0;color:var(--ink-2);font-size:13px;}
+.nav{display:flex;gap:18px;font-size:14px;}
+.nav-item{color:var(--ink-2);}
+.nav-item.active{color:var(--accent);font-weight:600;}
+.foot{border-top:3px double var(--border);margin-top:48px;padding:20px 0;font-size:13px;color:var(--ink-3);text-align:center;}
+.foot a{color:var(--ink-2);}
+.pv-line{color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums;}
+.pv-line span{color:var(--accent);font-weight:600;}
+main{padding:16px 0 32px;}
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 28px 24px;margin:8px 0 28px;}
+.hero-date{margin:0;color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;}
+.hero-title{font-family:var(--serif);font-size:28px;font-weight:normal;margin:8px 0 6px;line-height:1.3;}
+.hero-title a{color:var(--ink);}
+.hero-sub{margin:0 0 14px;color:var(--ink-2);font-size:15px;}
+.hero-cta{display:inline-block;background:var(--accent);color:#fff;padding:8px 18px;border-radius:6px;font-size:14px;}
+.hero-cta:hover{background:#9c3a19;text-decoration:none;}
+.section-title{font-family:var(--serif);font-size:20px;font-weight:normal;border-bottom:1px solid var(--border);padding-bottom:8px;margin:32px 0 16px;}
+.section-title .count{color:var(--ink-3);font-size:14px;font-family:var(--sans);}
+.page-title{font-family:var(--serif);font-size:26px;font-weight:normal;margin:8px 0 20px;}
+.day-title{font-family:var(--serif);font-size:24px;font-weight:normal;margin:8px 0 16px;}
+.breadcrumbs{font-size:13px;color:var(--ink-3);margin:4px 0 8px;}
+.banner{background:var(--accent-soft);border:1px solid #e8c9c0;border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:14px;}
+.feed{display:flex;flex-direction:column;gap:0;}
+.feed-card{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+.feed-date{color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;min-width:90px;padding-top:2px;}
+.feed-title{color:var(--ink);font-weight:600;}
+.feed-title:hover{color:var(--accent);}
+.feed-sub{margin:2px 0 0;color:var(--ink-3);font-size:13px;}
+.archive-link{margin:28px 0;text-align:center;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+.card-changed{border-left:4px solid var(--accent);}
+.card-watched{border-left:4px solid #c9a227;}
+.card-error{border-left:4px solid #c0392b;}
+.card-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.card-title{font-size:16px;font-weight:600;}
+.card-title a{color:var(--ink);}
+.card-title a:hover{color:var(--accent);}
+.card-title .rank{color:var(--ink-3);margin-right:6px;}
+.card-stats{display:flex;gap:14px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.stat-delta{color:var(--green);font-weight:600;}
+.stat-stars{color:#c9a227;}
+.desc{color:var(--ink-2);margin:8px 0 0;font-size:14px;}
+.intro{margin:12px 0 8px;padding:12px 14px;background:var(--bg);border-radius:8px;font-size:14.5px;}
+.intro p{margin:0 0 8px;}
+.intro p:last-child{margin-bottom:0;}
+.intro strong{color:var(--accent);}
+.card-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-3);margin-top:10px;}
+.gh-link{margin-left:auto;color:var(--accent);}
+.topics{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+.topic{font-size:11px;padding:2px 8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--ink-3);}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:var(--bg);border:1px solid var(--border);margin-left:6px;font-weight:normal;vertical-align:middle;}
+.badge-new{color:var(--accent);border-color:var(--accent);}
+.badge-base{color:var(--ink-3);border-color:var(--ink-3);}
+.badge-hot{color:#c0392b;border-color:#c0392b;}
+.badge-rank{color:var(--green);border-color:var(--green);}
+.badge-err{color:#c0392b;border-color:#c0392b;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+td.num{text-align:right;font-variant-numeric:tabular-nums;}
+.col-rank{color:var(--ink-3);width:32px;}
+td a{color:var(--accent);}
+.brief{color:var(--ink-2);font-size:13px;line-height:1.5;max-width:340px;}
+.meta-section ul{list-style:none;padding:0;font-size:14px;color:var(--ink-2);}
+.meta-section li{padding:4px 0;}
+.meta-section strong{color:var(--ink);}
+.search-box{margin:0 0 28px;}
+.search-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:var(--surface);color:var(--ink);font-family:var(--sans);}
+.search-box input:focus{outline:none;border-color:var(--accent);}
+.search-results{margin-top:8px;}
+.search-hit{display:block;padding:8px 12px;border-bottom:1px solid var(--border);font-size:14px;}
+.search-hit:hover{background:var(--accent-soft);text-decoration:none;}
+.cal-month{margin-bottom:36px;}
+.cal-title{font-family:var(--serif);font-size:18px;font-weight:normal;margin:0 0 12px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dow{text-align:center;font-size:12px;color:var(--ink-3);padding:4px 0;font-weight:600;}
+.cal-cell{min-height:64px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;font-size:13px;}
+.cal-cell.empty{background:transparent;border:1px dashed var(--border);opacity:.4;}
+.cal-cell.has-report{color:var(--ink);}
+.cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
+.cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
+.cal-count{font-size:11px;color:var(--accent);}
+.dual-section{display:flex;gap:28px;margin:8px 0 28px;}
+.dual-col{flex:1;min-width:0;}
+.dual-desc{color:var(--ink-3);font-size:13px;margin:0 0 12px;}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;color:var(--ink);background:var(--surface);}
+.mini-card:hover{border-color:var(--accent);background:var(--accent-soft);text-decoration:none;}
+.mini-rank{color:var(--ink-3);font-size:15px;font-weight:600;min-width:18px;text-align:center;font-variant-numeric:tabular-nums;}
+.mini-name{flex:1;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mini-delta{color:var(--green);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.mini-stars{color:#c9a227;font-size:13px;font-variant-numeric:tabular-nums;}
+.mini-new{border-left:3px solid var(--accent);}
+.mini-brief{margin:-2px 0 8px 12px;color:var(--ink-3);font-size:12px;line-height:1.45;padding-left:28px;}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}.dual-section{flex-direction:column;}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <div class="brand">
+      <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
+      <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
+    </div>
+    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item " href="archive.html">存档</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <p class="breadcrumbs"><a href="index.html">首页</a> / <a href="archive.html">存档</a> / 2026-10-28</p>
+  <h2 class="day-title">2026-10-28 AI 趋势日报</h2>
+  <section><h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending · 按今日新增星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>今日新增</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/Nutlope/hallmark" target="_blank" rel="noopener">Nutlope/hallmark</a></td>
+      <td class="brief">Hallmark 是 Together AI 出品的&quot;反 AI 味&quot;设计技能:给 Claude Code、Codex、Cursor、OpenCode 装上专业审美,让 AI 生成的页面拒绝一眼假,内置 48 套主题…</td>
+      <td class="num">+2830</td>
+      <td class="num">★ 39.6k</td>
+      <td>CSS</td><td>🆕</td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/makecindy/cindy" target="_blank" rel="noopener">makecindy/cindy</a></td>
+      <td class="brief">Cindy 是一个开源、开箱即用的 AI 智能体(&quot;想到,就能做到&quot;):在你自己的电脑上干真活——装好就能用,无需复杂配置,Apache-2.0 协议,官方提供简体中文文档。</td>
+      <td class="num">+1465</td>
+      <td class="num">★ 7.6k</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/pbakaus/impeccable" target="_blank" rel="noopener">pbakaus/impeccable</a></td>
+      <td class="brief">impeccable 是给你的编程智能体准备的&quot;设计词汇表&quot;:一套让 AI 生成界面更精致的设计指令集——写代码时用 polish/bolder 引导风格,评审时用 critique/audit 挑毛病,在 AI…</td>
+      <td class="num">+1449</td>
+      <td class="num">★ 90.9k</td>
+      <td>Rust</td><td>🆕</td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">affaan-m/ECC</a></td>
+      <td class="brief">ECC(Essential Claude Code)是面向 AI 编码代理(Claude Code/Codex/OpenCode/Cursor 等)的性能优化与增强系统,定位“agent harness 的操作系统…</td>
+      <td class="num">+1165</td>
+      <td class="num">★ 291k</td>
+      <td>JavaScript</td><td>🆕</td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/gitroomhq/postiz-app" target="_blank" rel="noopener">gitroomhq/postiz-app</a></td>
+      <td class="brief">Postiz 是开源的&quot;智能体化&quot;社交媒体排程工具:一站式管理多平台账号,支持 AI 生成与自动发布内容,可自托管,3.8 万星的该赛道头部项目。</td>
+      <td class="num">+951</td>
+      <td class="num">★ 39.5k</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/nightly-labs/openbot" target="_blank" rel="noopener">nightly-labs/openbot</a></td>
+      <td class="brief">openbot 是一个本地优先的桌面工作区,用来养&quot;常驻 AI 队友&quot;:给 Codex、Claude、Grok 各配专属工作区,带任务队列、文件共享、浏览器控制和智能体之间的协作。</td>
+      <td class="num">+777</td>
+      <td class="num">★ 2.6k</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">7</td>
+      <td><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers</a></td>
+      <td class="brief">superpowers 是一个Agent 技能框架+软件开发方法论,口号是“真的能用的”(agentic skills framework &amp; methodology that works)。</td>
+      <td class="num">+617</td>
+      <td class="num">★ 306.6k</td>
+      <td>Shell</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 涨星榜新进榜详解</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#1</span>
+      <a href="https://github.com/Nutlope/hallmark" target="_blank" rel="noopener">Nutlope/hallmark</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+2830</span><span class="stat-stars">★ 39.6k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:Hallmark 是 Together AI 出品的"反 AI 味"设计技能:给 Claude Code、Codex、Cursor、OpenCode 装上专业审美,让 AI 生成的页面拒绝一眼假,内置 48 套主题素材库。</p><p><strong>哪里好</strong>:每次从 48 套主题中抽 3 套围绕访客目标构建页面;生成后在真实浏览器里跑"AI 味检查":清除标题上的眉题、全大写字母间距、标题里孤立的彩色词、空框架堆砌、页尾必挂邮件订阅等典型机器感套路。</p><p><strong>应用场景</strong>:用 AI 生成落地页与产品页但嫌"一眼 AI"的开发者;设计审计与页面重做;团队统一 AI 生成页面的质量下限。</p></div>
+  <div class="card-meta">
+    <span>CSS</span>
+    
+    
+    <a class="gh-link" href="https://github.com/Nutlope/hallmark" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#3</span>
+      <a href="https://github.com/pbakaus/impeccable" target="_blank" rel="noopener">pbakaus/impeccable</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1449</span><span class="stat-stars">★ 90.9k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:impeccable 是给你的编程智能体准备的"设计词汇表":一套让 AI 生成界面更精致的设计指令集——写代码时用 polish/bolder 引导风格,评审时用 critique/audit 挑毛病,在 AI 味页面上线前就拦下来。</p><p><strong>哪里好</strong>:不换模型不换工具,只换"说话方式"就能显著提升 UI 产出;把设计师的评判标准固化为可复用指令;与 hallmark 等"反 AI 味"工具互补,形成生成+审查闭环;9 万星作者 pbakaus 出品,轻量即插即用。</p><p><strong>应用场景</strong>:用 Claude Code/Cursor 生成落地页与组件时提升设计质量;代码评审环节自动挑 UI 毛病;给团队统一 AI 前端产出的审美基线。</p></div>
+  <div class="card-meta">
+    <span>Rust</span>
+    <span>Apache-2.0</span>
+    <span>建于 2025-11-16</span>
+    <a class="gh-link" href="https://github.com/pbakaus/impeccable" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-skills</span><span class="topic">ai</span><span class="topic">anti-slop</span><span class="topic">design</span><span class="topic">slop</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#4</span>
+      <a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">affaan-m/ECC</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1165</span><span class="stat-stars">★ 291k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:ECC(Essential Claude Code)是面向 AI 编码代理(Claude Code/Codex/OpenCode/Cursor 等)的<strong>性能优化与增强系统</strong>,定位“agent harness 的操作系统”——提供技能(skills)、直觉、记忆、安全和研究优先开发能力。</p><p><strong>哪里好</strong>:把 Agent 增强能力(记忆持久化/技能库/安全沙箱)整合成统一框架,抓“Agent 工程化”浪潮,多语言文档完善。总星 24 万+,是 Claude Code 生态头部配套项目,近期因 skills 赛道回潮重回 Trending。</p><p><strong>应用场景</strong>:重度 AI 编程用户增强 Agent 记忆与技能;团队统一 AI 编码工作流;Agent 工程化最佳实践参考。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    
+    <span>建于 2026-01-18</span>
+    <a class="gh-link" href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#7</span>
+      <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+617</span><span class="stat-stars">★ 306.6k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:superpowers 是一个<strong>Agent 技能框架+软件开发方法论</strong>,口号是“真的能用的”(agentic skills framework & methodology that works)。</p><p><strong>哪里好</strong>:不止提供技能包,还打包了一套完整的开发方法论——把“Agent 怎么辅助开发”从零散技巧上升为体系化框架。强调工程实用性而非概念炒作。今天 +557 星。</p><p><strong>应用场景</strong>:团队标准化 AI 辅助开发流程;构建自己的 Agent 技能体系;学习 Agent 驱动的软件工程方法论。</p></div>
+  <div class="card-meta">
+    <span>Shell</span>
+    <span>MIT</span>
+    <span>建于 2025-10-09</span>
+    <a class="gh-link" href="https://github.com/obra/superpowers" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai</span><span class="topic">brainstorming</span><span class="topic">coding</span><span class="topic">obra</span><span class="topic">sdlc</span><span class="topic">skills</span></div>
+</article></section><section><h2 class="section-title">🚀 新项目崛起榜 <span class="count">近60天新建 · 按总星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/Ebony-Vinyl/dsh-our-free-model" target="_blank" rel="noopener">Ebony-Vinyl/dsh-our-free-model</a></td>
+      <td class="brief">dsh-our-free-model 是一个 DeepSeek Harness(dsh)免费模型插件:装上即可免登录、免注册、免 API Key 直接使用 DeepSeek V4.1 Flash、Kimi K3 等…</td>
+      <td class="num">★ 45.1k</td>
+      <td class="num">+2063</td>
+      <td>JavaScript</td><td></td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/Gathin23/cleanyourtv" target="_blank" rel="noopener">Gathin23/cleanyourtv</a></td>
+      <td class="brief">CleanYourTV 是安卓/Google TV 的&quot;去广告瘦身&quot;工具:通过 Wi-Fi 即可清除电视预装垃圾应用,把满屏广告的首页换成类 Apple TV 的干净桌面,免 Root、免数据线、不卸载任何东西、一…</td>
+      <td class="num">★ 39.7k</td>
+      <td class="num">+2552</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/Niko1221/Strata" target="_blank" rel="noopener">Niko1221/Strata</a></td>
+      <td class="brief">Strata 是一个开源本地大模型推理引擎,让你在自己游戏 PC 上运行 1250 亿参数的 Qwen3.8-Flash-Next 模型。只要一张 12GB 以上显存的 NVIDIA 或 AMD 显卡,Window…</td>
+      <td class="num">★ 34.7k</td>
+      <td class="num">+856</td>
+      <td>C++</td><td></td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a></td>
+      <td class="brief">magpie 是一个常驻菜单栏的本地 AI 网关:让任意编程智能体用上任意大模型——Claude Code 跑 Kimi、Codex 跑 DeepSeek、Gemini CLI 跑 GLM,一个本地网关统一供给,菜…</td>
+      <td class="num">★ 23.9k</td>
+      <td class="num">+1054</td>
+      <td>Go</td><td>🔥</td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/browser-use/jev-ultrafast" target="_blank" rel="noopener">browser-use/jev-ultrafast</a></td>
+      <td class="brief">jev-ultrafast 来自 browser-use 团队(video-use 同门):“最快最便宜的网页 Agent”—— ultrafast 系列的超高速浏览器自动化引擎,Browser Use Cloud…</td>
+      <td class="num">★ 23.8k</td>
+      <td class="num">+70</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">deepseek-ai/DeepInfer</a></td>
+      <td class="brief">DeepInfer 是 DeepSeek 官方开源的高性能大规模推理框架——正是支撑 DeepSeek 生产服务的同款引擎,首发支持 DeepSeek-V4.1-Flash,提供规模化服务所需的核心离线推理能力。</td>
+      <td class="num">★ 23.5k</td>
+      <td class="num">+359</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">wheresryan22/anatomy</a></td>
+      <td class="brief">Anatomy 是一个智能体技能:让 AI 用&quot;把想法造成一台真实可动的机器&quot;的方式来解释概念——生成细节丰富、可交互的等距视角插图,输出精致 SVG,还可叠加 WebGL 着色器与 3D 效果。</td>
+      <td class="num">★ 21.5k</td>
+      <td class="num">+406</td>
+      <td>JavaScript</td><td></td></tr><tr><td class="col-rank">8</td>
+      <td><a href="https://github.com/lnkiai/m3e-canvas" target="_blank" rel="noopener">lnkiai/m3e-canvas</a></td>
+      <td class="brief">m3e-canvas 是一个浏览器里的 Material 3 Expressive 界面草图工具:在浏览器中画界面、链接页面、点击预览,然后一键复制成 AI 编码工具的提示词(vibe-coding prompt)…</td>
+      <td class="num">★ 9.8k</td>
+      <td class="num">+31</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">9</td>
+      <td><a href="https://github.com/rehan-remade/universal-modder" target="_blank" rel="noopener">rehan-remade/universal-modder</a></td>
+      <td class="brief">universal-modder 是一套让 AI 编程智能体给 PC 游戏做 Mod 的技能包:配合 fal 的 MCP,智能体自己找到游戏、判断引擎、读真实代码、做侦察与逆向,生成美术/3D/音效,在运行中的游戏…</td>
+      <td class="num">★ 9k</td>
+      <td class="num">+69</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">zai-org/ZCode</a></td>
+      <td class="brief">ZCode 是智谱 Z.ai 开源的 AI 编程工作台:一套完整的编程智能体运行环境,提供桌面应用、浏览器界面和终端 Agent 三种形态,客户端、后端服务、共享 UI 直到 Agent CLI 与运行时源码全部开放。</td>
+      <td class="num">★ 8.3k</td>
+      <td class="num">+40</td>
+      <td>TypeScript</td><td>🔥</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 崛起榜新进榜 / 重大变化</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#2</span>
+      <a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a>
+      <span class="badge badge-hot">🔥 排名跃升 6→2</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1054</span><span class="stat-stars">★ 23.9k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:magpie 是一个常驻菜单栏的本地 AI 网关:让任意编程智能体用上任意大模型——Claude Code 跑 Kimi、Codex 跑 DeepSeek、Gemini CLI 跑 GLM,一个本地网关统一供给,菜单栏一点即切。</p><p><strong>哪里好</strong>:不改各智能体配置即可自由混搭模型与账号;某账号额度用完自动静默切换到下一个,工作不断线;全程本地运行,密钥与流量不经第三方;把多家订阅计划的价值榨到最满。</p><p><strong>应用场景</strong>:同时使用 Claude Code/Codex/Gemini CLI 多个智能体的开发者;手里有多个模型账号想统一调度;个人与小团队的模型额度集中管理。</p></div>
+  <div class="card-meta">
+    <span>Go</span>
+    <span>MIT</span>
+    <span>建于 2026-09-23</span>
+    <a class="gh-link" href="https://github.com/yetone/magpie" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">claude-code</span><span class="topic">codex</span><span class="topic">deepseek</span><span class="topic">gemini-cli</span><span class="topic">llm</span><span class="topic">macos</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#6</span>
+      <a href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">zai-org/ZCode</a>
+      <span class="badge badge-hot">🔥 排名跃升 10→6</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+40</span><span class="stat-stars">★ 8.3k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:ZCode 是智谱 Z.ai 开源的 AI 编程工作台:一套完整的编程智能体运行环境,提供桌面应用、浏览器界面和终端 Agent 三种形态,客户端、后端服务、共享 UI 直到 Agent CLI 与运行时源码全部开放。</p><p><strong>哪里好</strong>:官方主力维护、迭代迅速(已至 v3.14);一个工作台统一管理多形态智能体,不必在散装工具间来回切换;以简体中文为第一语言,配套飞书社群,国内开发者上手门槛低;架构完整,可自部署、可二次开发。</p><p><strong>应用场景</strong>:团队搭建可控、可扩展的编程智能体环境;基于其 CLI 与运行时构建定制 Agent 工具链;企业内部私有化部署 AI 编程平台。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-09-20</span>
+    <a class="gh-link" href="https://github.com/zai-org/ZCode" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article></section><section class="meta-section"><h2 class="section-title">📈 追踪元数据</h2><ul>
+    <li>涨星榜:<strong>7</strong> 个 AI 项目(来自 GitHub Trending 今日榜)</li>
+    <li>崛起榜候选池:<strong>987</strong> 个近60天新建 AI 项目(原始 1499)</li>
+    <li>关键词:<strong>62</strong> 组 · 失败 22 组</li>
+    <li>数据源:github-api(anonymous) · 生成于 2026-10-28 04:45</li>
+  </ul></section>
+  <p class="archive-link"><a href="archive.html">← 返回存档</a></p>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <p>每天 12:00 自动更新 · 数据源 GitHub Search API · <a href="https://github.com/mmlong818/ai-trending">源代码</a></p>
+    <p class="pv-line">📖 全站累计阅读 <span id="site-pv-display">12,000</span> 次</p>
+    <p class="muted">候选池:近 60 天新建的 AI 项目 · 按总星排序 = 崛起热度</p>
+  </div>
+  <span id="busuanzi_value_site_pv" style="display:none"></span>
+  <script>
+  (function(){
+    var BASE = 12000; // 阅读量基数:显示值 = 基数 + 真实计数
+    function fmt(n){ return Number(n).toLocaleString('zh-CN'); }
+    function upd(){
+      var pv = document.getElementById('busuanzi_value_site_pv');
+      var d1 = document.getElementById('site-pv-display');
+      var pvNum = parseInt(pv && pv.textContent, 10);
+      if (d1 && !isNaN(pvNum)) d1.textContent = fmt(BASE + pvNum);
+    }
+    var el = document.getElementById('busuanzi_value_site_pv');
+    if (el) new MutationObserver(upd).observe(el, {childList:true, characterData:true, subtree:true});
+    upd();
+  })();
+  </script>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
