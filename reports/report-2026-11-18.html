@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-18 AI 趋势日报 · AI 新项目崛起榜</title>
+<meta name="description" content="每天发现近 60 天新建、星数最高的 AI 项目">
+<link rel="alternate" type="application/rss+xml" title="AI 新项目崛起榜" href="rss.xml">
+<style>
+:root{--bg:#fbfaf7;--surface:#ffffff;--border:#e8e5de;--ink:#1b1a17;--ink-2:#5c5951;--ink-3:#8f8b80;--accent:#b8451f;--accent-soft:#faf1ee;--serif:Georgia,"Times New Roman",serif;--sans:-apple-system,"Segoe UI","Noto Sans SC",sans-serif;--green:#2d7a4f;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.muted{color:var(--ink-3);font-size:14px;}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+.masthead{border-bottom:3px double var(--border);padding:24px 0 16px;margin-bottom:8px;}
+.masthead-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+.logo{margin:0;font-family:var(--serif);font-size:26px;font-weight:normal;}
+.logo a{color:var(--ink);}
+.tagline{margin:4px 0 0;color:var(--ink-2);font-size:13px;}
+.nav{display:flex;gap:18px;font-size:14px;}
+.nav-item{color:var(--ink-2);}
+.nav-item.active{color:var(--accent);font-weight:600;}
+.foot{border-top:3px double var(--border);margin-top:48px;padding:20px 0;font-size:13px;color:var(--ink-3);text-align:center;}
+.foot a{color:var(--ink-2);}
+.pv-line{color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums;}
+.pv-line span{color:var(--accent);font-weight:600;}
+main{padding:16px 0 32px;}
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 28px 24px;margin:8px 0 28px;}
+.hero-date{margin:0;color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;}
+.hero-title{font-family:var(--serif);font-size:28px;font-weight:normal;margin:8px 0 6px;line-height:1.3;}
+.hero-title a{color:var(--ink);}
+.hero-sub{margin:0 0 14px;color:var(--ink-2);font-size:15px;}
+.hero-cta{display:inline-block;background:var(--accent);color:#fff;padding:8px 18px;border-radius:6px;font-size:14px;}
+.hero-cta:hover{background:#9c3a19;text-decoration:none;}
+.section-title{font-family:var(--serif);font-size:20px;font-weight:normal;border-bottom:1px solid var(--border);padding-bottom:8px;margin:32px 0 16px;}
+.section-title .count{color:var(--ink-3);font-size:14px;font-family:var(--sans);}
+.page-title{font-family:var(--serif);font-size:26px;font-weight:normal;margin:8px 0 20px;}
+.day-title{font-family:var(--serif);font-size:24px;font-weight:normal;margin:8px 0 16px;}
+.breadcrumbs{font-size:13px;color:var(--ink-3);margin:4px 0 8px;}
+.banner{background:var(--accent-soft);border:1px solid #e8c9c0;border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:14px;}
+.feed{display:flex;flex-direction:column;gap:0;}
+.feed-card{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+.feed-date{color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;min-width:90px;padding-top:2px;}
+.feed-title{color:var(--ink);font-weight:600;}
+.feed-title:hover{color:var(--accent);}
+.feed-sub{margin:2px 0 0;color:var(--ink-3);font-size:13px;}
+.archive-link{margin:28px 0;text-align:center;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+.card-changed{border-left:4px solid var(--accent);}
+.card-watched{border-left:4px solid #c9a227;}
+.card-error{border-left:4px solid #c0392b;}
+.card-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.card-title{font-size:16px;font-weight:600;}
+.card-title a{color:var(--ink);}
+.card-title a:hover{color:var(--accent);}
+.card-title .rank{color:var(--ink-3);margin-right:6px;}
+.card-stats{display:flex;gap:14px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.stat-delta{color:var(--green);font-weight:600;}
+.stat-stars{color:#c9a227;}
+.desc{color:var(--ink-2);margin:8px 0 0;font-size:14px;}
+.intro{margin:12px 0 8px;padding:12px 14px;background:var(--bg);border-radius:8px;font-size:14.5px;}
+.intro p{margin:0 0 8px;}
+.intro p:last-child{margin-bottom:0;}
+.intro strong{color:var(--accent);}
+.card-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-3);margin-top:10px;}
+.gh-link{margin-left:auto;color:var(--accent);}
+.topics{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+.topic{font-size:11px;padding:2px 8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--ink-3);}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:var(--bg);border:1px solid var(--border);margin-left:6px;font-weight:normal;vertical-align:middle;}
+.badge-new{color:var(--accent);border-color:var(--accent);}
+.badge-base{color:var(--ink-3);border-color:var(--ink-3);}
+.badge-hot{color:#c0392b;border-color:#c0392b;}
+.badge-rank{color:var(--green);border-color:var(--green);}
+.badge-err{color:#c0392b;border-color:#c0392b;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+td.num{text-align:right;font-variant-numeric:tabular-nums;}
+.col-rank{color:var(--ink-3);width:32px;}
+td a{color:var(--accent);}
+.brief{color:var(--ink-2);font-size:13px;line-height:1.5;max-width:340px;}
+.meta-section ul{list-style:none;padding:0;font-size:14px;color:var(--ink-2);}
+.meta-section li{padding:4px 0;}
+.meta-section strong{color:var(--ink);}
+.search-box{margin:0 0 28px;}
+.search-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:var(--surface);color:var(--ink);font-family:var(--sans);}
+.search-box input:focus{outline:none;border-color:var(--accent);}
+.search-results{margin-top:8px;}
+.search-hit{display:block;padding:8px 12px;border-bottom:1px solid var(--border);font-size:14px;}
+.search-hit:hover{background:var(--accent-soft);text-decoration:none;}
+.cal-month{margin-bottom:36px;}
+.cal-title{font-family:var(--serif);font-size:18px;font-weight:normal;margin:0 0 12px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dow{text-align:center;font-size:12px;color:var(--ink-3);padding:4px 0;font-weight:600;}
+.cal-cell{min-height:64px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;font-size:13px;}
+.cal-cell.empty{background:transparent;border:1px dashed var(--border);opacity:.4;}
+.cal-cell.has-report{color:var(--ink);}
+.cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
+.cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
+.cal-count{font-size:11px;color:var(--accent);}
+.dual-section{display:flex;gap:28px;margin:8px 0 28px;}
+.dual-col{flex:1;min-width:0;}
+.dual-desc{color:var(--ink-3);font-size:13px;margin:0 0 12px;}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;color:var(--ink);background:var(--surface);}
+.mini-card:hover{border-color:var(--accent);background:var(--accent-soft);text-decoration:none;}
+.mini-rank{color:var(--ink-3);font-size:15px;font-weight:600;min-width:18px;text-align:center;font-variant-numeric:tabular-nums;}
+.mini-name{flex:1;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mini-delta{color:var(--green);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.mini-stars{color:#c9a227;font-size:13px;font-variant-numeric:tabular-nums;}
+.mini-new{border-left:3px solid var(--accent);}
+.mini-brief{margin:-2px 0 8px 12px;color:var(--ink-3);font-size:12px;line-height:1.45;padding-left:28px;}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}.dual-section{flex-direction:column;}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <div class="brand">
+      <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
+      <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
+    </div>
+    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item " href="archive.html">存档</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <p class="breadcrumbs"><a href="index.html">首页</a> / <a href="archive.html">存档</a> / 2026-11-18</p>
+  <h2 class="day-title">2026-11-18 AI 趋势日报</h2>
+  <section><h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending · 按今日新增星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>今日新增</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers</a></td>
+      <td class="brief">superpowers 是一个Agent 技能框架+软件开发方法论,口号是“真的能用的”(agentic skills framework &amp; methodology that works)。</td>
+      <td class="num">+1917</td>
+      <td class="num">★ 319.6k</td>
+      <td>Shell</td><td>🆕</td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/dream-num/univer" target="_blank" rel="noopener">dream-num/univer</a></td>
+      <td class="brief">univer 自称“AI Agent 的 Office Harness”——把电子表格、文档、幻灯片、画布、关系表、PDF 打进一个运行时,让 Agent 拥有完整的办公能力。</td>
+      <td class="num">+1774</td>
+      <td class="num">★ 29.5k</td>
+      <td>TypeScript</td><td>🆕</td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/ag-ui-protocol/ag-ui" target="_blank" rel="noopener">ag-ui-protocol/ag-ui</a></td>
+      <td class="brief">AG-UI 是智能体与用户交互的开放协议:定义智能体如何接入前端应用——事件流、状态同步、生成式 UI,让任何智能体都能嵌进你的 Web 界面,2 万星的行业标准级项目。</td>
+      <td class="num">+1445</td>
+      <td class="num">★ 20.2k</td>
+      <td>TypeScript</td><td>🆕</td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/google-research/paper-orchestra" target="_blank" rel="noopener">google-research/paper-orchestra</a></td>
+      <td class="brief">PaperOrchestra 是 Google Research 开源的多智能体框架:自动化撰写 AI 研究论文——不同角色的智能体分工协作完成检索、实验、写作的研究全流程。</td>
+      <td class="num">+1072</td>
+      <td class="num">★ 3.4k</td>
+      <td>Python</td><td>🆕</td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/elementalsouls/Claude-BugHunter" target="_blank" rel="noopener">elementalsouls/Claude-BugHunter</a></td>
+      <td class="brief">Claude-BugHunter 是一套面向漏洞挖掘与外部红队工作的 Claude Code 技能包:82 个技能、15 个斜杠命令,沉淀了 681 份公开漏洞报告的模式,覆盖 24 类核心漏洞与企业身份、基础设施…</td>
+      <td class="num">+1005</td>
+      <td class="num">★ 10k</td>
+      <td>Python</td><td>🆕</td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">affaan-m/ECC</a></td>
+      <td class="brief">ECC(Essential Claude Code)是面向 AI 编码代理(Claude Code/Codex/OpenCode/Cursor 等)的性能优化与增强系统,定位“agent harness 的操作系统…</td>
+      <td class="num">+883</td>
+      <td class="num">★ 305.9k</td>
+      <td>JavaScript</td><td>🆕</td></tr><tr><td class="col-rank">7</td>
+      <td><a href="https://github.com/alibaba/open-code-review" target="_blank" rel="noopener">alibaba/open-code-review</a></td>
+      <td class="brief">阿里巴巴开源的混合架构代码评审工具——确定性流水线 + LLM 分析双引擎,在阿里内部规模实战检验过。</td>
+      <td class="num">+763</td>
+      <td class="num">★ 54k</td>
+      <td>Go</td><td>🆕</td></tr><tr><td class="col-rank">8</td>
+      <td><a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noopener">mvanhorn/last30days-skill</a></td>
+      <td class="brief">last30days 是一个 AI Agent 技能:跨 Reddit、X、YouTube、HN、Polymarket 和全网调研任意话题,合成增长趋势报告。</td>
+      <td class="num">+696</td>
+      <td class="num">★ 69.4k</td>
+      <td>Python</td><td>🆕</td></tr><tr><td class="col-rank">9</td>
+      <td><a href="https://github.com/backnotprop/plannotator" target="_blank" rel="noopener">backnotprop/plannotator</a></td>
+      <td class="brief">plannotator 是一个&quot;盯智能体&quot;的工作台:让你始终掌控 AI 干活的进程——塑形、决策、规划、批注、评审代码、与团队分享,所有反馈一键发给智能体,1.3 万星。</td>
+      <td class="num">+691</td>
+      <td class="num">★ 13.2k</td>
+      <td>TypeScript</td><td>🆕</td></tr><tr><td class="col-rank">10</td>
+      <td><a href="https://github.com/Tencent/LoopForge" target="_blank" rel="noopener">Tencent/LoopForge</a></td>
+      <td class="brief">LoopForge 是腾讯开源的编码智能体交付工作流编排器:自托管编排 CodeBuddy、Codex 与 Claude Code,以脚本加人工审批门控的方式管理智能体的交付全流程,内置本地工作流。</td>
+      <td class="num">+591</td>
+      <td class="num">★ 3.6k</td>
+      <td>Go</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 涨星榜新进榜详解</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#1</span>
+      <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1917</span><span class="stat-stars">★ 319.6k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:superpowers 是一个<strong>Agent 技能框架+软件开发方法论</strong>,口号是“真的能用的”(agentic skills framework & methodology that works)。</p><p><strong>哪里好</strong>:不止提供技能包,还打包了一套完整的开发方法论——把“Agent 怎么辅助开发”从零散技巧上升为体系化框架。强调工程实用性而非概念炒作。今天 +557 星。</p><p><strong>应用场景</strong>:团队标准化 AI 辅助开发流程;构建自己的 Agent 技能体系;学习 Agent 驱动的软件工程方法论。</p></div>
+  <div class="card-meta">
+    <span>Shell</span>
+    <span>MIT</span>
+    <span>建于 2025-10-09</span>
+    <a class="gh-link" href="https://github.com/obra/superpowers" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai</span><span class="topic">brainstorming</span><span class="topic">coding</span><span class="topic">obra</span><span class="topic">sdlc</span><span class="topic">skills</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#2</span>
+      <a href="https://github.com/dream-num/univer" target="_blank" rel="noopener">dream-num/univer</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1774</span><span class="stat-stars">★ 29.5k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:univer 自称<strong>“AI Agent 的 Office Harness”</strong>——把电子表格、文档、幻灯片、画布、关系表、PDF 打进一个运行时,让 Agent 拥有完整的办公能力。</p><p><strong>哪里好</strong>:办公场景是 Agent 落地最大市场,univer 把“Office 全家桶”工程化为 Agent 可调用的运行时,而非单点功能。老牌项目借 Agent 概念重获爆发。今日 +255 星。</p><p><strong>应用场景</strong>:Agent 驱动的表格/文档处理;办公自动化 Agent 的运行时底座;企业办公 AI 化。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>Apache-2.0</span>
+    <span>建于 2022-09-29</span>
+    <a class="gh-link" href="https://github.com/dream-num/univer" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">board</span><span class="topic">collaboration</span><span class="topic">doc</span><span class="topic">docx</span><span class="topic">excel</span><span class="topic">offce365</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#3</span>
+      <a href="https://github.com/ag-ui-protocol/ag-ui" target="_blank" rel="noopener">ag-ui-protocol/ag-ui</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1445</span><span class="stat-stars">★ 20.2k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:AG-UI 是智能体与用户交互的开放协议:定义智能体如何接入前端应用——事件流、状态同步、生成式 UI,让任何智能体都能嵌进你的 Web 界面,2 万星的行业标准级项目。</p><p><strong>哪里好</strong>:统一智能体前后端交互标准,一次接入处处可用;与 MCP(智能体连工具)互补——AG-UI 负责连用户;CopilotKit 等生态背书,落地组件丰富。</p><p><strong>应用场景</strong>:在 Web 应用中嵌入对话式智能体界面;构建生成式 UI 与实时协作体验;为多智能体产品制定前端集成规范。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>MIT</span>
+    <span>建于 2025-05-07</span>
+    <a class="gh-link" href="https://github.com/ag-ui-protocol/ag-ui" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ag-ui-protocol</span><span class="topic">agent-frontend</span><span class="topic">agent-ui</span><span class="topic">agentic-workflow</span><span class="topic">ai-agents</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#4</span>
+      <a href="https://github.com/google-research/paper-orchestra" target="_blank" rel="noopener">google-research/paper-orchestra</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1072</span><span class="stat-stars">★ 3.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:PaperOrchestra 是 Google Research 开源的多智能体框架:自动化撰写 AI 研究论文——不同角色的智能体分工协作完成检索、实验、写作的研究全流程。</p><p><strong>哪里好</strong>:Google Research 官方出品,把"AI 做 AI 研究"的探索开源化;多智能体角色分工架构清晰,是科研自动化方向的样板;发布即破 3 千星,热度高涨。</p><p><strong>应用场景</strong>:自动化文献综述与论文初稿生产;搭建科研智能体工作流的参考架构;学术团队提效的实验性工具。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-05-01</span>
+    <a class="gh-link" href="https://github.com/google-research/paper-orchestra" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-research-assistant</span><span class="topic">multi-agent-systems</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#5</span>
+      <a href="https://github.com/elementalsouls/Claude-BugHunter" target="_blank" rel="noopener">elementalsouls/Claude-BugHunter</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1005</span><span class="stat-stars">★ 10k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:Claude-BugHunter 是一套面向漏洞挖掘与外部红队工作的 Claude Code 技能包:82 个技能、15 个斜杠命令,沉淀了 681 份公开漏洞报告的模式,覆盖 24 类核心漏洞与企业身份、基础设施攻击矩阵。</p><p><strong>哪里好</strong>:把真实 disclosed 漏洞报告的经验模式化,智能体挖洞有"章法";覆盖面广(Web、身份、基础设施);开箱即得完整的红队工作流与命令体系。</p><p><strong>应用场景</strong>:授权渗透测试与漏洞赏金项目提效;安全团队构建自动化漏测流水线;安全研究人员学习漏洞模式库。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>MIT</span>
+    <span>建于 2026-05-05</span>
+    <a class="gh-link" href="https://github.com/elementalsouls/Claude-BugHunter" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-security</span><span class="topic">anthropic</span><span class="topic">application-security</span><span class="topic">bug-bounty</span><span class="topic">bugbounty</span><span class="topic">bugcrowd</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#6</span>
+      <a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">affaan-m/ECC</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+883</span><span class="stat-stars">★ 305.9k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:ECC(Essential Claude Code)是面向 AI 编码代理(Claude Code/Codex/OpenCode/Cursor 等)的<strong>性能优化与增强系统</strong>,定位“agent harness 的操作系统”——提供技能(skills)、直觉、记忆、安全和研究优先开发能力。</p><p><strong>哪里好</strong>:把 Agent 增强能力(记忆持久化/技能库/安全沙箱)整合成统一框架,抓“Agent 工程化”浪潮,多语言文档完善。总星 24 万+,是 Claude Code 生态头部配套项目,近期因 skills 赛道回潮重回 Trending。</p><p><strong>应用场景</strong>:重度 AI 编程用户增强 Agent 记忆与技能;团队统一 AI 编码工作流;Agent 工程化最佳实践参考。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>MIT</span>
+    <span>建于 2026-01-18</span>
+    <a class="gh-link" href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-agents</span><span class="topic">anthropic</span><span class="topic">claude</span><span class="topic">claude-code</span><span class="topic">developer-tools</span><span class="topic">llm</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#7</span>
+      <a href="https://github.com/alibaba/open-code-review" target="_blank" rel="noopener">alibaba/open-code-review</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+763</span><span class="stat-stars">★ 54k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:阿里巴巴开源的<strong>混合架构代码评审工具</strong>——确定性流水线 + LLM 分析双引擎,在阿里内部规模实战检验过。</p><p><strong>哪里好</strong>:“混合架构”是亮点——确定性的规则检查(便宜可靠)+ LLM 深度分析(灵活聪明)分工协作,比纯 LLM 评审更快更稳。大厂实战背书。今日 +443 星。</p><p><strong>应用场景</strong>:团队 Code Review 自动化;大仓库的规模化评审;LLM+规则混合架构的参考实现。</p></div>
+  <div class="card-meta">
+    <span>Go</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-05-18</span>
+    <a class="gh-link" href="https://github.com/alibaba/open-code-review" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent</span><span class="topic">agent-skills</span><span class="topic">code-review</span><span class="topic">code-review-assistant</span><span class="topic">harness</span><span class="topic">repository-level-context</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#8</span>
+      <a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noopener">mvanhorn/last30days-skill</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+696</span><span class="stat-stars">★ 69.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:last30days 是一个 AI Agent 技能:<strong>跨 Reddit、X、YouTube、HN、Polymarket 和全网调研任意话题</strong>,合成增长趋势报告。</p><p><strong>哪里好</strong>:把“查最近30天动态”这种重复劳动技能化——多平台数据源+自动合成,信息调研类 Agent 技能的实用范例。今日 +230 星。</p><p><strong>应用场景</strong>:话题热点与舆论趋势调研;竞品/行业近30天动态追踪;为内容创作提供素材。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>MIT</span>
+    <span>建于 2026-01-23</span>
+    <a class="gh-link" href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-prompts</span><span class="topic">ai-skill</span><span class="topic">bluesky</span><span class="topic">claude</span><span class="topic">claude-code</span><span class="topic">clawhub</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#9</span>
+      <a href="https://github.com/backnotprop/plannotator" target="_blank" rel="noopener">backnotprop/plannotator</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+691</span><span class="stat-stars">★ 13.2k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:plannotator 是一个"盯智能体"的工作台:让你始终掌控 AI 干活的进程——塑形、决策、规划、批注、评审代码、与团队分享,所有反馈一键发给智能体,1.3 万星。</p><p><strong>哪里好</strong>:解决多智能体并行时"人在哪里"的失控焦虑;可视化规划与批注,反馈通道直达智能体;支持团队协作共享,适合人机混编的开发节奏。</p><p><strong>应用场景</strong>:同时指挥多个 Claude Code/Codex 会话的统一驾驶舱;代码评审意见一键回传智能体;团队协作监督 AI 开发进度。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>Apache-2.0</span>
+    <span>建于 2025-12-28</span>
+    <a class="gh-link" href="https://github.com/backnotprop/plannotator" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agents</span><span class="topic">claude-code</span><span class="topic">code-review</span><span class="topic">codex</span><span class="topic">obsidian</span><span class="topic">opencode</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#10</span>
+      <a href="https://github.com/Tencent/LoopForge" target="_blank" rel="noopener">Tencent/LoopForge</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+591</span><span class="stat-stars">★ 3.6k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:LoopForge 是腾讯开源的编码智能体交付工作流编排器:自托管编排 CodeBuddy、Codex 与 Claude Code,以脚本加人工审批门控的方式管理智能体的交付全流程,内置本地工作流。</p><p><strong>哪里好</strong>:官方开源,直击"智能体产出谁来把关"的落地难题;人工审批门控保证关键节点可控;多智能体(Codex/Claude Code/CodeBuddy)统一编排,自托管数据自主。</p><p><strong>应用场景</strong>:企业内搭建带审核的智能体开发流水线;多智能体任务的统一调度与验收;智能体产出合规审计。</p></div>
+  <div class="card-meta">
+    <span>Go</span>
+    <span>NOASSERTION</span>
+    <span>建于 2026-07-28</span>
+    <a class="gh-link" href="https://github.com/Tencent/LoopForge" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-orchestration</span><span class="topic">agentic-workflow</span><span class="topic">ai-agents</span><span class="topic">ai-coding</span><span class="topic">claude-code</span><span class="topic">code-review</span></div>
+</article></section><section><h2 class="section-title">🚀 新项目崛起榜 <span class="count">近60天新建 · 按总星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/Ebony-Vinyl/dsh-our-free-model" target="_blank" rel="noopener">Ebony-Vinyl/dsh-our-free-model</a></td>
+      <td class="brief">dsh-our-free-model 是一个 DeepSeek Harness(dsh)免费模型插件:装上即可免登录、免注册、免 API Key 直接使用 DeepSeek V4.1 Flash、Kimi K3 等…</td>
+      <td class="num">★ 79k</td>
+      <td class="num">+7485</td>
+      <td>JavaScript</td><td>🔥</td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/Gathin23/cleanyourtv" target="_blank" rel="noopener">Gathin23/cleanyourtv</a></td>
+      <td class="brief">CleanYourTV 是安卓/Google TV 的&quot;去广告瘦身&quot;工具:通过 Wi-Fi 即可清除电视预装垃圾应用,把满屏广告的首页换成类 Apple TV 的干净桌面,免 Root、免数据线、不卸载任何东西、一…</td>
+      <td class="num">★ 59.1k</td>
+      <td class="num">+2034</td>
+      <td>Python</td><td>🔥</td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/Niko1221/Strata" target="_blank" rel="noopener">Niko1221/Strata</a></td>
+      <td class="brief">Strata 是一个开源本地大模型推理引擎,让你在自己游戏 PC 上运行 1250 亿参数的 Qwen3.8-Flash-Next 模型。只要一张 12GB 以上显存的 NVIDIA 或 AMD 显卡,Window…</td>
+      <td class="num">★ 45.4k</td>
+      <td class="num">+1800</td>
+      <td>C++</td><td>🔥</td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a></td>
+      <td class="brief">magpie 是一个常驻菜单栏的本地 AI 网关:让任意编程智能体用上任意大模型——Claude Code 跑 Kimi、Codex 跑 DeepSeek、Gemini CLI 跑 GLM,一个本地网关统一供给,菜…</td>
+      <td class="num">★ 38.4k</td>
+      <td class="num">+2812</td>
+      <td>Go</td><td>🔥</td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">wheresryan22/anatomy</a></td>
+      <td class="brief">Anatomy 是一个智能体技能:让 AI 用&quot;把想法造成一台真实可动的机器&quot;的方式来解释概念——生成细节丰富、可交互的等距视角插图,输出精致 SVG,还可叠加 WebGL 着色器与 3D 效果。</td>
+      <td class="num">★ 28k</td>
+      <td class="num">+994</td>
+      <td>JavaScript</td><td>🔥</td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a></td>
+      <td class="brief">dsh-go 是 DeepSeek Harness 的 Android 客户端:把 DSH 装进口袋——手机本机直接运行智能体,也能远程遥控电脑上的 DSH,中文优先,AGPL-3.0 开源,Android 8+…</td>
+      <td class="num">★ 26.4k</td>
+      <td class="num">+5470</td>
+      <td>Dart</td><td>🔥</td></tr><tr><td class="col-rank">7</td>
+      <td><a href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">deepseek-ai/DeepInfer</a></td>
+      <td class="brief">DeepInfer 是 DeepSeek 官方开源的高性能大规模推理框架——正是支撑 DeepSeek 生产服务的同款引擎,首发支持 DeepSeek-V4.1-Flash,提供规模化服务所需的核心离线推理能力。</td>
+      <td class="num">★ 26.2k</td>
+      <td class="num">+257</td>
+      <td>Python</td><td>🔥</td></tr><tr><td class="col-rank">8</td>
+      <td><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">deepseek-ai/dsh-superagent-prototype</a></td>
+      <td class="brief">dsh-superagent 是 DeepSeek 团队开源的&quot;超级智能体&quot;研究原型,配套论文《Exploring Super-agent Design: Towards a More Autonomous Age…</td>
+      <td class="num">★ 23.7k</td>
+      <td class="num">+936</td>
+      <td>TypeScript</td><td>🔥</td></tr><tr><td class="col-rank">9</td>
+      <td><a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">lemomo-ai/lemo-opuscar</a></td>
+      <td class="brief">Lemo-Opuscar 是一套&quot;用代码做电影&quot;的风格工具箱:内置 66 种现成影片风格,每种都配一支完全由 Claude Opus 5.5 用代码生成的示范短片,不依赖任何视频生成模型,也支持从零自创风格。</td>
+      <td class="num">★ 18k</td>
+      <td class="num">+2655</td>
+      <td>JavaScript</td><td>🔥</td></tr><tr><td class="col-rank">10</td>
+      <td><a href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a></td>
+      <td class="brief">unslop 是一个&quot;去 AI 味&quot;的 Claude 技能(支持 Claude Code、Codex、Google Antigravity):把一眼 AI 生成的界面改造成有自己性格的设计——先找出紫渐变、发光、e…</td>
+      <td class="num">★ 17.9k</td>
+      <td class="num">+2716</td>
+      <td>JavaScript</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 崛起榜新进榜 / 重大变化</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#1</span>
+      <a href="https://github.com/Ebony-Vinyl/dsh-our-free-model" target="_blank" rel="noopener">Ebony-Vinyl/dsh-our-free-model</a>
+      <span class="badge badge-hot">🔥 涨星加速 1257→7485</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+7485</span><span class="stat-stars">★ 79k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:dsh-our-free-model 是一个 DeepSeek Harness(dsh)免费模型插件:装上即可免登录、免注册、免 API Key 直接使用 DeepSeek V4.1 Flash、Kimi K3 等前沿模型,完全免费且不限量,MIT 开源、零依赖、无构建步骤。</p><p><strong>哪里好</strong>:把"前沿大模型免费用"的门槛降到一次插件安装;不收集账号、不碰密钥,配置成本几乎为零;适配 dsh 0.1.5-0.1.7 内核,轻量到没有任何依赖;当前为 beta,但已可日常白嫖顶级模型。</p><p><strong>应用场景</strong>:个人开发者在 dsh 工作台零成本体验最新模型;学生与尝鲜用户免注册上手 AI 编程;给轻量工作流接一个无配额焦虑的默认模型。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>NOASSERTION</span>
+    <span>建于 2026-09-24</span>
+    <a class="gh-link" href="https://github.com/Ebony-Vinyl/dsh-our-free-model" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-agents</span><span class="topic">deepseek</span><span class="topic">deepseek-harness</span><span class="topic">developer-tools</span><span class="topic">dsh</span><span class="topic">dsh-plugin</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#2</span>
+      <a href="https://github.com/Gathin23/cleanyourtv" target="_blank" rel="noopener">Gathin23/cleanyourtv</a>
+      <span class="badge badge-hot">🔥 涨星加速 473→2034</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+2034</span><span class="stat-stars">★ 59.1k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:CleanYourTV 是安卓/Google TV 的"去广告瘦身"工具:通过 Wi-Fi 即可清除电视预装垃圾应用,把满屏广告的首页换成类 Apple TV 的干净桌面,免 Root、免数据线、不卸载任何东西、一行命令可还原。</p><p><strong>哪里好</strong>:不破解不刷机,风险极低;所有系统应用只是停用而非删除,一条命令整体还原;全程 Wi-Fi 操作,小白可用;直接解决智能电视广告满天飞、桌面臃肿的普遍痛点,因此发布即爆火。</p><p><strong>应用场景</strong>:家里 Android/Google TV 广告烦人想换干净桌面;给长辈的电视做极简化设置;批量整理酒店、展厅等场景的电视设备。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>NOASSERTION</span>
+    <span>建于 2026-10-17</span>
+    <a class="gh-link" href="https://github.com/Gathin23/cleanyourtv" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">adb</span><span class="topic">adblock</span><span class="topic">android-tv</span><span class="topic">android-tv-launcher</span><span class="topic">apple-tv</span><span class="topic">bloatware-removal</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#3</span>
+      <a href="https://github.com/Niko1221/Strata" target="_blank" rel="noopener">Niko1221/Strata</a>
+      <span class="badge badge-hot">🔥 涨星加速 331→1800</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1800</span><span class="stat-stars">★ 45.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:Strata 是一个开源本地大模型推理引擎,让你在自己游戏 PC 上运行 1250 亿参数的 Qwen3.8-Flash-Next 模型。只要一张 12GB 以上显存的 NVIDIA 或 AMD 显卡,Windows/Linux 下一键安装即用,无需命令行折腾,本地即可获得 128K 超长上下文的推理能力。</p><p><strong>哪里好</strong>:最大亮点是"一键安装":下载即跑,把千亿模型部署门槛降到普通玩家水平。通过量化技术(IQ3_S)在 RTX 5070 级显卡上流畅运行;同时在 localhost 提供 OpenAI/Anthropic 兼容 API,现有 AI 工具链无缝接入,还支持图像输入,免费开源,数据全程不出本机。</p><p><strong>应用场景</strong>:适合想在本地私有化跑大模型的个人开发者与硬件发烧友:给编程助手、写作工具接一个免订阅费的本地后端;处理隐私敏感文档;或在离线环境中使用 AI 能力。</p></div>
+  <div class="card-meta">
+    <span>C++</span>
+    <span>MIT</span>
+    <span>建于 2026-09-24</span>
+    <a class="gh-link" href="https://github.com/Niko1221/Strata" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#4</span>
+      <a href="https://github.com/yetone/magpie" target="_blank" rel="noopener">yetone/magpie</a>
+      <span class="badge badge-hot">🔥 涨星加速 688→2812</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+2812</span><span class="stat-stars">★ 38.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:magpie 是一个常驻菜单栏的本地 AI 网关:让任意编程智能体用上任意大模型——Claude Code 跑 Kimi、Codex 跑 DeepSeek、Gemini CLI 跑 GLM,一个本地网关统一供给,菜单栏一点即切。</p><p><strong>哪里好</strong>:不改各智能体配置即可自由混搭模型与账号;某账号额度用完自动静默切换到下一个,工作不断线;全程本地运行,密钥与流量不经第三方;把多家订阅计划的价值榨到最满。</p><p><strong>应用场景</strong>:同时使用 Claude Code/Codex/Gemini CLI 多个智能体的开发者;手里有多个模型账号想统一调度;个人与小团队的模型额度集中管理。</p></div>
+  <div class="card-meta">
+    <span>Go</span>
+    <span>MIT</span>
+    <span>建于 2026-09-23</span>
+    <a class="gh-link" href="https://github.com/yetone/magpie" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">claude-code</span><span class="topic">codex</span><span class="topic">deepseek</span><span class="topic">gemini-cli</span><span class="topic">llm</span><span class="topic">macos</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#5</span>
+      <a href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">wheresryan22/anatomy</a>
+      <span class="badge badge-hot">🔥 涨星加速 190→994</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+994</span><span class="stat-stars">★ 28k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:Anatomy 是一个智能体技能:让 AI 用"把想法造成一台真实可动的机器"的方式来解释概念——生成细节丰富、可交互的等距视角插图,输出精致 SVG,还可叠加 WebGL 着色器与 3D 效果。</p><p><strong>哪里好</strong>:不止是画图,而是构造由许多精密小部件组成的"可运转对象",把真实机器与复杂系统的结构讲得直观透彻;SVG 为基底、3D 与着色器可选,成品质感出众;Claude Code、OpenCode、Codex 通用,即装即用。</p><p><strong>应用场景</strong>:技术文档与博客中可视化讲解引擎、电路等复杂构造;课堂教学与产品说明;为演讲和落地页生成高质感的机制类插图。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>MIT</span>
+    <span>建于 2026-10-08</span>
+    <a class="gh-link" href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-skill</span><span class="topic">open-source</span><span class="topic">svg</span><span class="topic">vizualization</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#6</span>
+      <a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a>
+      <span class="badge badge-hot">🔥 排名跃升 9→6 / 涨星加速 1055→5470</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+5470</span><span class="stat-stars">★ 26.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:dsh-go 是 DeepSeek Harness 的 Android 客户端:把 DSH 装进口袋——手机本机直接运行智能体,也能远程遥控电脑上的 DSH,中文优先,AGPL-3.0 开源,Android 8+ 即装即用。</p><p><strong>哪里好</strong>:手机秒变智能体终端,通勤路上任务不断线;本机运行与遥控 PC 双模式;背靠爆火的 dsh 生态,与 dsh-desktop、our-free-model 一脉相承;发布即暴涨近万星,热度空前。</p><p><strong>应用场景</strong>:外出时用手机接着跑智能体任务;远程指挥家里或公司电脑上的 DSH;移动端体验 DeepSeek 全家桶。</p></div>
+  <div class="card-meta">
+    <span>Dart</span>
+    <span>AGPL-3.0</span>
+    <span>建于 2026-10-25</span>
+    <a class="gh-link" href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-agent</span><span class="topic">android</span><span class="topic">android-app</span><span class="topic">coding-agent</span><span class="topic">deepseek</span><span class="topic">deepseek-harness</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#7</span>
+      <a href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">deepseek-ai/DeepInfer</a>
+      <span class="badge badge-hot">🔥 涨星加速 42→257</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+257</span><span class="stat-stars">★ 26.2k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:DeepInfer 是 DeepSeek 官方开源的高性能大规模推理框架——正是支撑 DeepSeek 生产服务的同款引擎,首发支持 DeepSeek-V4.1-Flash,提供规模化服务所需的核心离线推理能力。</p><p><strong>哪里好</strong>:工业级全家桶:FlashMLA 优化内核、注意力 DP 与均衡 CP、MoE EP+EPLB 并行、零开销异步批调度、确定性采样与结构化输出;批量不变推理保证结果可复现;出自一线生产环境而非实验室原型。</p><p><strong>应用场景</strong>:企业自建 DeepSeek 系模型的大规模推理服务;需要确定性输出与高吞吐的生产部署;研究 MoE 推理系统工程的参考实现。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-10-16</span>
+    <a class="gh-link" href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#8</span>
+      <a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">deepseek-ai/dsh-superagent-prototype</a>
+      <span class="badge badge-hot">🔥 涨星加速 250→936</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+936</span><span class="stat-stars">★ 23.7k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:dsh-superagent 是 DeepSeek 团队开源的"超级智能体"研究原型,配套论文《Exploring Super-agent Design: Towards a More Autonomous Agent System》:探索更自主的智能体系统形态,大量工程代码本身就由编程智能体写成。</p><p><strong>哪里好</strong>:一线大模型团队的一手智能体工程实践,从日常开发中生长出来的真实代码;坦率标注为研究参考而非官方产品,附使用注意事项;与 dsh 生态同源,可配合 dsh-our-free-model 等插件一起体验。</p><p><strong>应用场景</strong>:研究超智能体架构与自主性设计;基于其代码改造自己的智能体系统;观察 DeepSeek 如何用智能体写智能体的工程方法。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>MIT</span>
+    <span>建于 2026-10-31</span>
+    <a class="gh-link" href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#9</span>
+      <a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">lemomo-ai/lemo-opuscar</a>
+      <span class="badge badge-hot">🔥 涨星加速 390→2655</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+2655</span><span class="stat-stars">★ 18k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:Lemo-Opuscar 是一套"用代码做电影"的风格工具箱:内置 66 种现成影片风格,每种都配一支完全由 Claude Opus 5.5 用代码生成的示范短片,不依赖任何视频生成模型,也支持从零自创风格。</p><p><strong>哪里好</strong>:纯代码出片——风格即提示词,可复现、可魔改、无生成费用;挑一个风格带入故事,编程智能体就能当导演;66 种风格覆盖面广,画廊可在线预览;中文文档友好,把 AI 视频从"生成模型"路线切换成"代码"路线。</p><p><strong>应用场景</strong>:用 Claude Code 等智能体批量产出风格化短片与动态页面;设计师探索代码动画表达;教学演示"代码即影像"的创作方式。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>NOASSERTION</span>
+    <span>建于 2026-09-26</span>
+    <a class="gh-link" href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-skills</span><span class="topic">ai-agents</span><span class="topic">ai-short-film</span><span class="topic">ai-video</span><span class="topic">animation</span><span class="topic">canvas</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#10</span>
+      <a href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+2716</span><span class="stat-stars">★ 17.9k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:unslop 是一个"去 AI 味"的 Claude 技能(支持 Claude Code、Codex、Google Antigravity):把一眼 AI 生成的界面改造成有自己性格的设计——先找出紫渐变、发光、emoji 标签、喊话式文案、间距不匀等典型"AI 味",再像设计师做红线评审那样逐轮修整。</p><p><strong>哪里好</strong>:不挑技术栈,任意前端代码都能处理;先诊断后改造,每轮像设计师 pass 一样有方向;来自 X 上走红的 Unslopping 系列,方法论经过大量实战检验;与 hallmark/impeccable 组成完整的"反 AI 味"军械库。</p><p><strong>应用场景</strong>:拯救 vibecoding 产出的原型页面;给 AI 生成的产品界面注入品牌个性;前端上线前的"去机器感"终审。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>CC-BY-4.0</span>
+    <span>建于 2026-10-29</span>
+    <a class="gh-link" href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article></section><section class="meta-section"><h2 class="section-title">📈 追踪元数据</h2><ul>
+    <li>涨星榜:<strong>10</strong> 个 AI 项目(来自 GitHub Trending 今日榜)</li>
+    <li>崛起榜候选池:<strong>1790</strong> 个近60天新建 AI 项目(原始 3088)</li>
+    <li>关键词:<strong>62</strong> 组 · 失败 0 组</li>
+    <li>数据源:github-api(anonymous) · 生成于 2026-11-18 07:46</li>
+  </ul></section>
+  <p class="archive-link"><a href="archive.html">← 返回存档</a></p>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <p>每天 12:00 自动更新 · 数据源 GitHub Search API · <a href="https://github.com/mmlong818/ai-trending">源代码</a></p>
+    <p class="pv-line">📖 全站累计阅读 <span id="site-pv-display">12,000</span> 次</p>
+    <p class="muted">候选池:近 60 天新建的 AI 项目 · 按总星排序 = 崛起热度</p>
+  </div>
+  <span id="busuanzi_value_site_pv" style="display:none"></span>
+  <script>
+  (function(){
+    var BASE = 12000; // 阅读量基数:显示值 = 基数 + 真实计数
+    function fmt(n){ return Number(n).toLocaleString('zh-CN'); }
+    function upd(){
+      var pv = document.getElementById('busuanzi_value_site_pv');
+      var d1 = document.getElementById('site-pv-display');
+      var pvNum = parseInt(pv && pv.textContent, 10);
+      if (d1 && !isNaN(pvNum)) d1.textContent = fmt(BASE + pvNum);
+    }
+    var el = document.getElementById('busuanzi_value_site_pv');
+    if (el) new MutationObserver(upd).observe(el, {childList:true, characterData:true, subtree:true});
+    upd();
+  })();
+  </script>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
