@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-11-23 AI 趋势日报 · AI 新项目崛起榜</title>
+<meta name="description" content="每天发现近 60 天新建、星数最高的 AI 项目">
+<link rel="alternate" type="application/rss+xml" title="AI 新项目崛起榜" href="rss.xml">
+<style>
+:root{--bg:#fbfaf7;--surface:#ffffff;--border:#e8e5de;--ink:#1b1a17;--ink-2:#5c5951;--ink-3:#8f8b80;--accent:#b8451f;--accent-soft:#faf1ee;--serif:Georgia,"Times New Roman",serif;--sans:-apple-system,"Segoe UI","Noto Sans SC",sans-serif;--green:#2d7a4f;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+.muted{color:var(--ink-3);font-size:14px;}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+.masthead{border-bottom:3px double var(--border);padding:24px 0 16px;margin-bottom:8px;}
+.masthead-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+.logo{margin:0;font-family:var(--serif);font-size:26px;font-weight:normal;}
+.logo a{color:var(--ink);}
+.tagline{margin:4px 0 0;color:var(--ink-2);font-size:13px;}
+.nav{display:flex;gap:18px;font-size:14px;}
+.nav-item{color:var(--ink-2);}
+.nav-item.active{color:var(--accent);font-weight:600;}
+.foot{border-top:3px double var(--border);margin-top:48px;padding:20px 0;font-size:13px;color:var(--ink-3);text-align:center;}
+.foot a{color:var(--ink-2);}
+.pv-line{color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums;}
+.pv-line span{color:var(--accent);font-weight:600;}
+main{padding:16px 0 32px;}
+.hero{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 28px 24px;margin:8px 0 28px;}
+.hero-date{margin:0;color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;}
+.hero-title{font-family:var(--serif);font-size:28px;font-weight:normal;margin:8px 0 6px;line-height:1.3;}
+.hero-title a{color:var(--ink);}
+.hero-sub{margin:0 0 14px;color:var(--ink-2);font-size:15px;}
+.hero-cta{display:inline-block;background:var(--accent);color:#fff;padding:8px 18px;border-radius:6px;font-size:14px;}
+.hero-cta:hover{background:#9c3a19;text-decoration:none;}
+.section-title{font-family:var(--serif);font-size:20px;font-weight:normal;border-bottom:1px solid var(--border);padding-bottom:8px;margin:32px 0 16px;}
+.section-title .count{color:var(--ink-3);font-size:14px;font-family:var(--sans);}
+.page-title{font-family:var(--serif);font-size:26px;font-weight:normal;margin:8px 0 20px;}
+.day-title{font-family:var(--serif);font-size:24px;font-weight:normal;margin:8px 0 16px;}
+.breadcrumbs{font-size:13px;color:var(--ink-3);margin:4px 0 8px;}
+.banner{background:var(--accent-soft);border:1px solid #e8c9c0;border-radius:8px;padding:12px 16px;margin:12px 0 20px;font-size:14px;}
+.feed{display:flex;flex-direction:column;gap:0;}
+.feed-card{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+.feed-date{color:var(--ink-3);font-size:13px;font-variant-numeric:tabular-nums;min-width:90px;padding-top:2px;}
+.feed-title{color:var(--ink);font-weight:600;}
+.feed-title:hover{color:var(--accent);}
+.feed-sub{margin:2px 0 0;color:var(--ink-3);font-size:13px;}
+.archive-link{margin:28px 0;text-align:center;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+.card-changed{border-left:4px solid var(--accent);}
+.card-watched{border-left:4px solid #c9a227;}
+.card-error{border-left:4px solid #c0392b;}
+.card-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.card-title{font-size:16px;font-weight:600;}
+.card-title a{color:var(--ink);}
+.card-title a:hover{color:var(--accent);}
+.card-title .rank{color:var(--ink-3);margin-right:6px;}
+.card-stats{display:flex;gap:14px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.stat-delta{color:var(--green);font-weight:600;}
+.stat-stars{color:#c9a227;}
+.desc{color:var(--ink-2);margin:8px 0 0;font-size:14px;}
+.intro{margin:12px 0 8px;padding:12px 14px;background:var(--bg);border-radius:8px;font-size:14.5px;}
+.intro p{margin:0 0 8px;}
+.intro p:last-child{margin-bottom:0;}
+.intro strong{color:var(--accent);}
+.card-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-3);margin-top:10px;}
+.gh-link{margin-left:auto;color:var(--accent);}
+.topics{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+.topic{font-size:11px;padding:2px 8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--ink-3);}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:var(--bg);border:1px solid var(--border);margin-left:6px;font-weight:normal;vertical-align:middle;}
+.badge-new{color:var(--accent);border-color:var(--accent);}
+.badge-base{color:var(--ink-3);border-color:var(--ink-3);}
+.badge-hot{color:#c0392b;border-color:#c0392b;}
+.badge-rank{color:var(--green);border-color:var(--green);}
+.badge-err{color:#c0392b;border-color:#c0392b;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+td.num{text-align:right;font-variant-numeric:tabular-nums;}
+.col-rank{color:var(--ink-3);width:32px;}
+td a{color:var(--accent);}
+.brief{color:var(--ink-2);font-size:13px;line-height:1.5;max-width:340px;}
+.meta-section ul{list-style:none;padding:0;font-size:14px;color:var(--ink-2);}
+.meta-section li{padding:4px 0;}
+.meta-section strong{color:var(--ink);}
+.search-box{margin:0 0 28px;}
+.search-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:var(--surface);color:var(--ink);font-family:var(--sans);}
+.search-box input:focus{outline:none;border-color:var(--accent);}
+.search-results{margin-top:8px;}
+.search-hit{display:block;padding:8px 12px;border-bottom:1px solid var(--border);font-size:14px;}
+.search-hit:hover{background:var(--accent-soft);text-decoration:none;}
+.cal-month{margin-bottom:36px;}
+.cal-title{font-family:var(--serif);font-size:18px;font-weight:normal;margin:0 0 12px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dow{text-align:center;font-size:12px;color:var(--ink-3);padding:4px 0;font-weight:600;}
+.cal-cell{min-height:64px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;font-size:13px;}
+.cal-cell.empty{background:transparent;border:1px dashed var(--border);opacity:.4;}
+.cal-cell.has-report{color:var(--ink);}
+.cal-cell.has-report:hover{border-color:var(--accent);text-decoration:none;background:var(--accent-soft);}
+.cal-day{font-variant-numeric:tabular-nums;color:var(--ink-2);}
+.cal-count{font-size:11px;color:var(--accent);}
+.dual-section{display:flex;gap:28px;margin:8px 0 28px;}
+.dual-col{flex:1;min-width:0;}
+.dual-desc{color:var(--ink-3);font-size:13px;margin:0 0 12px;}
+.mini-list{display:flex;flex-direction:column;gap:0;}
+.mini-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;color:var(--ink);background:var(--surface);}
+.mini-card:hover{border-color:var(--accent);background:var(--accent-soft);text-decoration:none;}
+.mini-rank{color:var(--ink-3);font-size:15px;font-weight:600;min-width:18px;text-align:center;font-variant-numeric:tabular-nums;}
+.mini-name{flex:1;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mini-delta{color:var(--green);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.mini-stars{color:#c9a227;font-size:13px;font-variant-numeric:tabular-nums;}
+.mini-new{border-left:3px solid var(--accent);}
+.mini-brief{margin:-2px 0 8px 12px;color:var(--ink-3);font-size:12px;line-height:1.45;padding-left:28px;}
+@media(max-width:640px){.masthead-inner{flex-direction:column;align-items:flex-start;}.logo{font-size:22px;}.hero-title{font-size:23px;}.nav{flex-wrap:wrap;gap:14px;}.feed-date{min-width:78px;}.cal-cell{min-height:52px;font-size:11px;}td .feed-sub{display:none;}.brief{display:none;}th:nth-child(3){display:none;}.dual-section{flex-direction:column;}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <div class="brand">
+      <h1 class="logo">🔥 <a href="index.html">AI 新项目崛起榜</a></h1>
+      <p class="tagline">每天发现近 60 天新建、星数最高的 AI 项目</p>
+    </div>
+    <nav class="nav"><a class="nav-item " href="index.html">首页</a><a class="nav-item " href="archive.html">存档</a><a class="nav-item " href="https://github.com/mmlong818/ai-trending">源码</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <p class="breadcrumbs"><a href="index.html">首页</a> / <a href="archive.html">存档</a> / 2026-11-23</p>
+  <h2 class="day-title">2026-11-23 AI 趋势日报</h2>
+  <div class="banner">⚠️ <strong>含 2 天累计</strong>:上一期为 2026-11-21,中间缺测。崛起榜「日涨星」是 2026-11-21 → 2026-11-23 的累计值;涨星榜「今日新增」仍是 GitHub Trending 当日数据。</div><section><h2 class="section-title">🔥 今日涨星榜 <span class="count">GitHub Trending · 按今日新增星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>今日新增</th><th>总星数</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/elementalsouls/Claude-BugHunter" target="_blank" rel="noopener">elementalsouls/Claude-BugHunter</a></td>
+      <td class="brief">Claude-BugHunter 是一套面向漏洞挖掘与外部红队工作的 Claude Code 技能包:82 个技能、15 个斜杠命令,沉淀了 681 份公开漏洞报告的模式,覆盖 24 类核心漏洞与企业身份、基础设施…</td>
+      <td class="num">+1716</td>
+      <td class="num">★ 18.4k</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/firecrawl/firecrawl" target="_blank" rel="noopener">firecrawl/firecrawl</a></td>
+      <td class="brief">Firecrawl 是智能体时代的&quot;知识基础设施&quot;:一个 API 统一完成网页搜索、抓取与结构化提取,还接通了 550 多家数据源,让 AI 智能体随时拿到干净可用的实时数据,20 万星明星项目。</td>
+      <td class="num">+915</td>
+      <td class="num">★ 207.3k</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers</a></td>
+      <td class="brief">superpowers 是一个Agent 技能框架+软件开发方法论,口号是“真的能用的”(agentic skills framework &amp; methodology that works)。</td>
+      <td class="num">+788</td>
+      <td class="num">★ 324.4k</td>
+      <td>Shell</td><td></td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/HKUDS/CLI-Anything" target="_blank" rel="noopener">HKUDS/CLI-Anything</a></td>
+      <td class="brief">CLI-Anything 来自港大 HKUDS 实验室,目标是让所有软件原生支持 AI Agent(Agent-Native),提供 CLI-Hub 统一入口(clianything.cc),把命令行工具变成 Ag…</td>
+      <td class="num">+699</td>
+      <td class="num">★ 63k</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noopener">mvanhorn/last30days-skill</a></td>
+      <td class="brief">last30days 是一个 AI Agent 技能:跨 Reddit、X、YouTube、HN、Polymarket 和全网调研任意话题,合成增长趋势报告。</td>
+      <td class="num">+668</td>
+      <td class="num">★ 73k</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/mjmirza/app-store-compliance" target="_blank" rel="noopener">mjmirza/app-store-compliance</a></td>
+      <td class="brief">app-store-compliance 是一份开源的应用上架合规指南加 AI 技能:收录 124 种 App Store 与 Google Play 常见拒审模式及对应修法,含隐私清单、数据安全检查和 112 个…</td>
+      <td class="num">+621</td>
+      <td class="num">★ 4.3k</td>
+      <td>Shell</td><td></td></tr><tr><td class="col-rank">7</td>
+      <td><a href="https://github.com/cathrynlavery/diagram-design" target="_blank" rel="noopener">cathrynlavery/diagram-design</a></td>
+      <td class="brief">diagram-design 是一套面向 Claude Code 的编辑型图表资源,提供 52 种自包含的 HTML + SVG 图表类型,无阴影、无 Mermaid 依赖,专为 AI 编程场景设计。</td>
+      <td class="num">+518</td>
+      <td class="num">★ 70.5k</td>
+      <td>HTML</td><td></td></tr><tr><td class="col-rank">8</td>
+      <td><a href="https://github.com/google-labs-code/stitch-skills" target="_blank" rel="noopener">google-labs-code/stitch-skills</a></td>
+      <td class="brief">stitch-skills 是 Google Labs 出品的智能体技能库:为 Stitch MCP 服务器设计的一组技能,遵循 Agent Skills 开放标准,兼容 Antigravity、Gemini CL…</td>
+      <td class="num">+494</td>
+      <td class="num">★ 12.1k</td>
+      <td>TypeScript</td><td></td></tr><tr><td class="col-rank">9</td>
+      <td><a href="https://github.com/jingyaogong/minimind" target="_blank" rel="noopener">jingyaogong/minimind</a></td>
+      <td class="brief">minimind 是中文知名项目:2 小时从零训练一个 64M 参数的小型 LLM——完整覆盖数据清洗、预训练、SFT、RLHF 全流程,代码极简。</td>
+      <td class="num">+473</td>
+      <td class="num">★ 69k</td>
+      <td>Python</td><td></td></tr><tr><td class="col-rank">10</td>
+      <td><a href="https://github.com/Tracer-Cloud/opensre" target="_blank" rel="noopener">Tracer-Cloud/opensre</a></td>
+      <td class="brief">opensre 是一个开源的 CI/CD 可靠性智能体:盯着你的持续集成/部署流水线,构建挂了自动排查原因、定位到提交与配置,并给出修复建议,把 SRE 的日常救火自动化。</td>
+      <td class="num">+399</td>
+      <td class="num">★ 14.6k</td>
+      <td>Python</td><td></td></tr></tbody></table></div></section><section><h2 class="section-title">🚀 新项目崛起榜 <span class="count">近60天新建 · 按总星</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>项目</th><th>简介</th><th>总星数</th><th>日涨星</th><th>语言</th><th>状态</th></tr></thead>
+    <tbody><tr><td class="col-rank">1</td>
+      <td><a href="https://github.com/Gathin23/cleanyourtv" target="_blank" rel="noopener">Gathin23/cleanyourtv</a></td>
+      <td class="brief">CleanYourTV 是安卓/Google TV 的&quot;去广告瘦身&quot;工具:通过 Wi-Fi 即可清除电视预装垃圾应用,把满屏广告的首页换成类 Apple TV 的干净桌面,免 Root、免数据线、不卸载任何东西、一…</td>
+      <td class="num">★ 60.4k</td>
+      <td class="num">+558</td>
+      <td>Python</td><td>🔥</td></tr><tr><td class="col-rank">2</td>
+      <td><a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a></td>
+      <td class="brief">dsh-go 是 DeepSeek Harness 的 Android 客户端:把 DSH 装进口袋——手机本机直接运行智能体,也能远程遥控电脑上的 DSH,中文优先,AGPL-3.0 开源,Android 8+…</td>
+      <td class="num">★ 30.4k</td>
+      <td class="num">+1325</td>
+      <td>Dart</td><td>🔥</td></tr><tr><td class="col-rank">3</td>
+      <td><a href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">wheresryan22/anatomy</a></td>
+      <td class="brief">Anatomy 是一个智能体技能:让 AI 用&quot;把想法造成一台真实可动的机器&quot;的方式来解释概念——生成细节丰富、可交互的等距视角插图,输出精致 SVG,还可叠加 WebGL 着色器与 3D 效果。</td>
+      <td class="num">★ 28.8k</td>
+      <td class="num">+346</td>
+      <td>JavaScript</td><td>🔥</td></tr><tr><td class="col-rank">4</td>
+      <td><a href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">deepseek-ai/DeepInfer</a></td>
+      <td class="brief">DeepInfer 是 DeepSeek 官方开源的高性能大规模推理框架——正是支撑 DeepSeek 生产服务的同款引擎,首发支持 DeepSeek-V4.1-Flash,提供规模化服务所需的核心离线推理能力。</td>
+      <td class="num">★ 26.3k</td>
+      <td class="num">+63</td>
+      <td>Python</td><td>🔥</td></tr><tr><td class="col-rank">5</td>
+      <td><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">deepseek-ai/dsh-superagent-prototype</a></td>
+      <td class="brief">dsh-superagent 是 DeepSeek 团队开源的&quot;超级智能体&quot;研究原型,配套论文《Exploring Super-agent Design: Towards a More Autonomous Age…</td>
+      <td class="num">★ 24.3k</td>
+      <td class="num">+211</td>
+      <td>TypeScript</td><td>🔥</td></tr><tr><td class="col-rank">6</td>
+      <td><a href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a></td>
+      <td class="brief">unslop 是一个&quot;去 AI 味&quot;的 Claude 技能(支持 Claude Code、Codex、Google Antigravity):把一眼 AI 生成的界面改造成有自己性格的设计——先找出紫渐变、发光、e…</td>
+      <td class="num">★ 20.4k</td>
+      <td class="num">+1134</td>
+      <td>JavaScript</td><td>🔥</td></tr><tr><td class="col-rank">7</td>
+      <td><a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">lemomo-ai/lemo-opuscar</a></td>
+      <td class="brief">Lemo-Opuscar 是一套&quot;用代码做电影&quot;的风格工具箱:内置 99 种现成影片风格,每种都配一支完全由 Claude Opus 5.5 用代码生成的示范短片,不依赖任何视频生成模型,也支持从零自创风格。</td>
+      <td class="num">★ 20k</td>
+      <td class="num">+859</td>
+      <td>JavaScript</td><td>🔥</td></tr><tr><td class="col-rank">8</td>
+      <td><a href="https://github.com/JuneYaooo/rea-video" target="_blank" rel="noopener">JuneYaooo/rea-video</a></td>
+      <td class="brief">rea-video 是&quot;逆向拆解任何视频&quot;的智能体技能:逐个镜头判断是实拍、AI 生成还是代码做的,并给出复刻方案,在 Claude Code、Codex 里一句话调用,输出拆解报告和开放格式 VIDEO.md。</td>
+      <td class="num">★ 12.4k</td>
+      <td class="num">+895</td>
+      <td>Python</td><td>🆕</td></tr><tr><td class="col-rank">9</td>
+      <td><a href="https://github.com/kingcharleslzy-ai/dsh-purge" target="_blank" rel="noopener">kingcharleslzy-ai/dsh-purge</a></td>
+      <td class="brief">dsh-purge 社区版是 DeepSeek Harness 的「破甲」插件:靠 86 条宿主补丁与提示词注入,减少 DSH 确认与打断,让智能体连续执行任务,并带「无限制模式」预设;不改模型本身。</td>
+      <td class="num">★ 11.8k</td>
+      <td class="num">+742</td>
+      <td>JavaScript</td><td>🆕</td></tr><tr><td class="col-rank">10</td>
+      <td><a href="https://github.com/amosblomqvist/learnharness" target="_blank" rel="noopener">amosblomqvist/learnharness</a></td>
+      <td class="brief">LearnHarness 是一个面向学习的智能体框架(Agent Harness):AI 智能体先摸清你当前的理解程度和思考方式,再据此规划并讲授课程,从已有认知一路讲到学习目标,并随你的进步持续更新。</td>
+      <td class="num">★ 11.2k</td>
+      <td class="num">+455</td>
+      <td>TypeScript</td><td>🆕</td></tr></tbody></table></div></section><section><h2 class="section-title">🆕 崛起榜新进榜 / 重大变化</h2><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#1</span>
+      <a href="https://github.com/Gathin23/cleanyourtv" target="_blank" rel="noopener">Gathin23/cleanyourtv</a>
+      <span class="badge badge-hot">🔥 涨星加速 240→558</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+558</span><span class="stat-stars">★ 60.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:CleanYourTV 是安卓/Google TV 的"去广告瘦身"工具:通过 Wi-Fi 即可清除电视预装垃圾应用,把满屏广告的首页换成类 Apple TV 的干净桌面,免 Root、免数据线、不卸载任何东西、一行命令可还原。</p><p><strong>哪里好</strong>:不破解不刷机,风险极低;所有系统应用只是停用而非删除,一条命令整体还原;全程 Wi-Fi 操作,小白可用;直接解决智能电视广告满天飞、桌面臃肿的普遍痛点,因此发布即爆火。</p><p><strong>应用场景</strong>:家里 Android/Google TV 广告烦人想换干净桌面;给长辈的电视做极简化设置;批量整理酒店、展厅等场景的电视设备。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>NOASSERTION</span>
+    <span>建于 2026-10-17</span>
+    <a class="gh-link" href="https://github.com/Gathin23/cleanyourtv" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">adb</span><span class="topic">adblock</span><span class="topic">android-tv</span><span class="topic">android-tv-launcher</span><span class="topic">apple-tv</span><span class="topic">bloatware-removal</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#2</span>
+      <a href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">ccch1mneyyy/dsh-Go</a>
+      <span class="badge badge-hot">🔥 排名跃升 5→2</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1325</span><span class="stat-stars">★ 30.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:dsh-go 是 DeepSeek Harness 的 Android 客户端:把 DSH 装进口袋——手机本机直接运行智能体,也能远程遥控电脑上的 DSH,中文优先,AGPL-3.0 开源,Android 8+ 即装即用。</p><p><strong>哪里好</strong>:手机秒变智能体终端,通勤路上任务不断线;本机运行与遥控 PC 双模式;背靠爆火的 dsh 生态,与 dsh-desktop、our-free-model 一脉相承;发布即暴涨近万星,热度空前。</p><p><strong>应用场景</strong>:外出时用手机接着跑智能体任务;远程指挥家里或公司电脑上的 DSH;移动端体验 DeepSeek 全家桶。</p></div>
+  <div class="card-meta">
+    <span>Dart</span>
+    <span>AGPL-3.0</span>
+    <span>建于 2026-10-25</span>
+    <a class="gh-link" href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">ai-agent</span><span class="topic">android</span><span class="topic">android-app</span><span class="topic">coding-agent</span><span class="topic">deepseek</span><span class="topic">deepseek-harness</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#3</span>
+      <a href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">wheresryan22/anatomy</a>
+      <span class="badge badge-hot">🔥 排名跃升 6→3 / 涨星加速 161→346</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+346</span><span class="stat-stars">★ 28.8k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:Anatomy 是一个智能体技能:让 AI 用"把想法造成一台真实可动的机器"的方式来解释概念——生成细节丰富、可交互的等距视角插图,输出精致 SVG,还可叠加 WebGL 着色器与 3D 效果。</p><p><strong>哪里好</strong>:不止是画图,而是构造由许多精密小部件组成的"可运转对象",把真实机器与复杂系统的结构讲得直观透彻;SVG 为基底、3D 与着色器可选,成品质感出众;Claude Code、OpenCode、Codex 通用,即装即用。</p><p><strong>应用场景</strong>:技术文档与博客中可视化讲解引擎、电路等复杂构造;课堂教学与产品说明;为演讲和落地页生成高质感的机制类插图。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>MIT</span>
+    <span>建于 2026-10-08</span>
+    <a class="gh-link" href="https://github.com/wheresryan22/anatomy" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-skill</span><span class="topic">open-source</span><span class="topic">svg</span><span class="topic">vizualization</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#4</span>
+      <a href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">deepseek-ai/DeepInfer</a>
+      <span class="badge badge-hot">🔥 排名跃升 7→4 / 涨星加速 25→63</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+63</span><span class="stat-stars">★ 26.3k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:DeepInfer 是 DeepSeek 官方开源的高性能大规模推理框架——正是支撑 DeepSeek 生产服务的同款引擎,首发支持 DeepSeek-V4.1-Flash,提供规模化服务所需的核心离线推理能力。</p><p><strong>哪里好</strong>:工业级全家桶:FlashMLA 优化内核、注意力 DP 与均衡 CP、MoE EP+EPLB 并行、零开销异步批调度、确定性采样与结构化输出;批量不变推理保证结果可复现;出自一线生产环境而非实验室原型。</p><p><strong>应用场景</strong>:企业自建 DeepSeek 系模型的大规模推理服务;需要确定性输出与高吞吐的生产部署;研究 MoE 推理系统工程的参考实现。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-10-16</span>
+    <a class="gh-link" href="https://github.com/deepseek-ai/DeepInfer" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#5</span>
+      <a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">deepseek-ai/dsh-superagent-prototype</a>
+      <span class="badge badge-hot">🔥 排名跃升 8→5</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+211</span><span class="stat-stars">★ 24.3k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:dsh-superagent 是 DeepSeek 团队开源的"超级智能体"研究原型,配套论文《Exploring Super-agent Design: Towards a More Autonomous Agent System》:探索更自主的智能体系统形态,大量工程代码本身就由编程智能体写成。</p><p><strong>哪里好</strong>:一线大模型团队的一手智能体工程实践,从日常开发中生长出来的真实代码;坦率标注为研究参考而非官方产品,附使用注意事项;与 dsh 生态同源,可配合 dsh-our-free-model 等插件一起体验。</p><p><strong>应用场景</strong>:研究超智能体架构与自主性设计;基于其代码改造自己的智能体系统;观察 DeepSeek 如何用智能体写智能体的工程方法。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>MIT</span>
+    <span>建于 2026-10-31</span>
+    <a class="gh-link" href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#6</span>
+      <a href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">heydamir/unslop</a>
+      <span class="badge badge-hot">🔥 排名跃升 9→6</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+1134</span><span class="stat-stars">★ 20.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:unslop 是一个"去 AI 味"的 Claude 技能(支持 Claude Code、Codex、Google Antigravity):把一眼 AI 生成的界面改造成有自己性格的设计——先找出紫渐变、发光、emoji 标签、喊话式文案、间距不匀等典型"AI 味",再像设计师做红线评审那样逐轮修整。</p><p><strong>哪里好</strong>:不挑技术栈,任意前端代码都能处理;先诊断后改造,每轮像设计师 pass 一样有方向;来自 X 上走红的 Unslopping 系列,方法论经过大量实战检验;与 hallmark/impeccable 组成完整的"反 AI 味"军械库。</p><p><strong>应用场景</strong>:拯救 vibecoding 产出的原型页面;给 AI 生成的产品界面注入品牌个性;前端上线前的"去机器感"终审。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>CC-BY-4.0</span>
+    <span>建于 2026-10-29</span>
+    <a class="gh-link" href="https://github.com/heydamir/unslop" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#7</span>
+      <a href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">lemomo-ai/lemo-opuscar</a>
+      <span class="badge badge-hot">🔥 排名跃升 10→7 / 涨星加速 385→859</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+859</span><span class="stat-stars">★ 20k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:Lemo-Opuscar 是一套"用代码做电影"的风格工具箱:内置 99 种现成影片风格,每种都配一支完全由 Claude Opus 5.5 用代码生成的示范短片,不依赖任何视频生成模型,也支持从零自创风格。</p><p><strong>哪里好</strong>:纯代码出片——风格即提示词,可复现、可魔改、无生成费用;挑一个风格带入故事,编程智能体就能当导演;99 种风格覆盖面广,画廊可在线预览;中文文档友好,把 AI 视频从"生成模型"路线切换成"代码"路线。</p><p><strong>应用场景</strong>:用 Claude Code 等智能体批量产出风格化短片与动态页面;设计师探索代码动画表达;教学演示"代码即影像"的创作方式。</p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>NOASSERTION</span>
+    <span>建于 2026-09-26</span>
+    <a class="gh-link" href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-skills</span><span class="topic">ai-agents</span><span class="topic">ai-short-film</span><span class="topic">ai-video</span><span class="topic">animation</span><span class="topic">canvas</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#8</span>
+      <a href="https://github.com/JuneYaooo/rea-video" target="_blank" rel="noopener">JuneYaooo/rea-video</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+895</span><span class="stat-stars">★ 12.4k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:rea-video 是"逆向拆解任何视频"的智能体技能:逐个镜头判断是实拍、AI 生成还是代码做的,并给出复刻方案,在 Claude Code、Codex 里一句话调用,输出拆解报告和开放格式 VIDEO.md。</p><p><strong>哪里好</strong>:不止看画面猜,而是"测量+观察+听觉"三方取证,帧率、传感器噪声、AIGC 标签等硬证据优先于"看起来像";覆盖实拍、AI 视频、数字人、3D 动画、代码动效、录屏、混合片七类;离线免费,可选接入视频多模态模型;结果分层组织,给 AI 读时省 token。</p><p><strong>应用场景</strong>:学习爆款短片的镜头、节奏与打光;把参考片改写成基于自有版权素材的拍摄计划或提示词;短视频与广告团队做竞品拆解;配合 Remotion 用代码复刻动效。</p></div>
+  <div class="card-meta">
+    <span>Python</span>
+    <span>Apache-2.0</span>
+    <span>建于 2026-10-29</span>
+    <a class="gh-link" href="https://github.com/JuneYaooo/rea-video" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-skills</span><span class="topic">ai-video</span><span class="topic">aigc-detection</span><span class="topic">claude-code</span><span class="topic">codex</span><span class="topic">ffmpeg</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#9</span>
+      <a href="https://github.com/kingcharleslzy-ai/dsh-purge" target="_blank" rel="noopener">kingcharleslzy-ai/dsh-purge</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+742</span><span class="stat-stars">★ 11.8k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:dsh-purge 社区版是 DeepSeek Harness 的「破甲」插件:靠 86 条宿主补丁与提示词注入,减少 DSH 确认与打断,让智能体连续执行任务,并带「无限制模式」预设;不改模型本身。</p><p><strong>哪里好</strong>:工程化程度高:25 层状态自检逐层给证据,安装、补丁、注入是否就绪一屏看清;应用、安装、回滚前自动快照,随时可回退;全部逻辑本机运行,不上传提示词或配置;宿主升级后可诊断补丁锚点漂移。</p><p><strong>应用场景</strong>:自己拥有或已获授权的 DSH 实例上做个性化与实验;需连续跑长任务的本地智能体工作流。<em>⚠️ 注:此类插件会修改宿主并注入提示词以降低使用限制,可能违反模型服务条款,请自行评估合规与安全风险。</em></p></div>
+  <div class="card-meta">
+    <span>JavaScript</span>
+    <span>MIT</span>
+    <span>建于 2026-10-16</span>
+    <a class="gh-link" href="https://github.com/kingcharleslzy-ai/dsh-purge" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  <div class="topics"><span class="topic">agent-tools</span><span class="topic">backup</span><span class="topic">deepseek</span><span class="topic">deepseek-harness</span><span class="topic">dsh</span><span class="topic">dsh-plugin</span></div>
+</article><article class="card card-changed">
+  <div class="card-head">
+    <div class="card-title">
+      <span class="rank">#10</span>
+      <a href="https://github.com/amosblomqvist/learnharness" target="_blank" rel="noopener">amosblomqvist/learnharness</a>
+      <span class="badge badge-new">🆕 新进榜</span>
+    </div>
+    <div class="card-stats"><span class="stat-delta">+455</span><span class="stat-stars">★ 11.2k</span></div>
+  </div>
+  
+  <div class="intro"><p><strong>是什么</strong>:LearnHarness 是一个面向学习的智能体框架(Agent Harness):AI 智能体先摸清你当前的理解程度和思考方式,再据此规划并讲授课程,从已有认知一路讲到学习目标,并随你的进步持续更新。</p><p><strong>哪里好</strong>:不直接丢一段解释,而是"测量→规划→讲授→练习"四步:先定位理解断点,再画依赖图,每个新知识点都踩在已懂的内容上,困惑先修复再往下;练习题与提示随你的推理自适应;所学沉淀为跨会话的知识图谱;自带模型与密钥,数据存本机,系统提示词可查看可修改,AGPL 开源。</p><p><strong>应用场景</strong>:系统啃下数学、算法等有难度的科目;备考或补基础时找到真正的知识断点;把讲义、PDF 带进课堂做个性化辅导;长期积累、可回溯的个人学习档案。</p></div>
+  <div class="card-meta">
+    <span>TypeScript</span>
+    <span>AGPL-3.0</span>
+    <span>建于 2026-10-16</span>
+    <a class="gh-link" href="https://github.com/amosblomqvist/learnharness" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+  
+</article></section><section class="meta-section"><h2 class="section-title">📈 追踪元数据</h2><ul>
+    <li>涨星榜:<strong>10</strong> 个 AI 项目(来自 GitHub Trending 今日榜)</li>
+    <li>崛起榜候选池:<strong>1772</strong> 个近60天新建 AI 项目(原始 3125)</li>
+    <li>关键词:<strong>62</strong> 组 · 失败 0 组</li>
+    <li>数据源:github-api(anonymous) · 生成于 2026-11-23 08:04</li>
+  </ul></section>
+  <p class="archive-link"><a href="archive.html">← 返回存档</a></p>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <p>每天 12:00 自动更新 · 数据源 GitHub Search API · <a href="https://github.com/mmlong818/ai-trending">源代码</a></p>
+    <p class="pv-line">📖 全站累计阅读 <span id="site-pv-display">12,000</span> 次</p>
+    <p class="muted">候选池:近 60 天新建的 AI 项目 · 按总星排序 = 崛起热度</p>
+  </div>
+  <span id="busuanzi_value_site_pv" style="display:none"></span>
+  <script>
+  (function(){
+    var BASE = 12000; // 阅读量基数:显示值 = 基数 + 真实计数
+    function fmt(n){ return Number(n).toLocaleString('zh-CN'); }
+    function upd(){
+      var pv = document.getElementById('busuanzi_value_site_pv');
+      var d1 = document.getElementById('site-pv-display');
+      var pvNum = parseInt(pv && pv.textContent, 10);
+      if (d1 && !isNaN(pvNum)) d1.textContent = fmt(BASE + pvNum);
+    }
+    var el = document.getElementById('busuanzi_value_site_pv');
+    if (el) new MutationObserver(upd).observe(el, {childList:true, characterData:true, subtree:true});
+    upd();
+  })();
+  </script>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
