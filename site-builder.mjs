@@ -74,6 +74,12 @@ function headline(ranking) {
   return parts.join(" · ");
 }
 
+// 距上一期快照的天数(>1 说明中间缺测,当日 diff 实为跨多天累计)
+function gapDays(date, prevDate) {
+  if (!prevDate) return 0;
+  return Math.round((Date.parse(date) - Date.parse(prevDate)) / 86400000);
+}
+
 // ---------- 页面片段 ----------
 function masthead(activeNav = "") {
   const navItem = (key, label, href) =>
@@ -154,7 +160,12 @@ function repoCard(t, opts = {}) {
 function dayBody(ranking) {
   const { date, data: r } = ranking;
   const isFirst = r.is_first_run;
-  const banner = isFirst ? `<div class="banner">📋 <strong>基线收录日</strong>:首次收录,明天起会标注「🆕 新进榜」。所有项目已配中文解读。</div>` : "";
+  const gap = gapDays(date, r.prev_snapshot_date);
+  const banner = isFirst
+    ? `<div class="banner">📋 <strong>基线收录日</strong>:首次收录,明天起会标注「🆕 新进榜」。所有项目已配中文解读。</div>`
+    : gap > 1
+      ? `<div class="banner">⚠️ <strong>含 ${gap} 天累计</strong>:上一期为 ${esc(r.prev_snapshot_date)},中间缺测。崛起榜「日涨星」是 ${esc(r.prev_snapshot_date)} → ${date} 的累计值;涨星榜「今日新增」仍是 GitHub Trending 当日数据。</div>`
+      : "";
 
   // ===== 涨星榜 =====
   const trending = r.trending_top10 || [];
